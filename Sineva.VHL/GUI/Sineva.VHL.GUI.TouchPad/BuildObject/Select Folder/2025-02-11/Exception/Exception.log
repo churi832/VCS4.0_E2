@@ -1,0 +1,54 @@
+[2025-02-11 15:38:36.604](1)[2025-02-11 15:38:36.602] System.Net.Sockets.SocketException (0x80004005): 由于目标计算机积极拒绝，无法连接。 127.0.0.1:7777
+
+Server stack trace: 
+   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   在 System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket(EndPoint ipEndPoint)
+   在 System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket()
+   在 System.Runtime.Remoting.Channels.RemoteConnection.GetSocket()
+   在 System.Runtime.Remoting.Channels.SocketCache.GetSocket(String machinePortAndSid, Boolean openNew)
+   在 System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.SendRequestWithRetry(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream)
+   在 System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.ProcessMessage(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream, ITransportHeaders& responseHeaders, Stream& responseStream)
+   在 System.Runtime.Remoting.Channels.BinaryClientFormatterSink.SyncProcessMessage(IMessage msg)
+
+Exception rethrown at [0]: 
+   在 System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   在 System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   在 Sineva.VHL.Library.Remoting.RemoteObject.get_RemoteGUI()
+   在 Sineva.VHL.GUI.TouchPad.MainForm.Initilize() 位置 C:\Users\XHX\Desktop\Vehicle\E2_PH2\source\VHL4.0_E2_PH2_20250211_1449\Sineva.VHL\GUI\Sineva.VHL.GUI.TouchPad\MainForm.cs:行号 233
+[2025-02-11 16:29:40.828](1)[2025-02-11 16:29:40.826] System.Net.Sockets.SocketException (0x80004005): 由于目标计算机积极拒绝，无法连接。 192.168.1.185:7777
+
+Server stack trace: 
+   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   在 System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket(EndPoint ipEndPoint)
+   在 System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket()
+   在 System.Runtime.Remoting.Channels.RemoteConnection.GetSocket()
+   在 System.Runtime.Remoting.Channels.SocketCache.GetSocket(String machinePortAndSid, Boolean openNew)
+   在 System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.SendRequestWithRetry(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream)
+   在 System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.ProcessMessage(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream, ITransportHeaders& responseHeaders, Stream& responseStream)
+   在 System.Runtime.Remoting.Channels.BinaryClientFormatterSink.SyncProcessMessage(IMessage msg)
+
+Exception rethrown at [0]: 
+   在 System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   在 System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   在 Sineva.VHL.Library.Remoting.RemoteObject.get_RemoteGUI()
+   在 Sineva.VHL.GUI.TouchPad.MainForm.Initilize() 位置 C:\Users\XHX\Desktop\Vehicle\E2_PH2\source\VHL4.0_E2_PH2_20250211_1449\Sineva.VHL\GUI\Sineva.VHL.GUI.TouchPad\MainForm.cs:行号 233
+[2025-02-11 16:30:42.155](1)[2025-02-11 16:30:42.154] System.Net.Sockets.SocketException (0x80004005): 由于目标计算机积极拒绝，无法连接。 192.168.1.185:7777
+
+Server stack trace: 
+   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   在 System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket(EndPoint ipEndPoint)
+   在 System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket()
+   在 System.Runtime.Remoting.Channels.RemoteConnection.GetSocket()
+   在 System.Runtime.Remoting.Channels.SocketCache.GetSocket(String machinePortAndSid, Boolean openNew)
+   在 System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.SendRequestWithRetry(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream)
+   在 System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.ProcessMessage(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream, ITransportHeaders& responseHeaders, Stream& responseStream)
+   在 System.Runtime.Remoting.Channels.BinaryClientFormatterSink.SyncProcessMessage(IMessage msg)
+
+Exception rethrown at [0]: 
+   在 System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   在 System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   在 Sineva.VHL.Library.Remoting.RemoteObject.get_RemoteGUI()
+   在 Sineva.VHL.GUI.TouchPad.MainForm.Initilize() 位置 C:\Users\XHX\Desktop\Vehicle\E2_PH2\source\VHL4.0_E2_PH2_20250211_1449\Sineva.VHL\GUI\Sineva.VHL.GUI.TouchPad\MainForm.cs:行号 233

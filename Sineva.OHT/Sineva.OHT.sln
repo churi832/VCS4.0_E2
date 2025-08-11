@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32126.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sineva.OHT.LogProvider", "Sineva.OHT.LogProvider\Sineva.OHT.LogProvider.csproj", "{FFFCC9A6-BC93-4B7C-9910-8F0B1FA7C838}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sineva.OHT.Common", "Sineva.OHT.Common\Sineva.OHT.Common.csproj", "{1244649A-E73B-41B9-B84F-8DE33B90496D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sineva.OHT.DBProvider", "Sineva.OHT.DBProvider\Sineva.OHT.DBProvider.csproj", "{38D9BD5E-174C-41AA-A3F2-717AAC8043F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sineva.OHT.IF.Socket", "Sineva.OHT.IF.Socket\Sineva.OHT.IF.Socket.csproj", "{6F88F790-E4CF-4A81-AEAE-8AAE68DC9F75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sineva.OHT.IF.Melsec", "Sineva.OHT.IF.Melsec\Sineva.OHT.IF.Melsec.csproj", "{E5E2D498-E435-4C6F-809A-07C72CC0EBE6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FFFCC9A6-BC93-4B7C-9910-8F0B1FA7C838}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFFCC9A6-BC93-4B7C-9910-8F0B1FA7C838}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFFCC9A6-BC93-4B7C-9910-8F0B1FA7C838}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFFCC9A6-BC93-4B7C-9910-8F0B1FA7C838}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1244649A-E73B-41B9-B84F-8DE33B90496D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1244649A-E73B-41B9-B84F-8DE33B90496D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1244649A-E73B-41B9-B84F-8DE33B90496D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1244649A-E73B-41B9-B84F-8DE33B90496D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38D9BD5E-174C-41AA-A3F2-717AAC8043F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38D9BD5E-174C-41AA-A3F2-717AAC8043F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38D9BD5E-174C-41AA-A3F2-717AAC8043F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38D9BD5E-174C-41AA-A3F2-717AAC8043F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F88F790-E4CF-4A81-AEAE-8AAE68DC9F75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F88F790-E4CF-4A81-AEAE-8AAE68DC9F75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F88F790-E4CF-4A81-AEAE-8AAE68DC9F75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F88F790-E4CF-4A81-AEAE-8AAE68DC9F75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5E2D498-E435-4C6F-809A-07C72CC0EBE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5E2D498-E435-4C6F-809A-07C72CC0EBE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5E2D498-E435-4C6F-809A-07C72CC0EBE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5E2D498-E435-4C6F-809A-07C72CC0EBE6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E181D0EF-34AE-44A0-9640-762976E8A3E8}
+	EndGlobalSection
+EndGlobal

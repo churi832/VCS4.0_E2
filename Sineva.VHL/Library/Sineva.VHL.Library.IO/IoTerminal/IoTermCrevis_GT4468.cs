@@ -1,0 +1,48 @@
+﻿/****************************************************************
+ * Copyright	: www.sineva.com.cn
+ * Version		: V1.0
+ * Programmer	: Software Group
+ * Issue Date	: 23.02.20
+ * Description	: 
+ * 
+ ****************************************************************/
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Sineva.VHL.Library.IO
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    [Serializable]
+    public class IoTermCrevis_GT4468 : _IoTermCrevis
+    {
+		public IoTermCrevis_GT4468()
+		{
+			m_ChannelCount = 4;
+			m_Name = "GT-4468";
+			m_ProductNo = 0x4468;
+			m_ChannelBitSize = 0x10;
+			m_TermIoType = IoType.AO;
+			m_Description = "Analog Output, 8 Channels, 0~10Vdc, 16Bits, 10RTB";
+
+			m_IoTypes.Add(IoType.AI);
+		}
+
+		public override void CreateChannels()
+		{
+			int i = 0;
+			int add = this.m_InStartAddress;
+			for (i = 0; i < m_ChannelCount; i++)
+			{
+				IoChannel ch = new IoChannel();
+				ch.IoType = IoType.AO;
+				ch.Name = "ao__";
+				this.Channels.Add(ch);
+			}
+		}
+    }
+}

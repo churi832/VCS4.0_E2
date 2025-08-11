@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4CA639E0-8284-4CF0-AA8D-5C497DF454FA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sineva.VHL.Data.Alarm</RootNamespace>
+    <AssemblyName>Sineva.VHL.Data.Alarm</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\DLLs\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Sineva.VHL.Library, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\DLLs\Sineva.VHL.Library.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AlarmCurrentData.cs" />
+    <Compile Include="AlarmCurrentProvider.cs" />
+    <Compile Include="AlarmCurrentView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AlarmCurrentView.designer.cs">
+      <DependentUpon>AlarmCurrentView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AlarmData.cs" />
+    <Compile Include="AlarmHandler.cs" />
+    <Compile Include="AlarmHistoryData.cs" />
+    <Compile Include="AlarmHistoryProvider.cs" />
+    <Compile Include="AlarmHistoryView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AlarmHistoryView.designer.cs">
+      <DependentUpon>AlarmHistoryView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AlarmListProvider.cs" />
+    <Compile Include="AlarmListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AlarmListView.designer.cs">
+      <DependentUpon>AlarmListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sineva.VHL.Data.DbAdapter\Sineva.VHL.Data.DbAdapter.csproj">
+      <Project>{744a8081-12c7-49da-8ec5-cb28195ce9d5}</Project>
+      <Name>Sineva.VHL.Data.DbAdapter</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AlarmCurrentView.resx">
+      <DependentUpon>AlarmCurrentView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AlarmHistoryView.resx">
+      <DependentUpon>AlarmHistoryView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AlarmListView.resx">
+      <DependentUpon>AlarmListView.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

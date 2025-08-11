@@ -1,0 +1,94 @@
+D:\Sineva\Program\Ver4.0\VHL4.0\DLLs\Sineva.VHL.Library.RegistryKey.dll
+D:\Sineva\Program\Ver4.0\VHL4.0\DLLs\Sineva.VHL.Library.RegistryKey.pdb
+D:\Sineva\Program\Ver4.0\VHL4.0\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.AssemblyReference.cache
+D:\Sineva\Program\Ver4.0\VHL4.0\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.CoreCompileInputs.cache
+D:\Sineva\Program\Ver4.0\VHL4.0\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.dll
+D:\Sineva\Program\Ver4.0\VHL4.0\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.pdb
+D:\Source\VHL4.0\DLLs\Sineva.VHL.Library.RegistryKey.dll
+D:\Source\VHL4.0\DLLs\Sineva.VHL.Library.RegistryKey.pdb
+D:\Source\VHL4.0\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.CoreCompileInputs.cache
+D:\Source\VHL4.0\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.dll
+D:\Source\VHL4.0\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.pdb
+D:\Source\VHL4.0\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csprojAssemblyReference.cache
+C:\Sineva\Work\CRRC\Source\VHL4.0\DLLs\Sineva.VHL.Library.RegistryKey.dll
+C:\Sineva\Work\CRRC\Source\VHL4.0\DLLs\Sineva.VHL.Library.RegistryKey.pdb
+C:\Sineva\Work\CRRC\Source\VHL4.0\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.CoreCompileInputs.cache
+C:\Sineva\Work\CRRC\Source\VHL4.0\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.dll
+C:\Sineva\Work\CRRC\Source\VHL4.0\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.pdb
+C:\Sineva\Work\E2 PH2\Source\VHL4.0\DLLs\Sineva.VHL.Library.RegistryKey.dll
+C:\Sineva\Work\E2 PH2\Source\VHL4.0\DLLs\Sineva.VHL.Library.RegistryKey.pdb
+C:\Sineva\Work\E2 PH2\Source\VHL4.0\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.CoreCompileInputs.cache
+C:\Sineva\Work\E2 PH2\Source\VHL4.0\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.dll
+C:\Sineva\Work\E2 PH2\Source\VHL4.0\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.pdb
+C:\Users\XHX\Desktop\Vehicle\E2_PH2\source\VHL4.0_E2_PH2_20241223_1930\DLLs\Sineva.VHL.Library.RegistryKey.dll
+C:\Users\XHX\Desktop\Vehicle\E2_PH2\source\VHL4.0_E2_PH2_20241223_1930\DLLs\Sineva.VHL.Library.RegistryKey.pdb
+C:\Users\XHX\Desktop\Vehicle\E2_PH2\source\VHL4.0_E2_PH2_20241223_1930\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.AssemblyReference.cache
+C:\Users\XHX\Desktop\Vehicle\E2_PH2\source\VHL4.0_E2_PH2_20241223_1930\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.CoreCompileInputs.cache
+C:\Users\XHX\Desktop\Vehicle\E2_PH2\source\VHL4.0_E2_PH2_20241223_1930\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.dll
+C:\Users\XHX\Desktop\Vehicle\E2_PH2\source\VHL4.0_E2_PH2_20241223_1930\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.pdb
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250117_1400_CSV\DLLs\Sineva.VHL.Library.RegistryKey.dll
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250117_1400_CSV\DLLs\Sineva.VHL.Library.RegistryKey.pdb
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250117_1400_CSV\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.CoreCompileInputs.cache
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250117_1400_CSV\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.dll
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250117_1400_CSV\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.pdb
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250117_1400_CSV\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.AssemblyReference.cache
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250120_1700_CSV\DLLs\Sineva.VHL.Library.RegistryKey.dll
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250120_1700_CSV\DLLs\Sineva.VHL.Library.RegistryKey.pdb
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250120_1700_CSV\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.AssemblyReference.cache
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250120_1700_CSV\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.CoreCompileInputs.cache
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250120_1700_CSV\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.dll
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250120_1700_CSV\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.pdb
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250316_1300\DLLs\Sineva.VHL.Library.RegistryKey.dll
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250316_1300\DLLs\Sineva.VHL.Library.RegistryKey.pdb
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250316_1300\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.AssemblyReference.cache
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250316_1300\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.CoreCompileInputs.cache
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250316_1300\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.dll
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250316_1300\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.pdb
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250321_1026\DLLs\Sineva.VHL.Library.RegistryKey.dll
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250321_1026\DLLs\Sineva.VHL.Library.RegistryKey.pdb
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250321_1026\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.AssemblyReference.cache
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250321_1026\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.CoreCompileInputs.cache
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250321_1026\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.dll
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250321_1026\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.pdb
+D:\Sineva\Program\ESWIN\VHL4.0_E2_PH2_20250327_0847_1동 적용본\DLLs\Sineva.VHL.Library.RegistryKey.dll
+D:\Sineva\Program\ESWIN\VHL4.0_E2_PH2_20250327_0847_1동 적용본\DLLs\Sineva.VHL.Library.RegistryKey.pdb
+D:\Sineva\Program\ESWIN\VHL4.0_E2_PH2_20250327_0847_1동 적용본\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.AssemblyReference.cache
+D:\Sineva\Program\ESWIN\VHL4.0_E2_PH2_20250327_0847_1동 적용본\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.CoreCompileInputs.cache
+D:\Sineva\Program\ESWIN\VHL4.0_E2_PH2_20250327_0847_1동 적용본\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.dll
+D:\Sineva\Program\ESWIN\VHL4.0_E2_PH2_20250327_0847_1동 적용본\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.pdb
+D:\Sineva\Program\ESWIN\VHL4.0_E2_PH2_20250331_1410\DLLs\Sineva.VHL.Library.RegistryKey.dll
+D:\Sineva\Program\ESWIN\VHL4.0_E2_PH2_20250331_1410\DLLs\Sineva.VHL.Library.RegistryKey.pdb
+D:\Sineva\Program\ESWIN\VHL4.0_E2_PH2_20250331_1410\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.AssemblyReference.cache
+D:\Sineva\Program\ESWIN\VHL4.0_E2_PH2_20250331_1410\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.CoreCompileInputs.cache
+D:\Sineva\Program\ESWIN\VHL4.0_E2_PH2_20250331_1410\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.dll
+D:\Sineva\Program\ESWIN\VHL4.0_E2_PH2_20250331_1410\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.pdb
+D:\Sineva\Program\ESWIN\VHL4.0_E2_PH2\DLLs\Sineva.VHL.Library.RegistryKey.dll
+D:\Sineva\Program\ESWIN\VHL4.0_E2_PH2\DLLs\Sineva.VHL.Library.RegistryKey.pdb
+D:\Sineva\Program\ESWIN\VHL4.0_E2_PH2\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.AssemblyReference.cache
+D:\Sineva\Program\ESWIN\VHL4.0_E2_PH2\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.CoreCompileInputs.cache
+D:\Sineva\Program\ESWIN\VHL4.0_E2_PH2\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.dll
+D:\Sineva\Program\ESWIN\VHL4.0_E2_PH2\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.pdb
+D:\07.CRRC\반입\20250513\VHL4.0_E2_PH2_20250520_0849\DLLs\Sineva.VHL.Library.RegistryKey.dll
+D:\07.CRRC\반입\20250513\VHL4.0_E2_PH2_20250520_0849\DLLs\Sineva.VHL.Library.RegistryKey.pdb
+D:\07.CRRC\반입\20250513\VHL4.0_E2_PH2_20250520_0849\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.AssemblyReference.cache
+D:\07.CRRC\반입\20250513\VHL4.0_E2_PH2_20250520_0849\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.CoreCompileInputs.cache
+D:\07.CRRC\반입\20250513\VHL4.0_E2_PH2_20250520_0849\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.dll
+D:\07.CRRC\반입\20250513\VHL4.0_E2_PH2_20250520_0849\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.pdb
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250527_1051\DLLs\Sineva.VHL.Library.RegistryKey.dll
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250527_1051\DLLs\Sineva.VHL.Library.RegistryKey.pdb
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250527_1051\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.AssemblyReference.cache
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250527_1051\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.CoreCompileInputs.cache
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250527_1051\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.dll
+D:\Project\ESWIN\Program\VHL\4.0\VHL4.0_E2_PH2_20250527_1051\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.pdb
+C:\Sineva\Work\现有项目\E2 PH2\Source\VHL4.0_E2_PH2_20250725_0949\DLLs\Sineva.VHL.Library.RegistryKey.dll
+C:\Sineva\Work\现有项目\E2 PH2\Source\VHL4.0_E2_PH2_20250725_0949\DLLs\Sineva.VHL.Library.RegistryKey.pdb
+C:\Sineva\Work\现有项目\E2 PH2\Source\VHL4.0_E2_PH2_20250725_0949\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.AssemblyReference.cache
+C:\Sineva\Work\现有项目\E2 PH2\Source\VHL4.0_E2_PH2_20250725_0949\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.CoreCompileInputs.cache
+C:\Sineva\Work\现有项目\E2 PH2\Source\VHL4.0_E2_PH2_20250725_0949\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.dll
+C:\Sineva\Work\现有项目\E2 PH2\Source\VHL4.0_E2_PH2_20250725_0949\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.pdb
+C:\Users\78001515\Desktop\VHL4.0_E2_PH2_20250725_1130\DLLs\Sineva.VHL.Library.RegistryKey.dll
+C:\Users\78001515\Desktop\VHL4.0_E2_PH2_20250725_1130\DLLs\Sineva.VHL.Library.RegistryKey.pdb
+C:\Users\78001515\Desktop\VHL4.0_E2_PH2_20250725_1130\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.AssemblyReference.cache
+C:\Users\78001515\Desktop\VHL4.0_E2_PH2_20250725_1130\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.csproj.CoreCompileInputs.cache
+C:\Users\78001515\Desktop\VHL4.0_E2_PH2_20250725_1130\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.dll
+C:\Users\78001515\Desktop\VHL4.0_E2_PH2_20250725_1130\Sineva.VHL\Library\Sineva.VHL.Library.RegistryKey\obj\Debug\Sineva.VHL.Library.RegistryKey.pdb

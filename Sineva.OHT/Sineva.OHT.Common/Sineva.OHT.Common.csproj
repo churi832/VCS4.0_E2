@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1244649A-E73B-41B9-B84F-8DE33B90496D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sineva.OHT.Common</RootNamespace>
+    <AssemblyName>Sineva.OHT.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Sineva.VHL.BuildObject\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\DLLs\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>..\DLLs\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ConfigBase\ConfigFileSelector.cs" />
+    <Compile Include="ConfigBase\ConfigFolderSelector.cs" />
+    <Compile Include="ConfigBase\ConfigFolderSelector_WPF.xaml.cs" />
+    <Compile Include="ConfigBase\FileSelect.cs" />
+    <Compile Include="ConfigBase\FolderSelect.cs" />
+    <Compile Include="ConfigClass\Config.cs" />
+    <Compile Include="ConfigClass\ConfigAttribute.cs" />
+    <Compile Include="ConfigClass\Config_Database.cs" />
+    <Compile Include="ConfigClass\Config_Log.cs" />
+    <Compile Include="ConfigClass\IConfig.cs" />
+    <Compile Include="Libraries\CpuUsage.cs" />
+    <Compile Include="Libraries\DataItem_Base.cs" />
+    <Compile Include="Libraries\Enums.cs" />
+    <Compile Include="Libraries\Enums_Database.cs" />
+    <Compile Include="Libraries\Enum_Melsec.cs" />
+    <Compile Include="Libraries\FileCompressor.cs" />
+    <Compile Include="Libraries\GetLastInputTime.cs" />
+    <Compile Include="Libraries\GUIManager.cs" />
+    <Compile Include="Libraries\IniProfile.cs" />
+    <Compile Include="Libraries\ListShuffle.cs" />
+    <Compile Include="Libraries\MelsecAddressConverter.cs" />
+    <Compile Include="Libraries\MemoryController.cs" />
+    <Compile Include="Libraries\MultiKeyDictionary.cs" />
+    <Compile Include="Libraries\MultiKeySortedList.cs" />
+    <Compile Include="Libraries\ObjectCopier.cs" />
+    <Compile Include="Libraries\SerializableColor.cs" />
+    <Compile Include="Libraries\SerializableDictionary.cs" />
+    <Compile Include="Libraries\SerializableSortedList.cs" />
+    <Compile Include="Libraries\Singleton.cs" />
+    <Compile Include="Libraries\SortableList.cs" />
+    <Compile Include="Libraries\SystemTimeControl.cs" />
+    <Compile Include="Libraries\ThreadFunction.cs" />
+    <Compile Include="Libraries\TimeChecker.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValueConverters\AlarmTypeValueConverter.cs" />
+    <Compile Include="ValueConverters\BitColorConverter.cs" />
+    <Compile Include="ValueConverters\BitForegroundColorConverter.cs" />
+    <Compile Include="ValueConverters\BitValueConverter.cs" />
+    <Compile Include="ValueConverters\BoolColorConverter.cs" />
+    <Compile Include="ValueConverters\BoolForegroundColorConverter.cs" />
+    <Compile Include="ValueConverters\BoolReverseConverter.cs" />
+    <Compile Include="ValueConverters\BoolToLedStatusConverter.cs" />
+    <Compile Include="ValueConverters\ConnectionColorConverter.cs" />
+    <Compile Include="ValueConverters\IntBoolConverter.cs" />
+    <Compile Include="ValueConverters\IntegerBitColorConverter.cs" />
+    <Compile Include="ValueConverters\IntegerBitForegroundColorConverter.cs" />
+    <Compile Include="ValueConverters\IntegerBitValueConverter.cs" />
+    <Compile Include="ValueConverters\IsNotNULLConverter.cs" />
+    <Compile Include="ValueConverters\ManualCommandEnumConverter.cs" />
+    <Compile Include="ValueConverters\PortProhibitColorConverter.cs" />
+    <Compile Include="ValueConverters\PortProhibitConverter.cs" />
+    <Compile Include="ValueConverters\PortProhibitForeColorConverter.cs" />
+    <Compile Include="ValueConverters\PortStatusColorConverter.cs" />
+    <Compile Include="ValueConverters\PortStatusForeColorConverter.cs" />
+    <Compile Include="ValueConverters\ProcessedBoolColorConverter.cs" />
+    <Compile Include="ValueConverters\ProgressColorConverter.cs" />
+    <Compile Include="ValueConverters\ProgressIndeterminateConverter.cs" />
+    <Compile Include="ValueConverters\ProgressValueConverter.cs" />
+    <Compile Include="ValueConverters\StringDateTimeSubConverter.cs" />
+    <Compile Include="ValueConverters\TimeSpanColorConverter.cs" />
+    <Compile Include="ValueConverters\TimeSpanForeColorConverter.cs" />
+    <Compile Include="ValueConverters\TimeSpanValueConverter.cs" />
+    <Compile Include="ValueConverters\TransferStatusColorConverter.cs" />
+    <Compile Include="ValueConverters\TransferStatusForeColorConverter.cs" />
+    <Compile Include="ValueConverters\TransferTypeColorConverter.cs" />
+    <Compile Include="ValueConverters\TransferTypeForeColorConverter.cs" />
+    <Compile Include="ValueConverters\TSCStatusColorConverter.cs" />
+    <Compile Include="ValueConverters\UserLevelColorConverter.cs" />
+    <Compile Include="ValueConverters\UserLevelForeColorConverter.cs" />
+    <Compile Include="ValueConverters\VehicleAutoRunStateColorConverter.cs" />
+    <Compile Include="ValueConverters\VehicleAutoRunStateForeColorConverter.cs" />
+    <Compile Include="ValueConverters\VehicleBusyStateColorConverter.cs" />
+    <Compile Include="ValueConverters\VehicleBusyStateForeColorConverter.cs" />
+    <Compile Include="ValueConverters\VehicleCarrierExistStatusColorConverter.cs" />
+    <Compile Include="ValueConverters\VehicleConnectionConverter.cs" />
+    <Compile Include="ValueConverters\VehicleErrorStateColorConverter.cs" />
+    <Compile Include="ValueConverters\VehicleErrorStateForeColorConverter.cs" />
+    <Compile Include="ValueConverters\VehicleInRailStateColorConverter.cs" />
+    <Compile Include="ValueConverters\VehicleInRailStateForeColorConverter.cs" />
+    <Compile Include="ValueConverters\VehicleMovingStateColorConverter.cs" />
+    <Compile Include="ValueConverters\VehicleMovingStateForeColorConverter.cs" />
+    <Compile Include="ValueConverters\VehiclePauseStateColorConverter.cs" />
+    <Compile Include="ValueConverters\VehiclePauseStateForeColorConverter.cs" />
+    <Compile Include="ValueConverters\VehiclePowerStateColorConverter.cs" />
+    <Compile Include="ValueConverters\VehiclePowerStateForeColorConverter.cs" />
+    <Compile Include="ValueConverters\VehicleStateColorConverter.cs" />
+    <Compile Include="ValueConverters\VehicleStateForeColorConverter.cs" />
+    <Compile Include="ValueConverters\VehicleTransferEnableColorConverter.cs" />
+    <Compile Include="ValueConverters\VehicleTransferEnableConverter.cs" />
+    <Compile Include="ValueConverters\VehicleTransferEnableForeColorConverter.cs" />
+    <Compile Include="VehicleIFClass\IVehicleIF.cs" />
+    <Compile Include="VehicleIFClass\JCSIF\IJCSIF.cs" />
+    <Compile Include="VehicleIFClass\JCSIF\JCSIF.cs" />
+    <Compile Include="VehicleIFClass\JCSIF\JCSIF_DistanceChangeSendReply.cs" />
+    <Compile Include="VehicleIFClass\JCSIF\JCSIF_InitialStateReply.cs" />
+    <Compile Include="VehicleIFClass\JCSIF\JCSIF_DistanceChangeSend.cs" />
+    <Compile Include="VehicleIFClass\JCSIF\JCSIF_PassStatusChangeSendReply.cs" />
+    <Compile Include="VehicleIFClass\JCSIF\JCSIF_PassCompleteSendReply.cs" />
+    <Compile Include="VehicleIFClass\JCSIF\JCSIF_PassCompleteSend.cs" />
+    <Compile Include="VehicleIFClass\JCSIF\JCSIF_PassStatusChangeSend.cs" />
+    <Compile Include="VehicleIFClass\JCSIF\JCSIF_PassSendReply.cs" />
+    <Compile Include="VehicleIFClass\JCSIF\JCSIF_PassSend.cs" />
+    <Compile Include="VehicleIFClass\JCSIF\JCSIF_PassRequestReply.cs" />
+    <Compile Include="VehicleIFClass\JCSIF\JCSIF_PassRequest.cs" />
+    <Compile Include="VehicleIFClass\JCSIF\JCSIF_InitialStateRequest.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_AlarmEventReply.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_AlarmEventSend.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_AutoTeachingResultReply.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_AutoTeachingResultSend.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_CommandReply.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_CommandSend.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_DataVersionReply.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_DataVersionRequest.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_EventReply.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_EventSend.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_FDCDataReply.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_FDCDataSend.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_MapDataReply.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_PathSend.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_PathRequest.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_MapDataRequest.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_MapDataRequestAcknowledge.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_MapDataSend.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_OperationConfigDataReply.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_OperationConfigDataSend.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_TeachingDataReply.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_TeachingDataSend.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_UserLoginReply.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_UserLoginRequest.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_VehicleStatusDataReply.cs" />
+    <Compile Include="VehicleIFClass\VehicleIF_VehicleStatusDataSend.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="ConfigBase\ConfigFolderSelector_WPF.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

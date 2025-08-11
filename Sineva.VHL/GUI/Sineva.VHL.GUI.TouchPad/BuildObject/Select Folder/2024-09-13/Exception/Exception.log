@@ -1,0 +1,45 @@
+[2024-09-13 11:59:06.742] System.InvalidOperationException: 线程间操作无效: 从不是创建控件“label1”的线程访问它。
+   在 System.Windows.Forms.Control.get_Handle()
+   在 System.Windows.Forms.Control.set_WindowText(String value)
+   在 System.Windows.Forms.Control.set_Text(String value)
+   在 System.Windows.Forms.Label.set_Text(String value)
+   在 Sineva.VHL.Device.ucServoStatusValue.set_TextValue(String value) 位置 C:\Users\XHX\Desktop\Vehicle\中车软件包\Source\VHL4.0_20240904_1247\Sineva.VHL\Device\Sineva.VHL.Device\Design\ucServoStatusValue.cs:行号 69
+   在 Sineva.VHL.GUI.TouchPad.ServoStates.UpdateStatus() 位置 C:\Users\XHX\Desktop\Vehicle\中车软件包\Source\VHL4.0_20240904_1247\Sineva.VHL\GUI\Sineva.VHL.GUI.TouchPad\ServoStates.cs:行号 16
+   在 Sineva.VHL.GUI.TouchPad.MainForm.VehicleStateUpdate() 位置 C:\Users\XHX\Desktop\Vehicle\中车软件包\Source\VHL4.0_20240904_1247\Sineva.VHL\GUI\Sineva.VHL.GUI.TouchPad\MainForm.cs:行号 222
+   在 Sineva.VHL.GUI.TouchPad.MainForm.DoWork(Object sender, DoWorkEventArgs e) 位置 C:\Users\XHX\Desktop\Vehicle\中车软件包\Source\VHL4.0_20240904_1247\Sineva.VHL\GUI\Sineva.VHL.GUI.TouchPad\MainForm.cs:行号 143
+[2024-09-13 12:02:08.813] System.InvalidOperationException: 线程间操作无效: 从不是创建控件“label1”的线程访问它。
+   在 System.Windows.Forms.Control.get_Handle()
+   在 System.Windows.Forms.Control.set_WindowText(String value)
+   在 System.Windows.Forms.Control.set_Text(String value)
+   在 System.Windows.Forms.Label.set_Text(String value)
+   在 Sineva.VHL.Device.ucServoStatusValue.set_TextValue(String value) 位置 C:\Users\XHX\Desktop\Vehicle\中车软件包\Source\VHL4.0_20240904_1247\Sineva.VHL\Device\Sineva.VHL.Device\Design\ucServoStatusValue.cs:行号 69
+   在 Sineva.VHL.GUI.TouchPad.ServoStates.UpdateStatus() 位置 C:\Users\XHX\Desktop\Vehicle\中车软件包\Source\VHL4.0_20240904_1247\Sineva.VHL\GUI\Sineva.VHL.GUI.TouchPad\ServoStates.cs:行号 16
+   在 Sineva.VHL.GUI.TouchPad.MainForm.VehicleStateUpdate() 位置 C:\Users\XHX\Desktop\Vehicle\中车软件包\Source\VHL4.0_20240904_1247\Sineva.VHL\GUI\Sineva.VHL.GUI.TouchPad\MainForm.cs:行号 224
+   在 Sineva.VHL.GUI.TouchPad.MainForm.DoWork(Object sender, DoWorkEventArgs e) 位置 C:\Users\XHX\Desktop\Vehicle\中车软件包\Source\VHL4.0_20240904_1247\Sineva.VHL\GUI\Sineva.VHL.GUI.TouchPad\MainForm.cs:行号 145
+[2024-09-13 12:05:41.117] System.InvalidOperationException: 线程间操作无效: 从不是创建控件“label1”的线程访问它。
+   在 System.Windows.Forms.Control.get_Handle()
+   在 System.Windows.Forms.Control.set_WindowText(String value)
+   在 System.Windows.Forms.Control.set_Text(String value)
+   在 System.Windows.Forms.Label.set_Text(String value)
+   在 Sineva.VHL.Device.ucServoStatusValue.set_TextValue(String value) 位置 C:\Users\XHX\Desktop\Vehicle\中车软件包\Source\VHL4.0_20240904_1247\Sineva.VHL\Device\Sineva.VHL.Device\Design\ucServoStatusValue.cs:行号 69
+   在 Sineva.VHL.GUI.TouchPad.ServoStates.UpdateStatus() 位置 C:\Users\XHX\Desktop\Vehicle\中车软件包\Source\VHL4.0_20240904_1247\Sineva.VHL\GUI\Sineva.VHL.GUI.TouchPad\ServoStates.cs:行号 16
+   在 Sineva.VHL.GUI.TouchPad.MainForm.VehicleStateUpdate() 位置 C:\Users\XHX\Desktop\Vehicle\中车软件包\Source\VHL4.0_20240904_1247\Sineva.VHL\GUI\Sineva.VHL.GUI.TouchPad\MainForm.cs:行号 224
+   在 Sineva.VHL.GUI.TouchPad.MainForm.DoWork(Object sender, DoWorkEventArgs e) 位置 C:\Users\XHX\Desktop\Vehicle\中车软件包\Source\VHL4.0_20240904_1247\Sineva.VHL\GUI\Sineva.VHL.GUI.TouchPad\MainForm.cs:行号 145
+[2024-09-13 12:14:14.315] System.InvalidOperationException: 线程间操作无效: 从不是创建控件“label1”的线程访问它。
+   在 System.Windows.Forms.Control.get_Handle()
+   在 System.Windows.Forms.Control.set_WindowText(String value)
+   在 System.Windows.Forms.Control.set_Text(String value)
+   在 System.Windows.Forms.Label.set_Text(String value)
+   在 Sineva.VHL.Device.ucServoStatusValue.set_TextValue(String value) 位置 C:\Users\XHX\Desktop\Vehicle\中车软件包\Source\VHL4.0_20240904_1247\Sineva.VHL\Device\Sineva.VHL.Device\Design\ucServoStatusValue.cs:行号 69
+   在 Sineva.VHL.GUI.TouchPad.ServoStates.UpdateStatus() 位置 C:\Users\XHX\Desktop\Vehicle\中车软件包\Source\VHL4.0_20240904_1247\Sineva.VHL\GUI\Sineva.VHL.GUI.TouchPad\ServoStates.cs:行号 16
+   在 Sineva.VHL.GUI.TouchPad.MainForm.VehicleStateUpdate() 位置 C:\Users\XHX\Desktop\Vehicle\中车软件包\Source\VHL4.0_20240904_1247\Sineva.VHL\GUI\Sineva.VHL.GUI.TouchPad\MainForm.cs:行号 221
+   在 Sineva.VHL.GUI.TouchPad.MainForm.DoWork(Object sender, DoWorkEventArgs e) 位置 C:\Users\XHX\Desktop\Vehicle\中车软件包\Source\VHL4.0_20240904_1247\Sineva.VHL\GUI\Sineva.VHL.GUI.TouchPad\MainForm.cs:行号 145
+[2024-09-13 12:14:35.381] System.InvalidOperationException: 线程间操作无效: 从不是创建控件“label1”的线程访问它。
+   在 System.Windows.Forms.Control.get_Handle()
+   在 System.Windows.Forms.Control.set_WindowText(String value)
+   在 System.Windows.Forms.Control.set_Text(String value)
+   在 System.Windows.Forms.Label.set_Text(String value)
+   在 Sineva.VHL.Device.ucServoStatusValue.set_TextValue(String value) 位置 C:\Users\XHX\Desktop\Vehicle\中车软件包\Source\VHL4.0_20240904_1247\Sineva.VHL\Device\Sineva.VHL.Device\Design\ucServoStatusValue.cs:行号 69
+   在 Sineva.VHL.GUI.TouchPad.ServoStates.UpdateStatus() 位置 C:\Users\XHX\Desktop\Vehicle\中车软件包\Source\VHL4.0_20240904_1247\Sineva.VHL\GUI\Sineva.VHL.GUI.TouchPad\ServoStates.cs:行号 16
+   在 Sineva.VHL.GUI.TouchPad.MainForm.VehicleStateUpdate() 位置 C:\Users\XHX\Desktop\Vehicle\中车软件包\Source\VHL4.0_20240904_1247\Sineva.VHL\GUI\Sineva.VHL.GUI.TouchPad\MainForm.cs:行号 221
+   在 Sineva.VHL.GUI.TouchPad.MainForm.DoWork(Object sender, DoWorkEventArgs e) 位置 C:\Users\XHX\Desktop\Vehicle\中车软件包\Source\VHL4.0_20240904_1247\Sineva.VHL\GUI\Sineva.VHL.GUI.TouchPad\MainForm.cs:行号 145

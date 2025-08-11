@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2E4C888D-BA26-4AA2-98CE-007CD48D2DB0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sineva.VHL.Library.IO</RootNamespace>
+    <AssemblyName>Sineva.VHL.Library.IO</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\DLLs\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Abstract\_DeviceIo.cs" />
+    <Compile Include="AnalogScale.cs" />
+    <Compile Include="BnrAxisChannel.cs" />
+    <Compile Include="DevIoAnalogInput.cs" />
+    <Compile Include="DevIoAnalogOutput.cs" />
+    <Compile Include="DevIoCollection.cs" />
+    <Compile Include="DevIoDigitalInput.cs" />
+    <Compile Include="DevIoDigitalOutput.cs" />
+    <Compile Include="Form\FormIoSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\FormIoSelect.designer.cs">
+      <DependentUpon>FormIoSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form\FormAddIoNode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\FormAddIoNode.designer.cs">
+      <DependentUpon>FormAddIoNode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form\FormAddIoTerminal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\FormAddIoTerminal.designer.cs">
+      <DependentUpon>FormAddIoTerminal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form\FormAnalogScale.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\FormAnalogScale.designer.cs">
+      <DependentUpon>FormAnalogScale.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form\FormDevIoConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\FormDevIoConfig.designer.cs">
+      <DependentUpon>FormDevIoConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form\FormIoTagsSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\FormIoTagsSelect.designer.cs">
+      <DependentUpon>FormIoTagsSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form\TrendGraph.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Form\TrendGraph.designer.cs">
+      <DependentUpon>TrendGraph.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form\ucLed.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Form\ucLed.Designer.cs">
+      <DependentUpon>ucLed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interface\IChannelCommand.cs" />
+    <Compile Include="Interface\IDevIoCollection.cs" />
+    <Compile Include="Interface\INodeFactory.cs" />
+    <Compile Include="Interface\ITerminalFactory.cs" />
+    <Compile Include="IoChannel.cs" />
+    <Compile Include="IoManager.cs" />
+    <Compile Include="IoNode\IoNodeMxpEC.cs" />
+    <Compile Include="IoNode\IoNodeBnrX20CP0482.cs" />
+    <Compile Include="IoNode\IoNodeGL9089.cs" />
+    <Compile Include="IoNode\IoNodeGN9289.cs" />
+    <Compile Include="IoNode\IoNodeMp2100.cs" />
+    <Compile Include="IoNode\_IoNode.cs" />
+    <Compile Include="IoNode\IoNodeCrevisModbus.cs" />
+    <Compile Include="IoTag.cs" />
+    <Compile Include="IoTerminal\IoTermBnrX20AI2632.cs" />
+    <Compile Include="IoTerminal\IoTermBnrX20AI4632.cs" />
+    <Compile Include="IoTerminal\IoTermBnrX20AIA744.cs" />
+    <Compile Include="IoTerminal\IoTermBnrX20AIB744.cs" />
+    <Compile Include="IoTerminal\IoTermBnrX20AO2632.cs" />
+    <Compile Include="IoTerminal\IoTermBnrX20AO4632.cs" />
+    <Compile Include="IoTerminal\IoTermBnrX20DI9372.cs" />
+    <Compile Include="IoTerminal\IoTermBnrX20DO9321.cs" />
+    <Compile Include="IoTerminal\IoTermBnrX20MM2436.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT1238.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT123F.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT12DF.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT12FA.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT225F.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT226F.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT2318.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT2328.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT2618.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT2628.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT3002.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT3114.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT3118.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT3154.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT3158.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT317F.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT319F.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT3424.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT3428.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT3464.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT3468.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT347F.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT349F.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT4114.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT4118.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT4154.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT4158.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT4424.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT4428.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT4464.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT4468.cs" />
+    <Compile Include="IoTerminal\IoTermCrevis_GT7511.cs" />
+    <Compile Include="IoTerminal\IoTermMpAN2900.cs" />
+    <Compile Include="IoTerminal\IoTermMpAN2910.cs" />
+    <Compile Include="IoTerminal\IoTermMxpECK64.cs" />
+    <Compile Include="IoTerminal\IoTermMxpTR32K.cs" />
+    <Compile Include="IoTerminal\IoTermMxpD232.cs" />
+    <Compile Include="IoTerminal\IoTermMxpDT32K.cs" />
+    <Compile Include="IoTerminal\IoTermMpIO2310_30.cs" />
+    <Compile Include="IoTerminal\_IoTermMxp.cs" />
+    <Compile Include="IoTerminal\_IoTermBnr.cs" />
+    <Compile Include="IoTerminal\_IoTermCrevis.cs" />
+    <Compile Include="IoTerminal\_IoTerminal.cs" />
+    <Compile Include="IoTerminal\_IoTermMp.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Form\ViewIoEdit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Form\ViewIoEdit.designer.cs">
+      <DependentUpon>ViewIoEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form\ucConfigIo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Form\ucConfigIo.designer.cs">
+      <DependentUpon>ucConfigIo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UIEditorIoTag.cs" />
+    <Compile Include="UIEditorIoTags.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sineva.VHL.Library\Sineva.VHL.Library.csproj">
+      <Project>{c7fc4c85-a830-461f-ba75-6bb3d755b8cd}</Project>
+      <Name>Sineva.VHL.Library</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BasicLamp_Off.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Form\FormIoSelect.resx">
+      <DependentUpon>FormIoSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\FormAddIoNode.resx">
+      <DependentUpon>FormAddIoNode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\FormAddIoTerminal.resx">
+      <DependentUpon>FormAddIoTerminal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\FormAnalogScale.resx">
+      <DependentUpon>FormAnalogScale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\FormDevIoConfig.resx">
+      <DependentUpon>FormDevIoConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\FormIoTagsSelect.resx">
+      <DependentUpon>FormIoTagsSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\ucLed.resx">
+      <DependentUpon>ucLed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\ViewIoEdit.resx">
+      <DependentUpon>ViewIoEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\ucConfigIo.resx">
+      <DependentUpon>ucConfigIo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BasicLamp_On.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BasicLamp_On_Red.bmp" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

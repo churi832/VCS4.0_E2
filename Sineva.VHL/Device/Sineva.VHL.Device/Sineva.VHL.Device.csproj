@@ -1,0 +1,477 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{88ED1868-33AD-4314-BCAD-1FF8E5B41DA7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sineva.VHL.Device</RootNamespace>
+    <AssemblyName>Sineva.VHL.Device</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\DLLs\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Sineva.VHL.Library.IO, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\DLLs\Sineva.VHL.Library.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Design\ucDevCleaner.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Design\ucDevCleaner.designer.cs">
+      <DependentUpon>ucDevCleaner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\ucDevGripperPio.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Design\ucDevGripperPio.designer.cs">
+      <DependentUpon>ucDevGripperPio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\ucDevStatusDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Design\ucDevStatusDisplay.designer.cs">
+      <DependentUpon>ucDevStatusDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\ucDevPio.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Design\ucDevPio.designer.cs">
+      <DependentUpon>ucDevPio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\ucRFIDTag.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Design\ucRFIDTag.Designer.cs">
+      <DependentUpon>ucRFIDTag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\viewServoTeaching.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Design\viewServoTeaching.designer.cs">
+      <DependentUpon>viewServoTeaching.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\viewServoControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Design\viewServoControl.designer.cs">
+      <DependentUpon>viewServoControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\ucServoStatusDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Design\ucServoStatusDisplay.designer.cs">
+      <DependentUpon>ucServoStatusDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\ucServoStatusValue.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Design\ucServoStatusValue.designer.cs">
+      <DependentUpon>ucServoStatusValue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\ucDevAntiDropAction.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Design\ucDevAntiDropAction.designer.cs">
+      <DependentUpon>ucDevAntiDropAction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\ucDevGripperAction.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Design\ucDevGripperAction.designer.cs">
+      <DependentUpon>ucDevGripperAction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\ucManualTeachingView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Design\ucManualTeachingView.designer.cs">
+      <DependentUpon>ucManualTeachingView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\ucDevOBSStatus.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Design\ucDevOBSStatus.designer.cs">
+      <DependentUpon>ucDevOBSStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\ucDevOutRiggerAction.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Design\ucDevOutRiggerAction.designer.cs">
+      <DependentUpon>ucDevOutRiggerAction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\ucDevSteerAction.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Design\ucDevSteerAction.designer.cs">
+      <DependentUpon>ucDevSteerAction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\uiAnalogMeter.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Design\uiAnalogMeterRender.cs" />
+    <Compile Include="Unit\DevCleaner.cs" />
+    <Compile Include="Unit\DevCPS.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Design\ucDevAutoTeaching.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Design\ucDevAutoTeaching.Designer.cs">
+      <DependentUpon>ucDevAutoTeaching.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Unit\DevInterlockSwingSensor.cs" />
+    <Compile Include="Unit\DevInterlockBeltCut.cs" />
+    <Compile Include="Unit\DevInterlockCollision.cs" />
+    <Compile Include="Unit\DevInterlockEmo.cs" />
+    <Compile Include="Unit\DevOutRigger.cs" />
+    <Compile Include="Unit\DevRFID.cs" />
+    <Compile Include="Unit\DevSOS.cs" />
+    <Compile Include="Unit\DevOpPanel.cs" />
+    <Compile Include="Unit\DevGripperPIO.cs" />
+    <Compile Include="DevicesManager.cs" />
+    <Compile Include="Unit\DevAntiDrop.cs" />
+    <Compile Include="Unit\DevFoupGripper.cs" />
+    <Compile Include="Unit\DevSteer.cs" />
+    <Compile Include="Unit\DevAutoTeaching.cs" />
+    <Compile Include="Unit\DevOBS.cs" />
+    <Compile Include="Unit\DevTransfer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Design\ucConfigDevices.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Design\ucConfigDevices.designer.cs">
+      <DependentUpon>ucConfigDevices.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Unit\DevEqPIO.cs" />
+    <Compile Include="Design\viewDevProperty.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Design\viewDevProperty.designer.cs">
+      <DependentUpon>viewDevProperty.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Design\ucDevCleaner.resx">
+      <DependentUpon>ucDevCleaner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\ucDevGripperPio.resx">
+      <DependentUpon>ucDevGripperPio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\ucDevStatusDisplay.resx">
+      <DependentUpon>ucDevStatusDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\ucDevPio.resx">
+      <DependentUpon>ucDevPio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\ucRFIDTag.resx">
+      <DependentUpon>ucRFIDTag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\ucServoStatusValue.resx">
+      <DependentUpon>ucServoStatusValue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\viewServoTeaching.resx">
+      <DependentUpon>viewServoTeaching.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\viewServoControl.resx">
+      <DependentUpon>viewServoControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\ucServoStatusDisplay.resx">
+      <DependentUpon>ucServoStatusDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\ucDevAntiDropAction.resx">
+      <DependentUpon>ucDevAntiDropAction.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\ucConfigDevices.resx">
+      <DependentUpon>ucConfigDevices.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\ucDevGripperAction.resx">
+      <DependentUpon>ucDevGripperAction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\ucManualTeachingView.resx">
+      <DependentUpon>ucManualTeachingView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\ucDevOBSStatus.resx">
+      <DependentUpon>ucDevOBSStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\ucDevOutRiggerAction.resx">
+      <DependentUpon>ucDevOutRiggerAction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\ucDevSteerAction.resx">
+      <DependentUpon>ucDevSteerAction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\viewDevProperty.resx">
+      <DependentUpon>viewDevProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\ucDevAutoTeaching.resx">
+      <DependentUpon>ucDevAutoTeaching.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\Sineva.VHL.Data.Alarm\Sineva.VHL.Data.Alarm.csproj">
+      <Project>{4ca639e0-8284-4cf0-aa8d-5c497df454fa}</Project>
+      <Name>Sineva.VHL.Data.Alarm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\Sineva.VHL.Data.DbAdapter\Sineva.VHL.Data.DbAdapter.csproj">
+      <Project>{744a8081-12c7-49da-8ec5-cb28195ce9d5}</Project>
+      <Name>Sineva.VHL.Data.DbAdapter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\Sineva.VHL.Data.Login\Sineva.VHL.Data.Login.csproj">
+      <Project>{0a5e1802-dae3-4015-afb8-6d36f37d29b2}</Project>
+      <Name>Sineva.VHL.Data.Login</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\Sineva.VHL.Data.Process\Sineva.VHL.Data.Process.csproj">
+      <Project>{3813ad0e-9860-4c7e-8307-2df8b801008c}</Project>
+      <Name>Sineva.VHL.Data.Process</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\Sineva.VHL.Data.Setup\Sineva.VHL.Data.Setup.csproj">
+      <Project>{46cd1f17-0cd4-4beb-9dc1-cb42c0461734}</Project>
+      <Name>Sineva.VHL.Data.Setup</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\Sineva.VHL.Data\Sineva.VHL.Data.csproj">
+      <Project>{cbb2ff33-fb2a-4648-a820-3be95b3f1777}</Project>
+      <Name>Sineva.VHL.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\IF\Sineva.VHL.IF.EEIP\Sineva.VHL.IF.EEIP.csproj">
+      <Project>{9a53b2bc-e2ae-448b-9eb6-0183c2c0a6fd}</Project>
+      <Name>Sineva.VHL.IF.EEIP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\IF\Sineva.VHL.IF.JCS\Sineva.VHL.IF.JCS.csproj">
+      <Project>{ae979f47-4c64-4771-8615-3f31f4532c01}</Project>
+      <Name>Sineva.VHL.IF.JCS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\IF\Sineva.VHL.IF.OCS\Sineva.VHL.IF.OCS.csproj">
+      <Project>{2889e377-915d-4798-b10e-e5ae862bf573}</Project>
+      <Name>Sineva.VHL.IF.OCS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\IF\Sineva.VHL.IF.Vision\Sineva.VHL.IF.Vision.csproj">
+      <Project>{20b7d507-7fd1-4d4f-991d-9de0b3b59f48}</Project>
+      <Name>Sineva.VHL.IF.Vision</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\Sineva.VHL.Library.MXP\Sineva.VHL.Library.MXP.csproj">
+      <Project>{a64c19d4-f32c-4e7b-bae6-27e68413797c}</Project>
+      <Name>Sineva.VHL.Library.MXP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\Sineva.VHL.Library.Servo\Sineva.VHL.Library.Servo.csproj">
+      <Project>{f5b9d83b-afe1-405d-a326-6191e40ad690}</Project>
+      <Name>Sineva.VHL.Library.Servo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\Sineva.VHL.Library\Sineva.VHL.Library.csproj">
+      <Project>{c7fc4c85-a830-461f-ba75-6bb3d755b8cd}</Project>
+      <Name>Sineva.VHL.Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sineva.VHL.Device.Assem\Sineva.VHL.Device.Assem.csproj">
+      <Project>{787b8ff7-f0ea-4e28-a66d-23c5d911afae}</Project>
+      <Name>Sineva.VHL.Device.Assem</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sineva.VHL.Device.ServoControl\Sineva.VHL.Device.ServoControl.csproj">
+      <Project>{c1645797-7c9f-409d-8c94-f39a512edbdc}</Project>
+      <Name>Sineva.VHL.Device.ServoControl</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Resources\BasicLamp_Off.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BasicLamp_On.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BasicLamp_On_Blue.BMP" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BasicLamp_On_Red.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buttonFace1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buttonFace1_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buttonFace1_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buttonFace1_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buttonFace2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buttonFace3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buttonFace3_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buttonFace3_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buttonFace4_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buttonFace4_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buttonFace4_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buttonFace4_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buttonFace4_4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buttonFace4_5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buttonFace4_6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buttonFace4_7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buttonFace4_8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\motor_jog_ccwm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\motor_jog_ccwp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\motor_jog_stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\motor_jog_xm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\motor_jog_xp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\motor_jog_ym.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\motor_jog_yp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\motor_jog_zm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\motor_jog_zp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\motor_load.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\motor_move.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\motor_operation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\motor_operation_prev.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\motor_origin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\motor_repeat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\motor_repeat_small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\motor_reset.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\motor_reset_small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\motor_save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\motor_servo_off.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\motor_servo_on.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\motor_stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button_lock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button_unlock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\download.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\expand.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\suohui.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\upload.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\trash empty.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\trash full.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

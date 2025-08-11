@@ -1,0 +1,702 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D89E60FB-6C6E-4AA4-AA49-8CDC9DD7F72F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Sineva.VHL.GUI</RootNamespace>
+    <AssemblyName>Sineva.VHL.GUI</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\Sineva.VHL.BuildObject\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Sineva.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AlarmForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AlarmForm.Designer.cs">
+      <DependentUpon>AlarmForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DatabaseForm.Designer.cs">
+      <DependentUpon>DatabaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\DlgOpCallSingleMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\DlgOpCallSingleMessage.Designer.cs">
+      <DependentUpon>DlgOpCallSingleMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\DlgPioTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\DlgPioTest.Designer.cs">
+      <DependentUpon>DlgPioTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\DlgFrontDetectTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\DlgFrontDetectTest.Designer.cs">
+      <DependentUpon>DlgFrontDetectTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form\FormLifeTimeDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\FormLifeTimeDisplay.Designer.cs">
+      <DependentUpon>FormLifeTimeDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form\FormAutoTeaching.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\FormAutoTeaching.Designer.cs">
+      <DependentUpon>FormAutoTeaching.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form\FormDataDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\FormDataDisplay.Designer.cs">
+      <DependentUpon>FormDataDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form\FormEqpInitialize.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\FormEqpInitialize.designer.cs">
+      <DependentUpon>FormEqpInitialize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="JobsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="JobsForm.Designer.cs">
+      <DependentUpon>JobsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MotorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MotorForm.Designer.cs">
+      <DependentUpon>MotorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\SplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\SplashScreen.designer.cs">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SetupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SetupForm.Designer.cs">
+      <DependentUpon>SetupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SystemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SystemForm.Designer.cs">
+      <DependentUpon>SystemForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TitlePanel\FormModuleCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TitlePanel\FormModuleCheck.designer.cs">
+      <DependentUpon>FormModuleCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TitlePanel\TitlePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TitlePanel\TitlePanel.designer.cs">
+      <DependentUpon>TitlePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Toolbar\toolbarJobView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Toolbar\toolbarJobView.designer.cs">
+      <DependentUpon>toolbarJobView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\ucLifeTime.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControl\ucLifeTime.Designer.cs">
+      <DependentUpon>ucLifeTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\ucOcsCommunication.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControl\ucOcsCommunication.Designer.cs">
+      <DependentUpon>ucOcsCommunication.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\ucCommandDataView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControl\ucCommandDataView.designer.cs">
+      <DependentUpon>ucCommandDataView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\ucMotorStateView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControl\ucMotorStateView.designer.cs">
+      <DependentUpon>ucMotorStateView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\ucProcessDataView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControl\ucProcessDataView.designer.cs">
+      <DependentUpon>ucProcessDataView.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AlarmForm.resx">
+      <DependentUpon>AlarmForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DatabaseForm.resx">
+      <DependentUpon>DatabaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\DlgFrontDetectTest.resx">
+      <DependentUpon>DlgFrontDetectTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\DlgOpCallSingleMessage.resx">
+      <DependentUpon>DlgOpCallSingleMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\DlgPioTest.resx">
+      <DependentUpon>DlgPioTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\FormAutoTeaching.resx">
+      <DependentUpon>FormAutoTeaching.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\FormDataDisplay.resx">
+      <DependentUpon>FormDataDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\FormEqpInitialize.resx">
+      <DependentUpon>FormEqpInitialize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\FormLifeTimeDisplay.resx">
+      <DependentUpon>FormLifeTimeDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JobsForm.resx">
+      <DependentUpon>JobsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MotorForm.resx">
+      <DependentUpon>MotorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\SplashScreen.resx">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SetupForm.resx">
+      <DependentUpon>SetupForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SystemForm.resx">
+      <DependentUpon>SystemForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TitlePanel\FormModuleCheck.resx">
+      <DependentUpon>FormModuleCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TitlePanel\TitlePanel.resx">
+      <DependentUpon>TitlePanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Toolbar\toolbarJobView.resx">
+      <DependentUpon>toolbarJobView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControl\ucLifeTime.resx">
+      <DependentUpon>ucLifeTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControl\ucOcsCommunication.resx">
+      <DependentUpon>ucOcsCommunication.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControl\ucCommandDataView.resx">
+      <DependentUpon>ucCommandDataView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControl\ucMotorStateView.resx">
+      <DependentUpon>ucMotorStateView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControl\ucProcessDataView.resx">
+      <DependentUpon>ucProcessDataView.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\Sineva.VHL.Data.Alarm\Sineva.VHL.Data.Alarm.csproj">
+      <Project>{4ca639e0-8284-4cf0-aa8d-5c497df454fa}</Project>
+      <Name>Sineva.VHL.Data.Alarm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\Sineva.VHL.Data.DbAdapter\Sineva.VHL.Data.DbAdapter.csproj">
+      <Project>{744a8081-12c7-49da-8ec5-cb28195ce9d5}</Project>
+      <Name>Sineva.VHL.Data.DbAdapter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\Sineva.VHL.Data.EventLog\Sineva.VHL.Data.EventLog.csproj">
+      <Project>{84780b2f-8541-41f9-9866-10c8a2d8da28}</Project>
+      <Name>Sineva.VHL.Data.EventLog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\Sineva.VHL.Data.Login\Sineva.VHL.Data.Login.csproj">
+      <Project>{0a5e1802-dae3-4015-afb8-6d36f37d29b2}</Project>
+      <Name>Sineva.VHL.Data.Login</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\Sineva.VHL.Data.PathFinder\Sineva.VHL.Data.PathFinder.csproj">
+      <Project>{3bbe8cd0-7638-4302-b6d2-bab98da57c92}</Project>
+      <Name>Sineva.VHL.Data.PathFinder</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\Sineva.VHL.Data.Process\Sineva.VHL.Data.Process.csproj">
+      <Project>{3813ad0e-9860-4c7e-8307-2df8b801008c}</Project>
+      <Name>Sineva.VHL.Data.Process</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\Sineva.VHL.Data.Setup\Sineva.VHL.Data.Setup.csproj">
+      <Project>{46cd1f17-0cd4-4beb-9dc1-cb42c0461734}</Project>
+      <Name>Sineva.VHL.Data.Setup</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\Sineva.VHL.Data\Sineva.VHL.Data.csproj">
+      <Project>{cbb2ff33-fb2a-4648-a820-3be95b3f1777}</Project>
+      <Name>Sineva.VHL.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Device\Sineva.VHL.Device.Assem\Sineva.VHL.Device.Assem.csproj">
+      <Project>{787b8ff7-f0ea-4e28-a66d-23c5d911afae}</Project>
+      <Name>Sineva.VHL.Device.Assem</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Device\Sineva.VHL.Device.ServoControl\Sineva.VHL.Device.ServoControl.csproj">
+      <Project>{c1645797-7c9f-409d-8c94-f39a512edbdc}</Project>
+      <Name>Sineva.VHL.Device.ServoControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Device\Sineva.VHL.Device\Sineva.VHL.Device.csproj">
+      <Project>{88ed1868-33ad-4314-bcad-1ff8e5b41da7}</Project>
+      <Name>Sineva.VHL.Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\IF\Sineva.VHL.GL310\Sineva.VHL.IF.GL310.csproj">
+      <Project>{b3d41062-aafa-4880-9571-599aa4a5e370}</Project>
+      <Name>Sineva.VHL.IF.GL310</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\IF\Sineva.VHL.IF.JCS\Sineva.VHL.IF.JCS.csproj">
+      <Project>{ae979f47-4c64-4771-8615-3f31f4532c01}</Project>
+      <Name>Sineva.VHL.IF.JCS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\IF\Sineva.VHL.IF.OCS\Sineva.VHL.IF.OCS.csproj">
+      <Project>{2889e377-915d-4798-b10e-e5ae862bf573}</Project>
+      <Name>Sineva.VHL.IF.OCS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\Sineva.VHL.Library.InteropServices\Sineva.VHL.Library.InteropServices.csproj">
+      <Project>{bf88571b-62e9-4f6d-a86c-c364aacfe8bd}</Project>
+      <Name>Sineva.VHL.Library.InteropServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\Sineva.VHL.Library.IO\Sineva.VHL.Library.IO.csproj">
+      <Project>{2e4c888d-ba26-4aa2-98ce-007cd48d2db0}</Project>
+      <Name>Sineva.VHL.Library.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\Sineva.VHL.Library.MXP\Sineva.VHL.Library.MXP.csproj">
+      <Project>{a64c19d4-f32c-4e7b-bae6-27e68413797c}</Project>
+      <Name>Sineva.VHL.Library.MXP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\Sineva.VHL.Library.PathFindAlgorithm\Sineva.VHL.Library.PathFindAlgorithm.csproj">
+      <Project>{abb9e8fa-c222-403f-866b-2a2c5c44d17f}</Project>
+      <Name>Sineva.VHL.Library.PathFindAlgorithm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\Sineva.VHL.Library.RegistryKey\Sineva.VHL.Library.RegistryKey.csproj">
+      <Project>{90eebd9c-6716-474a-b470-7138edd0b3c5}</Project>
+      <Name>Sineva.VHL.Library.RegistryKey</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\Sineva.VHL.Library.Remoting\Sineva.VHL.Library.Remoting.csproj">
+      <Project>{35f1a666-b737-49bc-a737-e21b826e045a}</Project>
+      <Name>Sineva.VHL.Library.Remoting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\Sineva.VHL.Library.Servo\Sineva.VHL.Library.Servo.csproj">
+      <Project>{f5b9d83b-afe1-405d-a326-6191e40ad690}</Project>
+      <Name>Sineva.VHL.Library.Servo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\Sineva.VHL.Library.SimpleWifi\Sineva.VHL.Library.SimpleWifi.csproj">
+      <Project>{6aa425c9-ea6a-4b01-aaed-5ff122e8b663}</Project>
+      <Name>Sineva.VHL.Library.SimpleWifi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\Sineva.VHL.Library\Sineva.VHL.Library.csproj">
+      <Project>{c7fc4c85-a830-461f-ba75-6bb3d755b8cd}</Project>
+      <Name>Sineva.VHL.Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Task\Sineva.VHL.Task\Sineva.VHL.Task.csproj">
+      <Project>{1bfdd5c1-57c1-46d5-8c48-6e2efb70ad31}</Project>
+      <Name>Sineva.VHL.Task</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tftppa.ico" />
+    <None Include="Resources\system_io.ico" />
+    <None Include="Resources\StickYppa.ico" />
+    <None Include="Resources\StickXppa.ico" />
+    <None Include="Resources\StickTP.ico" />
+    <None Include="Resources\StickAlign.ico" />
+    <None Include="Resources\Stick.ico" />
+    <None Include="Resources\setup_stick.ico" />
+    <None Include="Resources\setup_setup.ico" />
+    <None Include="Resources\setup_mapping.ico" />
+    <None Include="Resources\setup_frame.ico" />
+    <None Include="Resources\setup_device.ico" />
+    <None Include="Resources\save_current_view_60px_p.ico" />
+    <None Include="Resources\save_current_view_60px_m.ico" />
+    <None Include="Resources\save_current_view_60px_d.ico" />
+    <None Include="Resources\save_current_view_60px.ico" />
+    <None Include="Resources\save_continuously_60px_p.ico" />
+    <None Include="Resources\save_continuously_60px_m.ico" />
+    <None Include="Resources\save_continuously_60px_d.ico" />
+    <None Include="Resources\save_continuously_60px.ico" />
+    <None Include="Resources\Save.ico" />
+    <None Include="Resources\recipe_recipe.ico" />
+    <None Include="Resources\popup_on.ico" />
+    <None Include="Resources\popup_off.ico" />
+    <None Include="Resources\noteo_m.ico" />
+    <None Include="Resources\motor_servo.ico" />
+    <None Include="Resources\motor_maxon.ico" />
+    <None Include="Resources\log_event.ico" />
+    <None Include="Resources\LightOff.ico" />
+    <None Include="Resources\Icon_ICS1.ico" />
+    <None Include="Resources\G_Vision.ico" />
+    <None Include="Resources\G_Transfer.ico" />
+    <None Include="Resources\G_Stage.ICO" />
+    <None Include="Resources\G_MoodControl.ico" />
+    <None Include="Resources\G_Loader.ico" />
+    <None Include="Resources\G_Laser.ico" />
+    <None Include="Resources\G_Gantry.ico" />
+    <None Include="Resources\Frame.ico" />
+    <None Include="Resources\FinalPpa.ico" />
+    <None Include="Resources\Data.ico" />
+    <None Include="Resources\crw.ico" />
+    <None Include="Resources\CPS_PersonalComputer_Ver0_0_FGW_V1-V2.ico" />
+    <None Include="Resources\ana_wave.ico" />
+    <None Include="Resources\ana_review.ico" />
+    <None Include="Resources\ana_line.ico" />
+    <None Include="Resources\alarm_List.ico" />
+    <None Include="Resources\alarm_history.ico" />
+    <None Include="Resources\whitecheck.png" />
+    <None Include="Resources\top_lco_login.png" />
+    <None Include="Resources\top.png" />
+    <None Include="Resources\TitleSubBackGround2.PNG" />
+    <None Include="Resources\TitleSubBackGround.PNG" />
+    <None Include="Resources\TitleMainBackGround.png" />
+    <None Include="Resources\stick_start_over.png" />
+    <None Include="Resources\stick_start_default.png" />
+    <None Include="Resources\stick_start_click.png" />
+    <None Include="Resources\RoundRectWhite.png" />
+    <None Include="Resources\RoundRectPink.png" />
+    <None Include="Resources\RoundRectGreen.png" />
+    <None Include="Resources\RoundRectCyan.png" />
+    <None Include="Resources\RoundRectBlue.png" />
+    <None Include="Resources\right_trash_over_half.png" />
+    <None Include="Resources\right_trash_over.png" />
+    <None Include="Resources\right_trash_default_half.png" />
+    <None Include="Resources\right_trash_default.png" />
+    <None Include="Resources\right_trash_click_half.png" />
+    <None Include="Resources\right_trash_click.png" />
+    <None Include="Resources\right_stop_over.png" />
+    <None Include="Resources\right_stop_default.png" />
+    <None Include="Resources\right_stop_click.png" />
+    <None Include="Resources\right_start_over_half.png" />
+    <None Include="Resources\right_start_over.png" />
+    <None Include="Resources\right_start_default_half.png" />
+    <None Include="Resources\right_start_default.png" />
+    <None Include="Resources\right_start_click_half.png" />
+    <None Include="Resources\right_start_click.png" />
+    <None Include="Resources\right_semiauto_over_half.png" />
+    <None Include="Resources\right_semiauto_over.png" />
+    <None Include="Resources\right_semiauto_default_half.png" />
+    <None Include="Resources\right_semiauto_default.png" />
+    <None Include="Resources\right_semiauto_click_half.png" />
+    <None Include="Resources\right_semiauto_click.png" />
+    <None Include="Resources\right_select_over_half.png" />
+    <None Include="Resources\right_select_over.png" />
+    <None Include="Resources\right_select_default_half.png" />
+    <None Include="Resources\right_select_default.png" />
+    <None Include="Resources\right_select_click_half.png" />
+    <None Include="Resources\right_select_click.png" />
+    <None Include="Resources\right_save_over_half.png" />
+    <None Include="Resources\right_save_over.png" />
+    <None Include="Resources\right_save_default_half.png" />
+    <None Include="Resources\right_save_default.png" />
+    <None Include="Resources\right_save_click_half.png" />
+    <None Include="Resources\right_save_click.png" />
+    <None Include="Resources\right_remove_over_half.png" />
+    <None Include="Resources\right_remove_over.png" />
+    <None Include="Resources\right_remove_default_half.png" />
+    <None Include="Resources\right_remove_default.png" />
+    <None Include="Resources\right_remove_click_half.png" />
+    <None Include="Resources\right_remove_click.png" />
+    <None Include="Resources\right_ready_over_half.png" />
+    <None Include="Resources\right_ready_over.png" />
+    <None Include="Resources\right_ready_default_half.png" />
+    <None Include="Resources\right_ready_default.png" />
+    <None Include="Resources\right_ready_click_half.png" />
+    <None Include="Resources\right_ready_click.png" />
+    <None Include="Resources\right_pause_over_half.png" />
+    <None Include="Resources\right_pause_over.png" />
+    <None Include="Resources\right_pause_default_half.png" />
+    <None Include="Resources\right_pause_default.png" />
+    <None Include="Resources\right_pause_click_half.png" />
+    <None Include="Resources\right_pause_click.png" />
+    <None Include="Resources\right_Online_over_half.png" />
+    <None Include="Resources\right_Online_over.png" />
+    <None Include="Resources\right_online_default_half.png" />
+    <None Include="Resources\right_online_default.png" />
+    <None Include="Resources\right_Online_click_half.png" />
+    <None Include="Resources\right_Online_click.png" />
+    <None Include="Resources\right_offline_over_half.png" />
+    <None Include="Resources\right_offline_over.png" />
+    <None Include="Resources\right_offline_default_half.png" />
+    <None Include="Resources\right_offline_default.png" />
+    <None Include="Resources\right_offline_click_half.png" />
+    <None Include="Resources\right_offline_click.png" />
+    <None Include="Resources\right_mpinterface_over_half.png" />
+    <None Include="Resources\right_mpinterface_over.png" />
+    <None Include="Resources\right_mpinterface_default_half.png" />
+    <None Include="Resources\right_mpinterface_default.png" />
+    <None Include="Resources\right_mpinterface_click_half.png" />
+    <None Include="Resources\right_mpinterface_click.png" />
+    <None Include="Resources\right_message_over_half.png" />
+    <None Include="Resources\right_message_over.png" />
+    <None Include="Resources\right_message_default_half.png" />
+    <None Include="Resources\right_message_default.png" />
+    <None Include="Resources\right_message_click_half.png" />
+    <None Include="Resources\right_message_click.png" />
+    <None Include="Resources\right_manual_over_half.png" />
+    <None Include="Resources\right_manual_over.png" />
+    <None Include="Resources\right_manual_default_half.png" />
+    <None Include="Resources\right_manual_default.png" />
+    <None Include="Resources\right_manual_click_half.png" />
+    <None Include="Resources\right_manual_click.png" />
+    <None Include="Resources\right_key_over.png" />
+    <None Include="Resources\right_key_default.png" />
+    <None Include="Resources\right_key_click.png" />
+    <None Include="Resources\right_empty_over_half.png" />
+    <None Include="Resources\right_empty_default_half.png" />
+    <None Include="Resources\right_empty_click_half.png" />
+    <None Include="Resources\right_copy_over_half.png" />
+    <None Include="Resources\right_copy_over.png" />
+    <None Include="Resources\right_copy_default_half.png" />
+    <None Include="Resources\right_copy_default.png" />
+    <None Include="Resources\right_copy_click_half.png" />
+    <None Include="Resources\right_copy_click.png" />
+    <None Include="Resources\right_auto_over_half.png" />
+    <None Include="Resources\right_auto_over.png" />
+    <None Include="Resources\right_auto_default_half.png" />
+    <None Include="Resources\right_auto_default.png" />
+    <None Include="Resources\right_auto_click_half.png" />
+    <None Include="Resources\right_auto_click.png" />
+    <None Include="Resources\right_addnew_over_half.png" />
+    <None Include="Resources\right_addnew_over.png" />
+    <None Include="Resources\right_addnew_default_half.png" />
+    <None Include="Resources\right_addnew_default.png" />
+    <None Include="Resources\right_addnew_click_half.png" />
+    <None Include="Resources\right_addnew_click.png" />
+    <None Include="Resources\right_abort_over_half.png" />
+    <None Include="Resources\right_abort_over.png" />
+    <None Include="Resources\right_abort_default_half.png" />
+    <None Include="Resources\right_abort_default.png" />
+    <None Include="Resources\right_abort_click_half.png" />
+    <None Include="Resources\right_abort_click.png" />
+    <None Include="Resources\redsmallarrow.png" />
+    <None Include="Resources\Process_Step.png" />
+    <None Include="Resources\Process_Sequence.png" />
+    <None Include="Resources\Popup_Open.png" />
+    <None Include="Resources\Popup_Close.png" />
+    <None Include="Resources\paste.png" />
+    <None Include="Resources\onlineidle.png" />
+    <None Include="Resources\onlinebusy.png" />
+    <None Include="Resources\online.png" />
+    <None Include="Resources\ok.png" />
+    <None Include="Resources\offline.png" />
+    <None Include="Resources\navi_Panel_bg.png" />
+    <None Include="Resources\motor_stop.png" />
+    <None Include="Resources\motor_servo_on.png" />
+    <None Include="Resources\motor_servo_off.png" />
+    <None Include="Resources\motor_save.png" />
+    <None Include="Resources\motor_right_operationP.png" />
+    <None Include="Resources\motor_right_operationO.png" />
+    <None Include="Resources\motor_right_operationD.png" />
+    <None Include="Resources\motor_reset.png" />
+    <None Include="Resources\motor_repeat.png" />
+    <None Include="Resources\motor_origin.png" />
+    <None Include="Resources\motor_operation_prev.png" />
+    <None Include="Resources\motor_operation.png" />
+    <None Include="Resources\motor_move.png" />
+    <None Include="Resources\motor_load.png" />
+    <None Include="Resources\motor_jog_zp.png" />
+    <None Include="Resources\motor_jog_zm.png" />
+    <None Include="Resources\motor_jog_yp.png" />
+    <None Include="Resources\motor_jog_ym.png" />
+    <None Include="Resources\motor_jog_xp.png" />
+    <None Include="Resources\motor_jog_xm.png" />
+    <None Include="Resources\motor_jog_stop.png" />
+    <None Include="Resources\motor_jog_ccwp.png" />
+    <None Include="Resources\motor_jog_ccwm.png" />
+    <None Include="Resources\logo.png" />
+    <None Include="Resources\Login.png" />
+    <None Include="Resources\light24x241.png" />
+    <None Include="Resources\light24x24.png" />
+    <None Include="Resources\left_bg.png" />
+    <None Include="Resources\joystick.png" />
+    <None Include="Resources\IFReset.png" />
+    <None Include="Resources\ico_led_red.png" />
+    <None Include="Resources\ico_led_green.png" />
+    <None Include="Resources\greensmallarrow1.png" />
+    <None Include="Resources\greensmallarrow.png" />
+    <None Include="Resources\frame_start_over.png" />
+    <None Include="Resources\frame_start_default.png" />
+    <None Include="Resources\frame_start_click.png" />
+    <None Include="Resources\Frame_Red.png" />
+    <None Include="Resources\Frame_Green.png" />
+    <None Include="Resources\Frame_Blue.png" />
+    <None Include="Resources\Door5.png" />
+    <None Include="Resources\Door4.png" />
+    <None Include="Resources\Door3.png" />
+    <None Include="Resources\Door2.png" />
+    <None Include="Resources\Door1.png" />
+    <None Include="Resources\diode.png" />
+    <None Include="Resources\copyy.png" />
+    <None Include="Resources\copy.png" />
+    <None Include="Resources\Command_bg.png" />
+    <None Include="Resources\ClampOpen.bmp" />
+    <None Include="Resources\ClampClose.bmp" />
+    <None Include="Resources\chk_unchecked.png" />
+    <None Include="Resources\chk_checked.png" />
+    <None Include="Resources\calculate.png" />
+    <None Include="Resources\buzzer.png" />
+    <None Include="Resources\buttonFace4_8.png" />
+    <None Include="Resources\buttonFace4_7.png" />
+    <None Include="Resources\buttonFace4_6.png" />
+    <None Include="Resources\buttonFace4_5.png" />
+    <None Include="Resources\buttonFace4_4.png" />
+    <None Include="Resources\buttonFace4_3.png" />
+    <None Include="Resources\buttonFace4_2.png" />
+    <None Include="Resources\buttonFace4_1.png" />
+    <None Include="Resources\buttonFace4_0.png" />
+    <None Include="Resources\buttonFace3_3.png" />
+    <None Include="Resources\buttonFace3_2.png" />
+    <None Include="Resources\buttonFace3.png" />
+    <None Include="Resources\buttonFace2.png" />
+    <None Include="Resources\buttonFace1_3.png" />
+    <None Include="Resources\buttonFace1_2.png" />
+    <None Include="Resources\buttonFace1_1.png" />
+    <None Include="Resources\buttonFace1.png" />
+    <None Include="Resources\btn_white120_D.png" />
+    <None Include="Resources\btn_blue120_P.png" />
+    <None Include="Resources\bottom_systemP.png" />
+    <None Include="Resources\bottom_systemO.png" />
+    <None Include="Resources\bottom_systemD.png" />
+    <None Include="Resources\bottom_setupP.png" />
+    <None Include="Resources\bottom_setupD.png" />
+    <None Include="Resources\bottom_setup_over.png" />
+    <None Include="Resources\bottom_ricipe_over.png" />
+    <None Include="Resources\bottom_ricipe_click.png" />
+    <None Include="Resources\bottom_recipeP.png" />
+    <None Include="Resources\bottom_recipeD.png" />
+    <None Include="Resources\bottom_motorP.png" />
+    <None Include="Resources\bottom_motorD.png" />
+    <None Include="Resources\bottom_motor_over.png" />
+    <None Include="Resources\bottom_logD.png" />
+    <None Include="Resources\bottom_log_over.png" />
+    <None Include="Resources\bottom_log_click.png" />
+    <None Include="Resources\bottom_jobsP.png" />
+    <None Include="Resources\bottom_jobsD.png" />
+    <None Include="Resources\bottom_jobs_over.png" />
+    <None Include="Resources\bottom_interlockP.png" />
+    <None Include="Resources\bottom_interlockO.png" />
+    <None Include="Resources\bottom_interlockD.png" />
+    <None Include="Resources\bottom_exitD.png" />
+    <None Include="Resources\bottom_exit_over.png" />
+    <None Include="Resources\bottom_exit_click.png" />
+    <None Include="Resources\bottom_emoD.png" />
+    <None Include="Resources\bottom_emo_over.png" />
+    <None Include="Resources\bottom_emo_default.png" />
+    <None Include="Resources\bottom_emo_click.png" />
+    <None Include="Resources\bottom_alarmD.png" />
+    <None Include="Resources\bottom_alarm_over.png" />
+    <None Include="Resources\bottom_alarm_click.png" />
+    <None Include="Resources\background.png" />
+    <None Include="Resources\Account.png" />
+    <None Include="Resources\1475141816_cross.png" />
+    <None Include="Resources\1475141789_tick.png" />
+    <None Include="Resources\1467647676_architecture-interior-30.png" />
+    <None Include="Resources\redsmallarrow2.png" />
+    <None Include="Resources\motor_right_operationD1.png" />
+    <None Include="Resources\light24x242.png" />
+    <None Include="Resources\left_bg1.png" />
+    <None Include="Resources\ico_led_red1.png" />
+    <None Include="Resources\greensmallarrow2.png" />
+    <None Include="Resources\button_left.png" />
+    <None Include="Resources\button_lock.png" />
+    <None Include="Resources\button_right.png" />
+    <None Include="Resources\button_unlock.png" />
+    <None Include="Resources\FrontAntiDrop_Lock.png" />
+    <None Include="Resources\RearAntiDrop_Lock.png" />
+    <None Include="Resources\VHL_HasFOUP.png" />
+    <None Include="Resources\VHL_NoFOUP.png" />
+    <None Include="Resources\FOUP.png" />
+    <Content Include="Sineva.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(SolutionDir)..\DLLs\*.dll" "$(TargetDir)" /y</PostBuildEvent>
+  </PropertyGroup>
+</Project>

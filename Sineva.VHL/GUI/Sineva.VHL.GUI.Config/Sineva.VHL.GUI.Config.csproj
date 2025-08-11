@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1A6C9074-A866-4F8A-86ED-0346092701F2}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Sineva.VHL.GUI.Config</RootNamespace>
+    <AssemblyName>Sineva.VHL.GUI.Config</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\Sineva.VHL.BuildObject\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>PC.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Sineva.VHL.Library">
+      <HintPath>..\..\..\DLLs\Sineva.VHL.Library.dll</HintPath>
+    </Reference>
+    <Reference Include="Sineva.VHL.Library.IO">
+      <HintPath>..\..\..\DLLs\Sineva.VHL.Library.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="Sineva.VHL.Library.MXP">
+      <HintPath>..\..\..\DLLs\Sineva.VHL.Library.MXP.dll</HintPath>
+    </Reference>
+    <Reference Include="Sineva.VHL.Library.Servo">
+      <HintPath>..\..\..\DLLs\Sineva.VHL.Library.Servo.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CodeDomDefineAlarm.cs" />
+    <Compile Include="CodeDomDefineIo.cs" />
+    <Compile Include="CodeDomDefineServoUnit.cs" />
+    <Compile Include="FormConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormConfig.Designer.cs">
+      <DependentUpon>FormConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormConfig.resx">
+      <DependentUpon>FormConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1Power.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\002F000C000A.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\16-NeXT98 Batch File.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\addin.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AI.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AO.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BitIn.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BitInOut.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BitOut.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\clock05.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CLOSE.ICO" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Config.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DataIn.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DataOut.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DI.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DO.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MP2300.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MxComponent.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OpenFolder.ICO" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PC.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WordIn.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WordOut.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="PC.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\Sineva.VHL.Data.Alarm\Sineva.VHL.Data.Alarm.csproj">
+      <Project>{4ca639e0-8284-4cf0-aa8d-5c497df454fa}</Project>
+      <Name>Sineva.VHL.Data.Alarm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\Sineva.VHL.Data.DbAdapter\Sineva.VHL.Data.DbAdapter.csproj">
+      <Project>{744a8081-12c7-49da-8ec5-cb28195ce9d5}</Project>
+      <Name>Sineva.VHL.Data.DbAdapter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Device\Sineva.VHL.Device.Assem\Sineva.VHL.Device.Assem.csproj">
+      <Project>{787b8ff7-f0ea-4e28-a66d-23c5d911afae}</Project>
+      <Name>Sineva.VHL.Device.Assem</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Device\Sineva.VHL.Device.ServoControl\Sineva.VHL.Device.ServoControl.csproj">
+      <Project>{c1645797-7c9f-409d-8c94-f39a512edbdc}</Project>
+      <Name>Sineva.VHL.Device.ServoControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Device\Sineva.VHL.Device\Sineva.VHL.Device.csproj">
+      <Project>{88ed1868-33ad-4314-bcad-1ff8e5b41da7}</Project>
+      <Name>Sineva.VHL.Device</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

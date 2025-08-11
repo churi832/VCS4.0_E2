@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F5B9D83B-AFE1-405D-A326-6191E40AD690}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sineva.VHL.Library.Servo</RootNamespace>
+    <AssemblyName>Sineva.VHL.Library.Servo</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\DLLs\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AxisBlockMXP.cs" />
+    <Compile Include="AxisBlockACS.cs" />
+    <Compile Include="AxisBlockAXT.cs" />
+    <Compile Include="AxisBlockMp2100.cs" />
+    <Compile Include="AxisCheckItem.cs" />
+    <Compile Include="AxisTag.cs" />
+    <Compile Include="Design\FormAddAxis.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Design\FormAddAxis.designer.cs">
+      <DependentUpon>FormAddAxis.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\FormAddAxisBlock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Design\FormAddAxisBlock.Designer.cs">
+      <DependentUpon>FormAddAxisBlock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\FormAddAxis_ServoUnit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Design\FormAddAxis_ServoUnit.Designer.cs">
+      <DependentUpon>FormAddAxis_ServoUnit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\FormAxisSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Design\FormAxisSelect.Designer.cs">
+      <DependentUpon>FormAxisSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\FormServoUnitSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Design\FormServoUnitSelect.Designer.cs">
+      <DependentUpon>FormServoUnitSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\FormTeachingPositionListSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Design\FormTeachingPositionListSelect.Designer.cs">
+      <DependentUpon>FormTeachingPositionListSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\FormTeachingPositionSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Design\FormTeachingPositionSelect.Designer.cs">
+      <DependentUpon>FormTeachingPositionSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\FormTeachingVelocitySelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Design\FormTeachingVelocitySelect.Designer.cs">
+      <DependentUpon>FormTeachingVelocitySelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\ucConfigServo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Design\ucConfigServo.Designer.cs">
+      <DependentUpon>ucConfigServo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Design\UIEditorAxisTag.cs" />
+    <Compile Include="Design\UIEditorServoUnitTag.cs" />
+    <Compile Include="Design\UIEditorTeachingPosition.cs" />
+    <Compile Include="Design\UIEditorTeachingPositionList.cs" />
+    <Compile Include="Design\UIEditorTeachingVelocity.cs" />
+    <Compile Include="IAxisBlockFactory.cs" />
+    <Compile Include="IAxisCommand.cs" />
+    <Compile Include="IAxisFactory.cs" />
+    <Compile Include="InterlockSafe.cs" />
+    <Compile Include="IServoUnit.cs" />
+    <Compile Include="IServoUnitFactory.cs" />
+    <Compile Include="MotionSensor.cs" />
+    <Compile Include="MotionProfile.cs" />
+    <Compile Include="MpAxis.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SegmentCommand.cs" />
+    <Compile Include="SequenceCommand.cs" />
+    <Compile Include="SequenceState.cs" />
+    <Compile Include="ServoCmdSet.cs" />
+    <Compile Include="Design\ServoControlView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Design\ServoControlView.Designer.cs">
+      <DependentUpon>ServoControlView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ServoManager.cs" />
+    <Compile Include="ServoUnit.cs" />
+    <Compile Include="ServoUnitTag.cs" />
+    <Compile Include="TaskServoControl.cs" />
+    <Compile Include="_Axis.cs" />
+    <Compile Include="_AxisBlock.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Design\FormAddAxis.resx">
+      <DependentUpon>FormAddAxis.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\FormAddAxisBlock.resx">
+      <DependentUpon>FormAddAxisBlock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\FormAddAxis_ServoUnit.resx">
+      <DependentUpon>FormAddAxis_ServoUnit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\FormAxisSelect.resx">
+      <DependentUpon>FormAxisSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\FormServoUnitSelect.resx">
+      <DependentUpon>FormServoUnitSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\FormTeachingPositionListSelect.resx">
+      <DependentUpon>FormTeachingPositionListSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\FormTeachingPositionSelect.resx">
+      <DependentUpon>FormTeachingPositionSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\FormTeachingVelocitySelect.resx">
+      <DependentUpon>FormTeachingVelocitySelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\ucConfigServo.resx">
+      <DependentUpon>ucConfigServo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\ServoControlView.resx">
+      <DependentUpon>ServoControlView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BasicLamp_Off.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BasicLamp_On.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BasicLamp_On_Red.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ArrowCcw.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ArrowCw.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ArrowDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ArrowLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ArrowRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ArrowUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sineva.VHL.Library\Sineva.VHL.Library.csproj">
+      <Project>{c7fc4c85-a830-461f-ba75-6bb3d755b8cd}</Project>
+      <Name>Sineva.VHL.Library</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
