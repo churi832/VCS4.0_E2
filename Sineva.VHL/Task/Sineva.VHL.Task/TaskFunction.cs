@@ -1287,7 +1287,7 @@ namespace Sineva.VHL.Task
                         else if (XFunc.GetTickCount() - StartTicks > 1000)
                         {
                             SequenceLog.WriteLog(FuncName, $"Foup Gripper Unit ({m_devFoupGripper.AxisHoist.AxisName}) Detect move after sensor detect. detected late. curPos:{cur_position}, Check Pos : {m_UpSensorDetectPosition + SetupManager.Instance.SetupHoist.HoistSensorDetectMoveDistance} Continuous Motion.");
-                            seqNo = 220;
+                            seqNo = 230;
                         }
                     }
                     break;
@@ -4127,7 +4127,7 @@ namespace Sineva.VHL.Task
                         else if (XFunc.GetTickCount() - StartTicks > 1000)
                         {
                             SequenceLog.WriteLog(FuncName, $"Foup Gripper Unit ({m_devFoupGripper.AxisHoist.AxisName}) Detect move after sensor detect. detected late. curPos:{cur_position}, Check Pos : {m_UpSensorDetectPosition + SetupManager.Instance.SetupHoist.HoistSensorDetectMoveDistance} Continuous Motion.");
-                            seqNo = 220;
+                            seqNo = 230;
                         }
                     }
                     break;
