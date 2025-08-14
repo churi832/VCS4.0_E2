@@ -3388,7 +3388,7 @@ namespace Sineva.VHL.Task
             #region Methods - Map Data Update Process
             private List<DataItem_Node> ParseToNodes(VehicleIF_MapDataSend message)
             {
-                List < DataItem_Node > nodes = new List < DataItem_Node >();
+                List<DataItem_Node> nodes = new List<DataItem_Node>();
                 try
                 {
                     string mapData = Encoding.ASCII.GetString(message.Data);
