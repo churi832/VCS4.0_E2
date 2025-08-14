@@ -1,6 +1,7 @@
 ﻿using Sineva.VHL.Library;
 using Sineva.VHL.Library.Servo;
 using Sineva.VHL.Data;
+using Sineva.VHL.Data.Setup;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -165,7 +166,8 @@ namespace Sineva.VHL.Device.ServoControl
             // Cur Axis Ready Check
             enAxisInFlag axisStatus = axis.AxisStatus;
             bool axisInPos = true;
-            if (axis.InPosCheckSkip == false && !axisWheel)
+            bool checkInPos = SetupManager.Instance.SetupOperation.Continuous_Motion_Use == Use.Use ? !moveOrigin : true; 
+            if (axis.InPosCheckSkip == false && !axisWheel && checkInPos)
                 axisInPos &= (axisStatus & enAxisInFlag.InPos) == enAxisInFlag.InPos;
             axisInPos &= (axisStatus & enAxisInFlag.HEnd) == enAxisInFlag.HEnd;
             SetInterlockMessage(axisInPos || moveOrigin, string.Format("Safety Moving Not Ready Condition[{0} = {1}]", axis.AxisName, axisStatus), ref safe);
@@ -252,8 +254,179 @@ namespace Sineva.VHL.Device.ServoControl
                 bool open = Instance.diGripperOpen != null && IsValidIO(Instance.diGripperOpen) ? Instance.diGripperOpen.GetDi() : true;
                 bool close = Instance.diGripperClose != null && IsValidIO(Instance.diGripperClose) ? Instance.diGripperClose.GetDi() : true;
                 SetInterlockMessage(open || close, string.Format("Safety Hoist Moving Alarm ! Gripper Open/Close Abnormal, Open={0}, Close={1}", open, close), ref safe);
-                bool anti_lock = Instance.diAntiDropLock1 != null && IsValidIO(Instance.diAntiDropLock1) ? Instance.diAntiDropLock1.GetDi() : true;
-                anti_lock &= Instance.diAntiDropLock2 != null && IsValidIO(Instance.diAntiDropLock2) ? Instance.diAntiDropLock2.GetDi() : true;
+                bool anti_lock = Instance.diAntiDropLock1 != null && IsValidIO(Instance.diAntiDropLock1) ? Instance.diAntiDropLock1.GetDi() : false;
+                anti_lock &= Instance.diAntiDropLock2 != null && IsValidIO(Instance.diAntiDropLock2) ? Instance.diAntiDropLock2.GetDi() : false;
+                bool anti_unlock = Instance.diAntiDropUnlock1 != null && IsValidIO(Instance.diAntiDropUnlock1) ? Instance.diAntiDropUnlock1.GetDi() : true;
+                anti_unlock &= Instance.diAntiDropUnlock2 != null && IsValidIO(Instance.diAntiDropUnlock2) ? Instance.diAntiDropUnlock2.GetDi() : true;
+                SetInterlockMessage(anti_unlock && !anti_lock, string.Format("Safety Hoist Moving Alarm ! AntiDrop Unlock Abnormal, Lock={0}, Unlock={1}", anti_lock, anti_unlock), ref safe);
+            }
+            if (axis.AxisId == Instance.Slide.AxisId)
+            {
+                if (Math.Abs(targetPos) > 15.0f)
+                {
+                    bool range_intr = true;
+                    int curLinkID = ProcessDataHandler.Instance.CurVehicleStatus.CurrentPath.LinkID;
+                    if (Instance.LeftProfilePositions != null)
+                    {
+                        if (Instance.LeftProfilePositions.ContainsKey(curLinkID) && slidePos > 15.0f)
+                        {
+                            List<XyztPosition> posOnLink = Instance.LeftProfilePositions[curLinkID].Where(item => item.X <= LBcr &&
+                            item.Y <= RBcr && item.Z >= LBcr && item.T >= RBcr).ToList();
+                            range_intr &= posOnLink.Count == 0;
+                        }
+                    }
+                    if (Instance.RightProfilePositions != null)
+                    {
+                        if (Instance.RightProfilePositions.ContainsKey(curLinkID) && slidePos < -15.0f)
+                        {
+                            List<XyztPosition> posOnLink = Instance.RightProfilePositions[curLinkID].Where(item => item.X <= LBcr &&
+                            item.Y <= RBcr && item.Z >= LBcr && item.T >= RBcr).ToList();
+                            range_intr &= posOnLink.Count == 0;
+                        }
+                    }
+                    SetInterlockMessage(range_intr, string.Format("Safety Slide Moving Alarm ! Slide Interlock Condition. Wheel Position Check"), ref safe);
+                }
+            }
+
+            return safe;
+        }
+
+        public static bool IsSafe_ContinuousMove(_Axis axis, double targetPos)
+        {
+            bool safe = true;
+            // General Condition Check
+            SetInterlockMessage(GV.PowerOn, "Equipment Power Off Condition", ref safe);
+            SetInterlockMessage(!GV.EmoAlarm, "Emergency Stop Condition", ref safe);
+            SetInterlockMessage(!GV.SaftyAlarm, "Emergency Stop Condition", ref safe);
+            SetInterlockMessage(!GV.CpAlarm, "Emergency Stop Condition", ref safe);
+            SetInterlockMessage(!GV.ManualPendantActivated, "Emergency Stop Condition", ref safe);
+            SetInterlockMessage(!GV.AutoModeSwitched, "Emergency Stop Condition", ref safe);
+            SetInterlockMessage(!GV.CleanerDoorOpenInterlock, "Cleaner Door Open Stop Condition", ref safe);
+
+            if (!safe) return safe;
+
+            try
+            {
+                safe &= IsSafeCheck_ContinuousMove(axis, targetPos);
+            }
+            catch (Exception err)
+            {
+                SetInterlockMessage(false, err.ToString(), ref safe);
+            }
+
+            return safe;
+        }
+        public static bool IsSafeCheck_ContinuousMove(_Axis axis, double targetPos)
+        {
+            bool safe = true;
+            //////////////////////////
+            // Stroke Limit Check, 주행축은 제외
+            bool axisWheel = false;
+            if (IsValidAxis(Instance.WheelMaster))
+            {
+                if (axis.AxisId == Instance.WheelMaster.AxisId) axisWheel = true;
+            }
+            if (axisWheel == false)
+            {
+                bool strokeCheck = true;
+                double strokeLimitPos = axis.PosLimitPos;
+                double strokeLimitNeg = axis.NegLimitPos;
+                strokeCheck &= targetPos <= strokeLimitPos ? true : false;
+                strokeCheck &= targetPos >= strokeLimitNeg ? true : false;
+                SetInterlockMessage(strokeCheck, string.Format("Safety Moving Stroke OverRange Condition[{0}], Target pos[{1}], NegLimit[{2}], PosLimit[{3}]", axis.AxisName, targetPos, axis.NegLimitPos, axis.PosLimitPos), ref safe);
+            }
+
+            // Cur Axis Ready Check
+            enAxisInFlag axisStatus = axis.AxisStatus;
+            bool axisInPos = true;
+            axisInPos &= (axisStatus & enAxisInFlag.HEnd) == enAxisInFlag.HEnd;
+            SetInterlockMessage(axisInPos, string.Format("Safety Moving Not Ready Condition[{0} = {1}]", axis.AxisName, axisStatus), ref safe);
+
+            bool swingSensorAlarm = !GV.SwingSensorInterlock;
+            SetInterlockMessage(swingSensorAlarm, string.Format("Safety Swing Sensor Condition[{0}]", axis.AxisName), ref safe);
+            bool beltCutAlarm = !GV.BeltCutInterlock;
+            SetInterlockMessage(beltCutAlarm, string.Format("Safety Belt Cut Condition[{0}]", axis.AxisName), ref safe);
+            bool bumpCollisionAlarm = !GV.BumpCollisionInterlock;
+            SetInterlockMessage(bumpCollisionAlarm, string.Format("Safety Bump Collision Condition[{0}]", axis.AxisName), ref safe);
+
+            double LBcr = Instance.WheelMaster.GetDevAxis().GetAxisCurLeftBarcode();
+            double RBcr = Instance.WheelMaster.GetDevAxis().GetAxisCurRightBarcode();
+            double masterPos = Instance.WheelMaster.GetDevAxis().GetCurPosition();
+            double hoistPos = Instance.Hoist.GetDevAxis().GetCurPosition();
+            double slidePos = Instance.Slide.GetDevAxis().GetCurPosition();
+            if (axis.AxisId == Instance.WheelMaster.AxisId)
+            {
+                SetInterlockMessage(Math.Abs(hoistPos) < 5, string.Format("Safety WheelMaster Moving Alarm ! Hoist Interlock Condition[{0}]", hoistPos), ref safe);
+                int curLinkID = ProcessDataHandler.Instance.CurVehicleStatus.CurrentPath.LinkID;
+                if (Math.Abs(slidePos) > 5.0f)
+                {
+                    bool range_intr = true;
+                    double moveDistance = targetPos - masterPos;
+                    if (moveDistance >= 0 && moveDistance < ProcessDataHandler.Instance.CurVehicleStatus.CurrentPath.RemainDistanceOfLink)
+                    {
+                        double target_lbcr = LBcr + moveDistance;
+                        double target_rbcr = RBcr + moveDistance;
+                        List<XyztPosition> posOnLink = new List<XyztPosition>();
+                        if (Instance.LeftProfilePositions != null)
+                        {
+                            if (Instance.LeftProfilePositions.ContainsKey(curLinkID) && slidePos > 5.0f)
+                            {
+                                posOnLink.AddRange(Instance.LeftProfilePositions[curLinkID].Where(item => item.X > LBcr && item.Y > RBcr && item.X < target_lbcr && item.Y < target_rbcr).ToList());
+                            }
+                        }
+                        if (Instance.RightProfilePositions != null)
+                        {
+                            if (Instance.RightProfilePositions.ContainsKey(curLinkID) && slidePos < -5.0f)
+                            {
+                                posOnLink.AddRange(Instance.RightProfilePositions[curLinkID].Where(item => item.X > LBcr && item.Y > RBcr && item.X < target_lbcr && item.Y < target_rbcr).ToList());
+                            }
+                        }
+                        // Start 위치가 CurBCR보다 크고 Target 위치보다 적으면....이건 Interlock area를 지나간다는 뜻
+                        range_intr &= posOnLink.Count == 0;
+                        SetInterlockMessage(range_intr, string.Format("Safety Wheel Moving Alarm ! Wheel Interlock Condition. Slide Position Check"), ref safe);
+                    }
+                    else if (moveDistance < 0 && Math.Abs(moveDistance) < ProcessDataHandler.Instance.CurVehicleStatus.CurrentPath.CurrentPositionOfLink)
+                    {
+                        double target_lbcr = LBcr + moveDistance;
+                        double target_rbcr = RBcr + moveDistance;
+                        List<XyztPosition> posOnLink = new List<XyztPosition>();
+                        if (Instance.LeftProfilePositions != null)
+                        {
+                            if (Instance.LeftProfilePositions.ContainsKey(curLinkID) && slidePos > 5.0f)
+                            {
+                                posOnLink.AddRange(Instance.LeftProfilePositions[curLinkID].Where(item => item.X < LBcr && item.Y < RBcr && item.X > target_lbcr && item.Y > target_rbcr).ToList());
+                            }
+                        }
+                        if (Instance.RightProfilePositions != null)
+                        {
+                            if (Instance.RightProfilePositions.ContainsKey(curLinkID) && slidePos < -5.0f)
+                            {
+                                posOnLink.AddRange(Instance.RightProfilePositions[curLinkID].Where(item => item.X < LBcr && item.Y < RBcr && item.X > target_lbcr && item.Y > target_rbcr).ToList());
+                            }
+                        }
+                        // End 위치가 CurBCR보다 적고 Target 위치보다 크면....이건 Interlock area를 지나간다는 뜻
+                        range_intr &= posOnLink.Count == 0;
+                        SetInterlockMessage(range_intr, string.Format("Safety Wheel Moving Alarm ! Wheel Interlock Condition. Slide Position Check"), ref safe);
+                    }
+                }
+            }
+            if (axis.AxisId == Instance.Hoist.AxisId)
+            {
+                if (AppConfig.Instance.Simulation.IO) Instance.diHoistBrake.SetDo(true);
+                bool brake_off = Instance.diHoistBrake != null && IsValidIO(Instance.diHoistBrake) ? Instance.diHoistBrake.GetDi() : true;
+                SetInterlockMessage(brake_off, string.Format("Safety Hoist Moving Alarm ! Hoist Interlock Condition Brake ON"), ref safe);
+                
+                bool left = Instance.diLeftFoupExist != null && IsValidIO(Instance.diLeftFoupExist) ? Instance.diLeftFoupExist.GetDi() : true;
+                bool right = Instance.diRightFoupExist != null && IsValidIO(Instance.diRightFoupExist) ? Instance.diRightFoupExist.GetDi() : true;
+                bool foup_exist = left && right;
+                bool foup_not_exist = !left && !right;
+                SetInterlockMessage(foup_exist || foup_not_exist, string.Format("Safety Hoist Moving Alarm ! Foup Exist Sensor Abnormal, Left={0}, Right={1}", left, right), ref safe);
+                
+                bool open = Instance.diGripperOpen != null && IsValidIO(Instance.diGripperOpen) ? Instance.diGripperOpen.GetDi() : true;
+                bool close = Instance.diGripperClose != null && IsValidIO(Instance.diGripperClose) ? Instance.diGripperClose.GetDi() : true;
+                SetInterlockMessage(open || close, string.Format("Safety Hoist Moving Alarm ! Gripper Open/Close Abnormal, Open={0}, Close={1}", open, close), ref safe);
+                bool anti_lock = Instance.diAntiDropLock1 != null && IsValidIO(Instance.diAntiDropLock1) ? Instance.diAntiDropLock1.GetDi() : false;
+                anti_lock &= Instance.diAntiDropLock2 != null && IsValidIO(Instance.diAntiDropLock2) ? Instance.diAntiDropLock2.GetDi() : false;
                 bool anti_unlock = Instance.diAntiDropUnlock1 != null && IsValidIO(Instance.diAntiDropUnlock1) ? Instance.diAntiDropUnlock1.GetDi() : true;
                 anti_unlock &= Instance.diAntiDropUnlock2 != null && IsValidIO(Instance.diAntiDropUnlock2) ? Instance.diAntiDropUnlock2.GetDi() : true;
                 SetInterlockMessage(anti_unlock && !anti_lock, string.Format("Safety Hoist Moving Alarm ! AntiDrop Unlock Abnormal, Lock={0}, Unlock={1}", anti_lock, anti_unlock), ref safe);

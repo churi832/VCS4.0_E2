@@ -30,6 +30,7 @@ namespace Sineva.VHL.Data.Process
         private bool m_IsInPosition = false; // Target 도착 했을때 사용...inrange 범위...
         private bool m_DistanceErrorBCREncorder = false;
         private double m_MasterWheelVelocity = 0.0f;
+        private double m_MasterWheelCMDVelocity = 0.0f;
         #endregion
 
         #region Properties
@@ -114,6 +115,11 @@ namespace Sineva.VHL.Data.Process
         {
             get { return m_MasterWheelVelocity; }
             set { m_MasterWheelVelocity = value; }
+        }
+        public double MasterWheelCMDVelocity
+        {
+            get { return m_MasterWheelCMDVelocity; }
+            set { m_MasterWheelCMDVelocity = value; }
         }
         #endregion
 

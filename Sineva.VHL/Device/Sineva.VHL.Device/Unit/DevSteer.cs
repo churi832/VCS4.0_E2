@@ -934,7 +934,7 @@ namespace Sineva.VHL.Device
                 bool rv = false;
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 // Steer Change Enable Area 판단을 하자!!!
-                double cur_velocity = ProcessDataHandler.Instance.CurVehicleStatus.MasterWheelVelocity;
+                double cur_velocity = ProcessDataHandler.Instance.CurVehicleStatus.MasterWheelCMDVelocity; //ProcessDataHandler.Instance.CurVehicleStatus.MasterWheelVelocity;
                 double cur_override = ProcessDataHandler.Instance.CurVehicleStatus.ObsStatus.MxpOverrideRatio;
                 /// Next Path가 Curve or Branch 일 경우 myPath.RemainDistance가 <200일때 속도가 50mm/sec 이상일때 Steer 출력을 주자~~
                 double remainBcrPos = myPath.RemainDistanceOfLink;

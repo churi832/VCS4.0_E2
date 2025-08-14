@@ -1645,13 +1645,22 @@ namespace Sineva.VHL.Task
                             }
                             abort_run |= AlarmCurrentProvider.Instance.IsHeavyAlarm();
 
-                            if (abort_run)
+                            if (GV.RouteChangeOk && AlarmCurrentProvider.Instance.IsHeavyAlarm() == false)
                             {
+                                GV.RouteChangeOk = false;
+                                SequenceOCSLog.WriteLog(FuncName, "Vehicle already proceeded with Route Change."); //Vehicle Move에서 이미 Route Change를 위해 Case 30으로 돌아 갔다..
+                                seqNo = 0;
+                            }
+                            else if (abort_run)
+                            {
+                                GV.RouteChangeOk = false;
+                                SequenceOCSLog.WriteLog(FuncName, "Abort Run Start");
                                 seqNo = 20;
                             }
                             else if (GV.scmAbortSeqRun.Ing)
                             {
                                 SequenceOCSLog.WriteLog(FuncName, "Operator Manual Abort Start");
+                                GV.RouteChangeOk = false;
                                 m_ManualOperation = true;
                                 StartTicks = XFunc.GetTickCount();
                                 seqNo = 110;
@@ -2178,8 +2187,6 @@ namespace Sineva.VHL.Task
                             {
                                 // HJYOU OCS->VHL RouteChange는 미사용.
                                 // 주기적으로 물어보니까 불필요할 것 같다..
-                                
-
                                 TransferCommand curTransferCommand = ProcessDataHandler.Instance.CurTransferCommand;
                                 VehicleStatus curVehicleStatus = ProcessDataHandler.Instance.CurVehicleStatus;
 
@@ -3431,27 +3438,27 @@ namespace Sineva.VHL.Task
 
                         DataItem_Link link = new DataItem_Link
                         {
-                            LinkID = Convert.ToInt32(datas[0]), 
-                            UseFlag = datas[1]=="1", 
-                            FromNodeID = Convert.ToInt32(datas[2]), 
-                            ToNodeID = Convert.ToInt32(datas[3]), 
-                            Type = (LinkType)Convert.ToInt32(datas[4]), 
-                            BCRMatchType = datas[5], 
-                            SteerDirectionValue = (enSteerDirection)Convert.ToInt32(datas[6]), 
-                            SteerChangeLeftBCR = Convert.ToInt32(datas[7]), 
-                            SteerChangeRightBCR = Convert.ToInt32(datas[8]), 
-                            Time = Convert.ToDouble(datas[9]), 
+                            LinkID = Convert.ToInt32(datas[0]),
+                            UseFlag = datas[1] == "1",
+                            FromNodeID = Convert.ToInt32(datas[2]),
+                            ToNodeID = Convert.ToInt32(datas[3]),
+                            Type = (LinkType)Convert.ToInt32(datas[4]),
+                            BCRMatchType = datas[5],
+                            SteerDirectionValue = (enSteerDirection)Convert.ToInt32(datas[6]),
+                            SteerChangeLeftBCR = Convert.ToInt32(datas[7]),
+                            SteerChangeRightBCR = Convert.ToInt32(datas[8]),
+                            Time = Convert.ToDouble(datas[9]),
                             Weight = 0, // always zer0 
-                            Distance = Convert.ToDouble(datas[10]), 
-                            Velocity = Convert.ToDouble(datas[11]), 
-                            Acceleration = Convert.ToDouble(datas[12]), 
-                            Deceleration = Convert.ToDouble(datas[13]), 
-                            Jerk = Convert.ToDouble(datas[14]), 
-                            UBSLevel0 = Convert.ToInt32(datas[15]), 
-                            UBSLevel1 = Convert.ToInt32(datas[16]), 
-                            RouteChangeCheck = datas[17]=="1", 
-                            SteerGuideLengthFromNode = Convert.ToInt32(datas[18]), 
-                            SteerGuideLengthToNode = Convert.ToInt32(datas[19]), 
+                            Distance = Convert.ToDouble(datas[10]),
+                            Velocity = Convert.ToDouble(datas[11]),
+                            Acceleration = Convert.ToDouble(datas[12]),
+                            Deceleration = Convert.ToDouble(datas[13]),
+                            Jerk = Convert.ToDouble(datas[14]),
+                            UBSLevel0 = Convert.ToInt32(datas[15]),
+                            UBSLevel1 = Convert.ToInt32(datas[16]),
+                            RouteChangeCheck = datas[17] == "1",
+                            SteerGuideLengthFromNode = Convert.ToInt32(datas[18]),
+                            SteerGuideLengthToNode = Convert.ToInt32(datas[19]),
                             JCSAreaFlag = datas[20] == "1",
                             FromExtensionDistance = Convert.ToInt32(datas[21]),
                             ToExtensionDistance = Convert.ToInt32(datas[22]),
@@ -3671,8 +3678,8 @@ namespace Sineva.VHL.Task
                                                 link.SteerGuideLengthFromNode,
                                                 link.SteerGuideLengthToNode,
                                                 link.JCSAreaFlag ? "1" : "0",
-												link.FromExtensionDistance,
-												link.ToExtensionDistance));
+                                                link.FromExtensionDistance,
+                                                link.ToExtensionDistance));
                         }
                     }
                     else if (type == MapDataType.ErrorList)

@@ -39,7 +39,7 @@ namespace Sineva.VHL.Data.Setup
         //2024.12.31 Foup Cover
         private int m_CoverNotDetectCheckTime = 3000; // msec
 
-        private int m_OSBAbnormalReleaseWaitTime = 2;
+        private int m_OBSAbnormalReleaseWaitTime = 2;
         #endregion
 
         #region Properties
@@ -164,11 +164,11 @@ namespace Sineva.VHL.Data.Setup
             get { return m_CoverNotDetectCheckTime; }
             set { m_CoverNotDetectCheckTime = value; }
         }
-        [Category("FoupCover"), DisplayName("Abnormal Override Stop Release Time(sec)")]
-        public int OSBAbnormalReleaseWaitTime
+        [Category("OBS"), DisplayName("Abnormal Override Stop Release Time(sec)")]
+        public int OBSAbnormalReleaseWaitTime
         {
-            get { return m_OSBAbnormalReleaseWaitTime; }
-            set { m_OSBAbnormalReleaseWaitTime = value; }
+            get { return m_OBSAbnormalReleaseWaitTime; }
+            set { m_OBSAbnormalReleaseWaitTime = value; }
         }        
         #endregion
 

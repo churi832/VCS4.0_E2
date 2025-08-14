@@ -44,6 +44,8 @@ namespace Sineva.VHL.IF.WebApi.Models.Dtos
         public int DestinationID { get; set; }
         public int TypeOfDestination { get; set; }
         public double TargetNodeToDistance { get; set; }
+        public int TotalCount { get; set; }
+        public int WaitTime { get; set; }
     }
     public class CarrierStateDto
     {

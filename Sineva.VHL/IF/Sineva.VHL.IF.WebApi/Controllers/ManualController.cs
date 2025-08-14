@@ -213,6 +213,8 @@ namespace Sineva.VHL.IF.WebApi.Controllers
                         TypeOfDestination = commandDto.TypeOfDestination,
                         TargetNodeToDistance = commandDto.TargetNodeToDistance,
                         CommandType = commandDto.CommandType,
+                        TotalCount = commandDto.TotalCount,
+                        WaitTime = commandDto.WaitTime,
                     };
                     RemoteManager.TouchInstance.Remoting.TouchGUI.WebAction = action;
                     retcode = new ReturnCode() { succeed = true, msg = "Ok！", status = 200, };

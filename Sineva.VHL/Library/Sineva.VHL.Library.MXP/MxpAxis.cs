@@ -231,6 +231,7 @@ namespace Sineva.VHL.Library.MXP
                         m_Axis.SequenceState.IsSequenceComplete = m_SequenceState.done == 1 ? true : false;
                         m_Axis.SequenceState.IsSequenceAlarm = m_SequenceState.errorOn == 1 ? true : false;
                         m_Axis.SequenceState.SequenceAlarmId = m_SequenceState.errorID;
+                        m_Axis.SequenceState.IsSequenceMoving = m_SequenceMoving;
                     }
                     /////////////////////////////////////////////////////////////////////////////////////
 
@@ -381,7 +382,7 @@ namespace Sineva.VHL.Library.MXP
                     if (m_AxisState.homing == 1 || m_CommandHome) inFlag |= enAxisInFlag.Busy;
                     //if (m_MoveState == MXP_MOVESTATE.MOVESTATE_MOVING) inFlag |= enAxisInFlag.Busy;
                     if (m_SequenceState.busy == 1) inFlag |= enAxisInFlag.Busy;
-                    if (command_state == 1) inFlag |= enAxisInFlag.Busy;
+                    //if (command_state == 1) inFlag |= enAxisInFlag.Busy;
 
                     //if ((m_AxisState.isHomed == 1 || m_HomeEnd) && m_CommandHome == false) inFlag |= enAxisInFlag.HEnd;
 
@@ -480,6 +481,10 @@ namespace Sineva.VHL.Library.MXP
                     msg += axisState.servoWarning == 1 ? string.Format("servoWarning|") : "";
                     msg += axisState.servoTargetReached == 1 ? string.Format("servoTargetReached|") : "";
                     msg += m_SequenceState.busy == 1 ? string.Format("m_SequenceStatebusy|") : "";
+                    msg += m_AxisState.discreteMotion == 1 ? string.Format("discreteMotionbusy|") : "";
+                    msg += m_AxisState.stopping == 1 ? string.Format("stoppingbusy|") : "";
+                    msg += m_AxisState.homing == 1 ? string.Format("homingbusy|") : "";
+                    msg += m_MoveState == MXP_MOVESTATE.MOVESTATE_MOVING ? string.Format("m_MoveStateBusy|") : "";
                     msg += command_state == 1 ? string.Format("command_state|") : "";
                     if (IsAlarm())
                     {
@@ -2228,6 +2233,7 @@ namespace Sineva.VHL.Library.MXP
                             else if (XFunc.GetTickCount() - StartTicks > 10 * 1000)
                             {
                                 MxpCommLog.WriteLog(string.Format("{0} Servo Stop TimeOver", m_Axis.AxisName));
+                                MxpCommLog.WriteLog($"{m_Axis.AxisName}. standstill:{m_MxpAxis.AxisState.standstill}, busy:{m_MxpAxis.SequenceState.busy}, MoveState:{m_MxpAxis.MoveState}");
                                 seqNo = 0;
                             }
                         }

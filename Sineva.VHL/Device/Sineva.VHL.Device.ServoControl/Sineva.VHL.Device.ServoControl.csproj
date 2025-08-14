@@ -86,6 +86,10 @@
       <Project>{3813ad0e-9860-4c7e-8307-2df8b801008c}</Project>
       <Name>Sineva.VHL.Data.Process</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Data\Sineva.VHL.Data.Setup\Sineva.VHL.Data.Setup.csproj">
+      <Project>{46cd1f17-0cd4-4beb-9dc1-cb42c0461734}</Project>
+      <Name>Sineva.VHL.Data.Setup</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Data\Sineva.VHL.Data\Sineva.VHL.Data.csproj">
       <Project>{cbb2ff33-fb2a-4648-a820-3be95b3f1777}</Project>
       <Name>Sineva.VHL.Data</Name>

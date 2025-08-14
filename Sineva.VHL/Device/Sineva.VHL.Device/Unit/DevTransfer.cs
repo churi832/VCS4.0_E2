@@ -986,6 +986,7 @@ namespace Sineva.VHL.Device
                             else GV.WheelBusy = false;
 
                             ProcessDataHandler.Instance.CurVehicleStatus.MasterWheelVelocity = m_Master.GetCurVelocity();
+                            ProcessDataHandler.Instance.CurVehicleStatus.MasterWheelCMDVelocity = m_Master.GetCommandVelocity();
 
                             // Normalize Current Position
                             m_Device.MotionRunPosition = m_Master.GetAxis().CurPos - m_Device.MotionStartPosition;

@@ -564,7 +564,7 @@ namespace Sineva.VHL.Task
                         {
                             if (!m_ServoReady[i])
                             {
-                                bool rv1 = m_DevAxes[i].IsAxisReady(false);
+                                bool rv1 = m_DevAxes[i].IsAxisReady(false, true);
                                 if (rv1) m_ServoReady[i] = true;
                             }
                             ready &= m_ServoReady[i];

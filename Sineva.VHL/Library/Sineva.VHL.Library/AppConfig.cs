@@ -141,9 +141,11 @@ namespace Sineva.VHL.Library
         private static readonly string[] ignores = new string[] { "Assembly", "bin", "Debug" };
         private static string m_AppRootPath = "";
         public static readonly string DefaultConfigFilePath = GetAppRootPath() + "\\Configuration";
+        public static readonly string DefaultTroubleshootingManualPath = DefaultConfigFilePath + "\\Troubleshooting";
         public static readonly string DefaultLogFilePath = GetAppRootPath() + "\\Log";
 
         private static FolderSelect m_ConfigPath = new FolderSelect();
+        private static FolderSelect m_TroubleshootingManualPath = new FolderSelect();
 
         private static FolderSelect m_LogPath = new FolderSelect();
         private static LogFileSplitType m_LogFileSplit = LogFileSplitType.Day;
@@ -222,6 +224,14 @@ namespace Sineva.VHL.Library
             get { return m_ConfigPath; }
             set { m_ConfigPath = value; }
         }
+        [Category("FilePath : TroubleshootingManualFile")]
+        [DisplayName("Troubleshooting Manual Path")]
+        public FolderSelect TroubleshootingManualPath
+        {
+            get { return m_TroubleshootingManualPath; }
+            set { m_TroubleshootingManualPath = value; }
+        }
+
         [Browsable(false)]
         public string AppConfigPath
         {

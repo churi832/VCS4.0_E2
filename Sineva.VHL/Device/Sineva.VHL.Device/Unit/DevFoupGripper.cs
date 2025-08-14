@@ -12,6 +12,7 @@ using Sineva.VHL.Library.Servo;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Drawing.Design;
 using System.IO;
 using System.Linq;
@@ -92,6 +93,9 @@ namespace Sineva.VHL.Device
 
         private SeqAction m_SeqAction = null;
         private SeqMonitor m_SeqMonitor = null;
+
+        private bool m_CommandBusy = false;
+        private bool m_CommandMoveWaitPosition = false;
         #endregion
 
         #region Properties
@@ -790,6 +794,25 @@ namespace Sineva.VHL.Device
             rv = m_SeqAction.Move(mask, pos, sets);
             return rv;
         }
+        public int ContinuousMove(enAxisMask mask, XyztPosition pos, List<VelSet> sets, bool diffPos = false)
+        {
+            if (SetupManager.Instance.SetupHoist.FoupGripperUse == Use.NoUse) return 0;
+            if (!Initialized) return m_ALM_NotDefine.ID;
+
+            int rv = -1;
+            rv = m_SeqAction.ContinuousMove(mask, pos, sets, diffPos);
+            return rv;
+        }
+        public void SetCommandWaitMove()
+        {
+            if (SetupManager.Instance.SetupHoist.FoupGripperUse == Use.NoUse) return;
+            if (!Initialized) return;
+
+            if (m_CommandBusy) m_SeqAction.SeqAbort();
+            m_CommandBusy = false;
+            m_CommandMoveWaitPosition = true;
+            return;
+        }
         #endregion
 
         #region Methods
@@ -977,9 +1000,14 @@ namespace Sineva.VHL.Device
             private List<double> m_UsedPos = null;
             private List<VelSet> m_UsedVelSet = null;
 
+            private List<VelSet> m_WaitVelSets = new List<VelSet>();
+            private XyztPosition m_WaitPosition = new XyztPosition(); // wait
+
             private bool[] m_CommandComp = null;
             private int m_device_order = 0;
             private int m_moveorder = 0;
+            private int m_moveNo = 0;
+            private int m_retryCNT = 0;
             #endregion
 
             #region Constructor
@@ -1006,11 +1034,16 @@ namespace Sineva.VHL.Device
                 m_TargetVelSet = new List<VelSet>();
                 m_UsedPos = new List<double>();
                 m_UsedVelSet = new List<VelSet>();
+                TaskDeviceControl.Instance.RegSeq(this);
             }
 
             public override void SeqAbort()
             {
                 this.InitSeq();
+                m_moveNo = 0;
+                m_retryCNT = 0;
+                m_Device.m_CommandBusy = false;
+                m_Device.m_CommandMoveWaitPosition = false;
             }
             #endregion
 
@@ -1649,7 +1682,322 @@ namespace Sineva.VHL.Device
                 this.SeqNo = seqNo;
                 return rv;
             }
+            public int ContinuousMove(enAxisMask mask, XyztPosition pos, List<VelSet> sets, bool diffPos = false)
+            {
+                int rv = -1;
+                int seqNo = this.SeqNo;
+
+                switch (seqNo)
+                {
+                    case 0:
+                        {
+                            if (SetupManager.Instance.SetupHoist.FoupGripperUse == Use.Use)
+                            {
+                                double diff_z = Math.Abs(pos.Z - m_Hoist.GetCurPosition());
+                                double diff_y = Math.Abs(pos.Y - m_Slide.GetCurPosition());
+                                double diff_t = Math.Abs(pos.T - m_Turn.GetCurPosition());
+                                m_Device.HoistWorkingDistance += diff_z;
+                                m_Device.SlideWorkingDistance += diff_y;
+                                m_Device.RotateWorkingDistance += diff_t;
+                                StartTicks = XFunc.GetTickCount();
+                                seqNo = 5;
+                            }
+                        }
+                        break;
+
+                    case 5:
+                        {
+                            bool safty = true;
+                            safty &= GV.HoistMoveEnable;
+                            if (safty)
+                            {
+                                m_SetMask = mask;
+                                m_CurMask = enAxisMask.aZ; // Z축부터 시작
+
+                                SequenceDeviceLog.WriteLog(m_Device.MyName, string.Format("FoupGripper Move Start"));
+                                seqNo = 10;
+                            }
+                            else if (XFunc.GetTickCount() - StartTicks > 1000)
+                            {
+                                m_Device.SetBrake(false);
+                                SequenceDeviceLog.WriteLog(m_Device.MyName, string.Format("FoupGripper Move Interlock Alarm, HoistEnable={0}, HoistEnableCode={1}", GV.HoistMoveEnable, GV.HoistMoveEnableCode));
+
+								if (!GV.HoistMoveEnable)
+								{
+                                	if (GV.HoistMoveEnableCode == 1) //BeltCut
+                                    	SequenceDeviceLog.WriteLog(m_Device.MyName, string.Format("Home operation cannot be performed due to the beltCut Sensor."));
+                                	else if (GV.HoistMoveEnableCode == 2) //Swing Sensor
+                                    	SequenceDeviceLog.WriteLog(m_Device.MyName, string.Format("Home operation cannot be performed due to the Swing Sensor."));
+                                	else if (GV.HoistMoveEnableCode == 3) //Vehicle Moveing
+                                    	SequenceDeviceLog.WriteLog(m_Device.MyName, string.Format("Home operation cannot be performed due to Vehicle Current State Moving."));
+                                	else if (GV.HoistMoveEnableCode == 4) //Hoist Brake
+                                    	SequenceDeviceLog.WriteLog(m_Device.MyName, string.Format("Home operation cannot be performed due to Hoist Brake."));
+                                	else if (GV.HoistMoveEnableCode == 5) //Abnormal Foup Exist
+                                    	SequenceDeviceLog.WriteLog(m_Device.MyName, string.Format("Home operation cannot be performed due to Abnormal Foup Exist"));
+
+                                	rv = m_Device.ALM_HoistMoveInterlockError.ID;
+								}
+                                seqNo = 0;
+                            }
+                        }
+                        break;
+
+                    case 10:
+                        {
+                            if (m_SetMask == 0)
+                            {
+                                m_Device.SetBrake(false);
+                                SequenceDeviceLog.WriteLog(m_Device.MyName, string.Format("FoupGripper Move Complete"));
+                                rv = 0;
+                                seqNo = 0;
+                            }
+                            else
+                            {
+                                m_UsedDevAxes.Clear();
+                                m_UsedPos.Clear();
+                                m_UsedVelSet.Clear();
+                                m_moveorder = 0;
+
+                                if ((m_SetMask & enAxisMask.aZ) == enAxisMask.aZ)
+                                {
+                                    m_Device.SetBrake(true);
+                                    VelSet set = sets.Find(x => x.AxisCoord == enAxisCoord.Z);
+                                    if (set.Vel == 0.0f) set = m_Device.AxisHoist.GetDevAxis().GetTeachingVel(m_Device.TeachingVelocityMid.PropId);
+                                    if (m_Device.AxisHoist.IsValid)
+                                    {
+                                        m_UsedDevAxes.Add(m_Hoist);
+                                        m_UsedPos.Add(pos.Z);
+                                        m_UsedVelSet.Add(set);
+                                    }
+                                    m_CurMask = enAxisMask.aZ;
+                                }
+                                else if ((m_SetMask & enAxisMask.aY) == enAxisMask.aY)
+                                {
+                                    VelSet set = sets.Find(x => x.AxisCoord == enAxisCoord.Y);
+                                    if (set.Vel == 0.0f) set = m_Device.AxisSlide.GetDevAxis().GetTeachingVel(m_Device.TeachingVelocityMid.PropId);
+                                    if (m_Device.AxisSlide.IsValid)
+                                    {
+                                        m_UsedDevAxes.Add(m_Slide);
+                                        m_UsedPos.Add(pos.Y);
+                                        m_UsedVelSet.Add(set);
+                                    }
+                                    m_CurMask = enAxisMask.aY;
+                                }
+                                else if ((m_SetMask & enAxisMask.aT) == enAxisMask.aT)
+                                {
+                                    VelSet set = sets.Find(x => x.AxisCoord == enAxisCoord.T);
+                                    if (set.Vel == 0.0f) set = m_Device.AxisTurn.GetDevAxis().GetTeachingVel(m_Device.TeachingVelocityMid.PropId);
+                                    if (m_Device.AxisTurn.IsValid)
+                                    {
+                                        m_UsedDevAxes.Add(m_Turn);
+                                        m_UsedPos.Add(pos.T);
+                                        m_UsedVelSet.Add(set);
+                                    }
+                                    m_CurMask = enAxisMask.aT;
+                                }
+                                else if ((m_SetMask & enAxisMask.aYT) == enAxisMask.aYT)
+                                {
+                                    VelSet set = sets.Find(x => x.AxisCoord == enAxisCoord.T);
+                                    if (set.Vel == 0.0f) set = m_Device.AxisTurn.GetDevAxis().GetTeachingVel(m_Device.TeachingVelocityMid.PropId);
+                                    if (m_Device.AxisTurn.IsValid)
+                                    {
+                                        m_UsedDevAxes.Add(m_Turn);
+                                        m_UsedPos.Add(pos.T);
+                                        m_UsedVelSet.Add(set);
+                                    }
+
+                                    set = sets.Find(x => x.AxisCoord == enAxisCoord.Y);
+                                    if (set.Vel == 0.0f) set = m_Device.AxisSlide.GetDevAxis().GetTeachingVel(m_Device.TeachingVelocityMid.PropId);
+                                    if (m_Device.AxisSlide.IsValid)
+                                    {
+                                        m_UsedDevAxes.Add(m_Slide);
+                                        m_UsedPos.Add(pos.Y);
+                                        m_UsedVelSet.Add(set);
+                                    }
+                                    m_CurMask = enAxisMask.aYT;
+                                }
+                                m_device_order = 0;
+                                foreach (_DevAxis axis in m_UsedDevAxes)
+                                {
+                                    m_device_order = m_device_order > axis.GetAxis().MoveOrder ? m_device_order : axis.GetAxis().MoveOrder;
+                                    axis.SeqAbort();
+                                }
+                                seqNo = 20;
+                            }
+                        }
+                        break;
+
+                    case 20:
+                        {
+                            if (m_moveorder <= m_device_order && m_UsedDevAxes.Count > 0) //Z -> X -> Y
+                            {
+                                string logMsg = "";
+                                // Move Order 계산.
+                                m_TargetDevAxes.Clear();
+                                m_TargetPos.Clear();
+                                m_TargetVelSet.Clear();
+                                int index = 0;
+                                foreach (_DevAxis axis in m_UsedDevAxes)
+                                {
+                                    if (axis.GetAxis().MoveOrder == m_moveorder)
+                                    {
+                                        m_TargetDevAxes.Add(axis);
+                                        m_TargetPos.Add(m_UsedPos[index]);
+                                        m_TargetVelSet.Add(m_UsedVelSet[index]);
+                                        logMsg += string.Format("[{0}={1}],", axis.GetName(), m_UsedPos[index]);
+                                    }
+                                    index++;
+                                }
+                                if (m_TargetDevAxes.Count > 0)
+                                {
+                                    for (int i = 0; i < m_CommandComp.Length; i++) m_CommandComp[i] = false;
+                                    SequenceDeviceLog.WriteLog(m_Device.MyName, string.Format("FoupGripper Move [{0}]", logMsg));
+                                    seqNo = 100;
+                                }
+                                else
+                                {
+                                    m_moveorder++;
+                                }
+                            }
+                            else
+                            {
+                                if (m_SetMask.HasFlag(m_CurMask)) m_SetMask ^= m_CurMask;
+                                seqNo = 10;
+                            }
+                        }
+                        break;
+
+                    case 100:
+                        {
+                            bool alarm = false;
+                            int almId = 0;
+                            bool complete = true;
+                            int index = 0;
+                            foreach (_DevAxis axis in m_TargetDevAxes)
+                            {
+                                if (!m_CommandComp[index])
+                                {
+                                    int move_status = -1;
+                                    move_status = axis.ContinuousMove(m_TargetPos[index], m_TargetVelSet[index], true);
+                                    if (move_status == 0)
+                                    {
+                                        m_CommandComp[index] = true;
+                                        SequenceDeviceLog.WriteLog(m_Device.MyName, string.Format("FoupGripper Move OK [{0}]", axis.GetName()));
+                                    }
+                                    else if (move_status > 0)
+                                    {
+                                        SequenceDeviceLog.WriteLog(m_Device.MyName, string.Format("FoupGripper Move NG [{0}][alarm={1}]", axis.GetName(), move_status));
+                                        almId = move_status;
+                                        alarm = true;
+                                    }
+                                }
+                                complete &= m_CommandComp[index];
+                                index++;
+                            }
+                            bool reSchedule = false;
+                            reSchedule |= !m_SetMask.HasFlag(mask);
+                            reSchedule |= diffPos;
+                            if (reSchedule)
+                            {
+                                m_SetMask |= mask;
+                                m_CurMask = enAxisMask.aZ;
+                                seqNo = 10;
+                            }
+                            else if (complete || m_TargetDevAxes.Count == 0)
+                            {
+                                m_moveorder++;
+                                seqNo = 20;
+                            }
+                            else if (alarm)
+                            {
+                                m_Device.SetBrake(false);
+                                foreach (_DevAxis axis in m_TargetDevAxes) axis.SeqAbort();
+                                for (int i = 0; i < m_CommandComp.Length; i++) m_CommandComp[i] = false;
+                                rv = almId;
+                                seqNo = 0;
+                            }
+                        }
+                        break;
+                }
+
+                this.SeqNo = seqNo;
+                return rv;
+            }
+
+            public override int Do()
+            {
+                int seqNo = m_moveNo;
+                int rv = -1;
+
+                if (!m_Device.Initialized) return rv;
+
+                switch (seqNo)
+                {
+                    case 0:
+                        {
+                            if (SetupManager.Instance.SetupHoist.FoupGripperUse == Use.Use)
+                            {
+                                if (m_Device.m_CommandMoveWaitPosition)
+                                {
+                                    seqNo = 10;
+                                    m_WaitVelSets = m_Device.GetTeachingVelSets(m_Device.TeachingVelocityUp.PropId);
+                                    m_WaitPosition = m_Device.GetTeachingPosition(m_Device.TeachingPointWait.PosId);
+                                }
+                            }
+                            else
+                            {
+                                m_Device.m_CommandMoveWaitPosition = false;
+                                m_Device.m_CommandBusy = false;
+                            }
+                        }
+                        break;
+
+                    case 10:
+                        {
+                            //이거는 무조건 연속동작으로 해야되지않을까..?
+                            //Anti Drop에 간섭되지않을까..?
+                            if (SetupManager.Instance.SetupOperation.Continuous_Motion_Use == Use.Use)
+                                rv = m_Device.ContinuousMove(enAxisMask.aYT, m_WaitPosition, m_WaitVelSets);
+                            else
+                                rv = m_Device.Move(enAxisMask.aY | enAxisMask.aT, m_WaitPosition, m_WaitVelSets);
+
+                            if (rv == 0)
+                            {
+                                SequenceDeviceLog.WriteLog(m_Device.MyName, string.Format("FoupGripper Motion Complete!"));
+                                m_Device.m_CommandBusy = false;
+                                m_Device.m_CommandMoveWaitPosition = false;
+                                seqNo = 0;
+                            }
+                            else if (rv > 0)
+                            {
+                                AlarmId = rv;
+                            }
+                        }
+                        break;
+
+                    case 20:
+                        {
+                            if (m_retryCNT < 3)
+                            {
+                                m_retryCNT++;
+                                SequenceDeviceLog.WriteLog(m_Device.MyName, $"FoupGripper Motion Fail! Count : {m_retryCNT}");
+                                seqNo = 10;
+                            }
+                            else
+                            {
+                                seqNo = 0;
+                                EqpAlarm.Set(rv);
+                                m_Device.SeqAbort();
+                            }
+                        }
+                        break;
+                }
+
+                m_moveNo = seqNo;
+                return rv;
+            }
             #endregion
+
         }
         #endregion
 

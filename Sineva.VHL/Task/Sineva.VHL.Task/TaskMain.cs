@@ -317,6 +317,7 @@ namespace Sineva.VHL.Task
                         if (IsEnableAutoRun())
                         {
                             SequenceLog.WriteLog(FuncName, "Auto Run Condition OK!");
+                            EqpStateManager.Instance.SetOpCallMessage(OperatorCallKind.Hide, "");
                             EqpStateManager.Instance.SetRunMode(EqpRunMode.Start);
                             seqNo = 0;
                         }

@@ -817,6 +817,24 @@ namespace Sineva.VHL.Device.ServoControl
 
             return ready;
         }
+        public bool IsAxisContinuousReady(bool moveOrigin = false)
+        {
+            if (GetAxis() == null) return false;
+
+            enAxisInFlag status = GetAxis().AxisStatus;  //(GetAxis() as IAxisCommand).GetAxisCurStatus();
+            bool ready = true;
+            ready &= (status & enAxisInFlag.SvOn) == enAxisInFlag.SvOn;
+            ready &= !((status & enAxisInFlag.Alarm) == enAxisInFlag.Alarm);
+            ready &= !((status & enAxisInFlag.OverrideAbnormalStop) == enAxisInFlag.OverrideAbnormalStop);
+            ready &= !((status & enAxisInFlag.InRange_Error) == enAxisInFlag.InRange_Error);
+
+            if (moveOrigin == false)
+            {
+                ready &= (status & enAxisInFlag.HEnd) == enAxisInFlag.HEnd;
+            }
+
+            return ready;
+        }
         public bool IsMoving()
         {
             bool isMoving = false;
@@ -939,6 +957,11 @@ namespace Sineva.VHL.Device.ServoControl
         {
             if (m_SeqMove == null) return m_ALM_CmdError.ID;
             return m_SeqMove.Do(pos, set, safty);
+        }
+        public int ContinuousMove(double pos, VelSet set, bool safty)
+        {
+            if (m_SeqMove == null) return m_ALM_CmdError.ID;
+            return m_SeqMove.Do_Continuous(pos, set, safty);
         }
 
         public int RelativeMove(double offset, VelSet set, bool safty)
@@ -1652,7 +1675,10 @@ namespace Sineva.VHL.Device.ServoControl
                             }
                             else if (home_end > enAxisResult.Success)
                             {
-                                if (home_end == enAxisResult.MoveTimeout && nRetry < 5)
+                                if ((home_end == enAxisResult.MoveTimeout ||
+                                    home_end == enAxisResult.Timeover ||
+                                    home_end == enAxisResult.HomeTimeout ||
+                                    home_end == enAxisResult.ZeroSetTimeout) && nRetry < 5)
                                 {
                                     ServoLog.WriteLog(string.Format("{0}.{1} Home Command Set Timeover. Retry !", m_Servo.ServoName, m_Axis.AxisName));
                                     StartTicks = XFunc.GetTickCount();
@@ -2449,6 +2475,347 @@ namespace Sineva.VHL.Device.ServoControl
                                     else if((status & enAxisInFlag.OverrideAbnormalStop) == enAxisInFlag.OverrideAbnormalStop)
                                         ServoLog.WriteLog(string.Format("{0}.{1} Axis Override Abnormal Stop", m_Servo.ServoName, m_Axis.AxisName));
                                     else if((status & enAxisInFlag.InRange_Error) == enAxisInFlag.InRange_Error)
+                                        ServoLog.WriteLog(string.Format("{0}.{1} Axis In Range Error", m_Servo.ServoName, m_Axis.AxisName));
+                                    ServoLog.WriteLog(string.Format("{0}.{1} Alarm Status, Try Alarm Clear", m_Servo.ServoName, m_Axis.AxisName));
+                                    seqNo = 100;
+                                }
+                                else if (XFunc.GetTickCount() - StartTicks > m_Axis.InposWaitTime)
+                                {
+                                    string code_name = Enum.GetName(typeof(enAxisResult), enAxisResult.NotReadyError);
+                                    ServoLog.WriteLog(string.Format("{0}.{1} Move Timeout Error[code={2}]", m_Servo.ServoName, m_Axis.AxisName, code_name));
+                                    rv = m_Device.GetAlarmID(enAxisResult.NotReadyError);
+                                    seqNo = 0;
+                                }
+                            }
+                        }
+                        break;
+
+                    case 20:
+                        {
+                            bool timer_over = XFunc.GetTickCount() - StartTicks > 100;
+
+                            if (timer_over)
+                            {
+                                //Axis Done
+                                enAxisResult move_end = m_Servo.MotionDoneAxis(m_Axis);
+                                if (move_end == enAxisResult.Success)
+                                {
+                                    ServoLog.WriteLog(string.Format("{0}.{1} Move OK", m_Servo.ServoName, m_Axis.AxisName));
+                                    StartTicks = XFunc.GetTickCount();
+                                    seqNo = 30;
+                                }
+                                else if (move_end == enAxisResult.CmdError && m_RetryCmdError < 5)
+                                {
+                                    ServoLog.WriteLog(string.Format("{0}.{1} Move Command Set Abnormal. Retry !", m_Servo.ServoName, m_Axis.AxisName));
+                                    StartTicks = XFunc.GetTickCount();
+                                    seqNo = 50;
+                                }
+                                else if (move_end > enAxisResult.Success)
+                                {
+                                    string code_name = Enum.GetName(typeof(enAxisResult), move_end);
+
+                                    List<int> con_list = (m_Axis as MpAxis).ControllerAlarmIdList.FindAll(n => n != 0);
+                                    List<int> dri_list = (m_Axis as MpAxis).DriverAlarmIdList.FindAll(n => n != 0);
+                                    if (con_list.Count == 0) con_list.Add(0); if (dri_list.Count == 0) dri_list.Add(0);
+
+                                    string axis_alarm_code = string.Format("CMD={0},Control={1},Driver={2}", (m_Axis as MpAxis).CommandAlarmId, string.Join("-", con_list), string.Join("-", dri_list));
+                                    ServoLog.WriteLog(string.Format("{0}.{1} Move Error[code={2}][{3}]", m_Servo.ServoName, m_Axis.AxisName, code_name, axis_alarm_code));
+                                    rv = m_Device.GetAlarmID(move_end);
+                                    seqNo = 0;
+                                }
+                                else if (XFunc.GetTickCount() - StartTicks > m_SetTimeout * 1000)
+                                {
+                                    string code_name = Enum.GetName(typeof(enAxisResult), enAxisResult.MoveTimeout);
+                                    rv = m_Device.GetAlarmID(enAxisResult.MoveTimeout);
+                                    ServoLog.WriteLog(string.Format("{0}.{1} Move Timeout Error[code={2}]", m_Servo.ServoName, m_Axis.AxisName, code_name, rv));
+                                    seqNo = 0;
+                                }
+                            }
+                        }
+                        break;
+
+                    case 30:
+                        {
+                            //Position Check
+                            bool pos_check = true;
+                            double target_pos = pos;
+                            double cur_torque = (m_Axis as IAxisCommand).GetAxisCurTorque();
+                            double cur_pos = (m_Axis as IAxisCommand).GetAxisCurPos();
+                            double in_range = m_Axis.InRangeValue;
+                            pos_check &= (Math.Abs(target_pos - cur_pos) < in_range) ? true : false;
+                            if (pos_check || m_Axis.CommandSkip)
+                            {
+                                ServoLog.WriteLog(string.Format("{0}.{1} Position Check[Target:{2},Cur:{3}]", m_Servo.ServoName, m_Axis.AxisName, target_pos, cur_pos));
+                                rv = 0;
+                                seqNo = 0;
+                            }
+                            else if (XFunc.GetTickCount() - StartTicks > m_Axis.InposWaitTime)
+                            {
+                                if (m_RetryCount < 5)
+                                {
+                                    ServoLog.WriteLog(string.Format("{0}.{1} Position Check({2})[Target:{3},Cur:{4}]", m_Servo.ServoName, m_Axis.AxisName, m_RetryCount, target_pos, cur_pos));
+                                    m_RetryCount++;
+                                    StartTicks = XFunc.GetTickCount();
+                                    if (Math.Abs(target_pos - cur_pos) > in_range) seqNo = 40;
+                                    else seqNo = 10;
+                                }
+                                else
+                                {
+                                    string code_name = Enum.GetName(typeof(enAxisResult), enAxisResult.MoveTimeout);
+                                    ServoLog.WriteLog(string.Format("{0}.{1} Move Timeout Error[code={2}]", m_Servo.ServoName, m_Axis.AxisName, code_name));
+                                    rv = m_Device.GetAlarmID(enAxisResult.MoveTimeout);
+                                    seqNo = 0;
+                                }
+                            }
+                        }
+                        break;
+
+                    case 40:
+                        {
+                            // HJYOU  - 혹시나 모르지 .... Safty Check를 새로 하자.
+                            if (safty_check)
+                            {
+                                bool isSafe = true;
+                                isSafe &= InterlockManager.IsSafe(m_Axis, pos);
+                                if (isSafe)
+                                {
+                                    ServoLog.WriteLog(string.Format("{0}.{1} Safty Check OK[Target={2}]", m_Servo.ServoName, m_Axis.AxisName, pos));
+                                    seqNo = 10;
+                                }
+                                else if (XFunc.GetTickCount() - StartTicks > m_Axis.InposWaitTime)
+                                {
+                                    string code_name = Enum.GetName(typeof(enAxisResult), enAxisResult.IntrError);
+                                    ServoLog.WriteLog(string.Format("{0}.{1} Safty Check NG[{2},Target={3}]", m_Servo.ServoName, m_Axis.AxisName, code_name, pos));
+                                    rv = m_Device.GetAlarmID(enAxisResult.IntrError);
+                                    seqNo = 0;
+                                }
+                            }
+                            else if (XFunc.GetTickCount() - StartTicks > m_Axis.InposWaitTime)
+                            {
+                                seqNo = 10;
+                            }
+                        }
+                        break;
+
+                    case 50:
+                        {
+                            //Axis Stop
+                            enAxisResult stop_start = m_Servo.Stop(m_Axis);
+                            if (stop_start == enAxisResult.Success)
+                            {
+                                ServoLog.WriteLog(string.Format("{0}.{1} Stop Start", m_Servo.ServoName, m_Axis.AxisName));
+                                StartTicks = XFunc.GetTickCount();
+                                seqNo = 60;
+                            }
+                            else if (stop_start > enAxisResult.Success)
+                            {
+                                string code_name = Enum.GetName(typeof(enAxisResult), stop_start);
+
+                                List<int> con_list = (m_Axis as MpAxis).ControllerAlarmIdList.FindAll(n => n != 0);
+                                List<int> dri_list = (m_Axis as MpAxis).DriverAlarmIdList.FindAll(n => n != 0);
+                                if (con_list.Count == 0) con_list.Add(0); if (dri_list.Count == 0) dri_list.Add(0);
+
+                                string axis_alarm_code = string.Format("CMD={0},Control={1},Driver={2}", (m_Axis as MpAxis).CommandAlarmId, string.Join("-", con_list), string.Join("-", dri_list));
+                                ServoLog.WriteLog(string.Format("{0}.{1} Stop Start Alarm[code={2}][{3}]", m_Servo.ServoName, m_Axis.AxisName, code_name, axis_alarm_code));
+                                rv = m_Device.GetAlarmID(stop_start);
+                                m_RetryCmdError = 0;
+                                seqNo = 0;
+                            }
+                        }
+                        break;
+
+                    case 60:
+                        {
+                            if (XFunc.GetTickCount() - StartTicks < 100) break; // Command이 완료되는 시간 대기
+
+                            //Axis Done
+                            enAxisResult stop_end = m_Servo.MotionDoneAxis(m_Axis);
+                            if (stop_end == enAxisResult.Success)
+                            {
+                                ServoLog.WriteLog(string.Format("{0}.{1} Stop OK", m_Servo.ServoName, m_Axis.AxisName));
+                                seqNo = 70;
+                            }
+                            else if (stop_end > enAxisResult.Success)
+                            {
+                                string code_name = Enum.GetName(typeof(enAxisResult), stop_end);
+
+                                List<int> con_list = (m_Axis as MpAxis).ControllerAlarmIdList.FindAll(n => n != 0);
+                                List<int> dri_list = (m_Axis as MpAxis).DriverAlarmIdList.FindAll(n => n != 0);
+                                if (con_list.Count == 0) con_list.Add(0); if (dri_list.Count == 0) dri_list.Add(0);
+
+                                string axis_alarm_code = string.Format("CMD={0},Control={1},Driver={2}", (m_Axis as MpAxis).CommandAlarmId, string.Join("-", con_list), string.Join("-", dri_list));
+                                ServoLog.WriteLog(string.Format("{0}.{1} Stop Error[code={2}][{3}]", m_Servo.ServoName, m_Axis.AxisName, code_name, axis_alarm_code));
+                                rv = m_Device.GetAlarmID(stop_end);
+                                m_RetryCmdError = 0;
+                                seqNo = 0;
+                            }
+                            else if (XFunc.GetTickCount() - StartTicks > 10 * 1000)
+                            {
+                                string code_name = Enum.GetName(typeof(enAxisResult), enAxisResult.StopTimeout);
+                                ServoLog.WriteLog(string.Format("{0}.{1} Stop Timeout Error[code={2}]", m_Servo.ServoName, m_Axis.AxisName, code_name));
+                                rv = m_Device.GetAlarmID(enAxisResult.StopTimeout);
+                                m_RetryCmdError = 0;
+                                seqNo = 0;
+                            }
+                        }
+                        break;
+
+                    case 70:
+                        {
+                            if (XFunc.GetTickCount() - StartTicks > 500)
+                            {
+                                m_RetryCmdError++;
+                                seqNo = 0;
+                            }
+                        }
+                        break;
+
+                    case 100:
+                        {
+                            //Axis Alarm Clear
+                            int rv1 = m_Device.AlarmClear();
+                            if (rv1 == 0)
+                            {
+                                m_RetryReady++;
+                                seqNo = 10;
+                            }
+                            else if (rv1 > 0)
+                            {
+                                rv = rv1;
+                                seqNo = 0;
+                            }
+                        }
+                        break;
+                }
+                this.SeqNo = seqNo;
+                return rv;
+            }
+            /// <summary>
+            /// moving : 이동중 신규명령을 내릴 경우
+            /// </summary>
+            /// <param name="pos"></param>
+            /// <param name="set"></param>
+            /// <param name="safty_check"></param>
+            /// <param name="moving"></param>
+            /// <returns></returns>
+            public int Do_Continuous(double pos, VelSet set, bool safty_check = true)
+            {
+                int rv = -1;
+                int seqNo = this.SeqNo;
+
+                switch (seqNo)
+                {
+                    case 0:
+                        {
+                            if (m_Axis.CommandSkip)
+                            {
+                                rv = 0;
+                            }
+                            else
+                            {
+                                // Move Skip 판단
+                                // CurPosition == Teaching Position 이면 굳이 이동하지 말자
+                                bool move_skip = true;
+                                double target_pos = pos;
+                                double cur_pos = (m_Axis as IAxisCommand).GetAxisCurPos();
+                                double in_range = m_Axis.InRangeValue;
+                                move_skip &= (Math.Abs(target_pos - cur_pos) < in_range) ? true : false;
+                                if (move_skip)
+                                {
+                                    ServoLog.WriteLog(string.Format("{0}.{1} Position Move Skip[Target:{2},Cur:{3}]", m_Servo.ServoName, m_Axis.AxisName, target_pos, cur_pos));
+                                    rv = 0;
+                                    seqNo = 0;
+                                }
+                                else
+                                {
+                                    m_RetryReady = 0;
+                                    m_RetryCmdError = 0;
+                                    m_Servo.SetTargetPosition(m_Axis, pos, set);
+                                    seqNo = 5;
+                                }
+                            }
+                        }
+                        break;
+
+                    case 5:
+                        {
+                            // safty check
+                            if (safty_check)
+                            {
+                                bool isSafe = true;
+                                isSafe &= InterlockManager.IsSafe_ContinuousMove(m_Axis, pos);
+                                if (isSafe)
+                                {
+                                    ServoLog.WriteLog(string.Format("{0}.{1} Safty Check OK[Target={2}]", m_Servo.ServoName, m_Axis.AxisName, pos));
+                                    StartTicks = XFunc.GetTickCount();
+                                    m_RetryCount = 0;
+
+                                    seqNo = 10;
+                                }
+                                else
+                                {
+                                    string code_name = Enum.GetName(typeof(enAxisResult), enAxisResult.IntrError);
+                                    ServoLog.WriteLog(string.Format("{0}.{1} Safty Check NG[{2},Target={3}]", m_Servo.ServoName, m_Axis.AxisName, code_name, pos));
+                                    rv = m_Device.GetAlarmID(enAxisResult.IntrError);
+                                    seqNo = 0;
+                                }
+                            }
+                            else
+                            {
+                                m_RetryCount = 0;
+                                seqNo = 10;
+                            }
+                        }
+                        break;
+
+                    case 10:
+                        {
+                            //이때는 무조건 Ready 상태여야 한다.
+                            if (m_Device.IsAxisContinuousReady(false))
+                            {
+                                //Axis Move
+                                if (set.Vel > m_Axis.SpeedLimit) set.Vel = m_Axis.SpeedLimit;
+                                enAxisResult move_start = m_Servo.ContinuousMoveAxisStart(m_Axis, pos, set);
+                                if (move_start == enAxisResult.Success)
+                                {
+                                    double cur_pos = (m_Axis as IAxisCommand).GetAxisCurPos();
+                                    double end_pos = pos;
+                                    double speed = set.Vel;
+                                    m_SetTimeout = (int)(Math.Abs(end_pos - cur_pos) / speed + m_Axis.SetTimeoutMargin / 1000.0f);
+
+                                    ServoLog.WriteLog(string.Format("{0}.{1} Move Start _ SetTime={2}", m_Servo.ServoName, m_Axis.AxisName, m_SetTimeout));
+                                    StartTicks = XFunc.GetTickCount();
+                                    seqNo = 20;
+                                }
+                                else if (move_start > enAxisResult.Success)
+                                {
+                                    string code_name = Enum.GetName(typeof(enAxisResult), move_start);
+
+                                    List<int> con_list = (m_Axis as MpAxis).ControllerAlarmIdList.FindAll(n => n != 0);
+                                    List<int> dri_list = (m_Axis as MpAxis).DriverAlarmIdList.FindAll(n => n != 0);
+                                    if (con_list.Count == 0) con_list.Add(0); if (dri_list.Count == 0) dri_list.Add(0);
+
+                                    string axis_alarm_code = string.Format("CMD={0},Control={1},Driver={2}", (m_Axis as MpAxis).CommandAlarmId, string.Join("-", con_list), string.Join("-", dri_list));
+                                    ServoLog.WriteLog(string.Format("{0}.{1} Move Start Alarm[code={2}][{3}]", m_Servo.ServoName, m_Axis.AxisName, code_name, axis_alarm_code));
+                                    rv = m_Device.GetAlarmID(move_start);
+                                    seqNo = 0;
+                                }
+                            }
+                            else
+                            {
+                                enAxisInFlag status = (m_Axis as IAxisCommand).GetAxisCurStatus();
+                                bool recover_alarm = false;
+                                recover_alarm |= ((status & enAxisInFlag.Alarm) == enAxisInFlag.Alarm);
+                                recover_alarm |= ((status & enAxisInFlag.OverrideAbnormalStop) == enAxisInFlag.OverrideAbnormalStop);
+                                recover_alarm |= ((status & enAxisInFlag.InRange_Error) == enAxisInFlag.InRange_Error);
+                                recover_alarm &= (status & enAxisInFlag.SvOn) == enAxisInFlag.SvOn;
+                                if (recover_alarm && m_RetryReady < 5)
+                                {
+                                    if (((status & enAxisInFlag.Alarm) == enAxisInFlag.Alarm))
+                                        ServoLog.WriteLog(string.Format("{0}.{1} Axis Servo Alarm", m_Servo.ServoName, m_Axis.AxisName));
+                                    else if ((status & enAxisInFlag.OverrideAbnormalStop) == enAxisInFlag.OverrideAbnormalStop)
+                                        ServoLog.WriteLog(string.Format("{0}.{1} Axis Override Abnormal Stop", m_Servo.ServoName, m_Axis.AxisName));
+                                    else if ((status & enAxisInFlag.InRange_Error) == enAxisInFlag.InRange_Error)
                                         ServoLog.WriteLog(string.Format("{0}.{1} Axis In Range Error", m_Servo.ServoName, m_Axis.AxisName));
                                     ServoLog.WriteLog(string.Format("{0}.{1} Alarm Status, Try Alarm Clear", m_Servo.ServoName, m_Axis.AxisName));
                                     seqNo = 100;

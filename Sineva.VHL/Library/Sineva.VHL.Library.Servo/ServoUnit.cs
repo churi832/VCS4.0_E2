@@ -925,6 +925,33 @@ namespace Sineva.VHL.Library.Servo
 
 			return false;
 		}
+		public bool SetContinuousCommand(enAxisOutFlag cmd, _Axis axis)
+		{
+            //Trace.WriteLine(string.Format("Axis - {0}, CMD - {1}", axis.AxisName, cmd.ToString()));
+            foreach (_Axis ax in this.Axes)
+			{
+				if (System.Object.ReferenceEquals(ax, axis))
+				{
+                    bool move = Convert.ToBoolean(cmd & enAxisOutFlag.MotionStart);
+                    move |= Convert.ToBoolean(cmd & enAxisOutFlag.RelativeMoveStart);
+                    move |= Convert.ToBoolean(cmd & enAxisOutFlag.SequenceMotionStart);
+                    bool home = Convert.ToBoolean(cmd & enAxisOutFlag.HomeStart);
+
+                    if (move)
+					{
+						if (!GetContinuousReady(axis)) return false;
+                        if (!GetHomeEnd(axis.AxisName)) return false;
+                    }
+                    if (home)
+                    {
+                        if (!GetContinuousReady(axis)) return false;
+                    }
+                    return ax.CmdPxy.SetCmd(cmd);
+				}
+			}
+
+			return false;
+		}
 		public enAxisOutFlag GetCommand(_Axis axis)
 		{
 			enAxisOutFlag cmd = enAxisOutFlag.CommandNone;
@@ -1141,7 +1168,29 @@ namespace Sineva.VHL.Library.Servo
 
 			return rv;
 		}
-
+		public bool GetContinuousReady(_Axis axis)
+		{
+			bool rv = true;
+            if ((axis as _Axis).CommandSkip) return rv;
+            rv &= ((axis as IAxisCommand).GetAxisCurStatus() & enAxisInFlag.SvOn) == enAxisInFlag.SvOn ? true : false;
+            rv &= ((axis as IAxisCommand).GetAxisCurStatus() & enAxisInFlag.Alarm) == enAxisInFlag.Alarm ? false : true;
+            rv &= ((axis as IAxisCommand).GetAxisCurStatus() & enAxisInFlag.Limit_N) == enAxisInFlag.Limit_N ? false : true;
+            rv &= ((axis as IAxisCommand).GetAxisCurStatus() & enAxisInFlag.Limit_P) == enAxisInFlag.Limit_P ? false : true;
+            
+			if (!rv)
+			{
+				if (((axis as IAxisCommand).GetAxisCurStatus() & enAxisInFlag.SvOn) != enAxisInFlag.SvOn)
+					ServoLog.WriteLog(string.Format("{0} Status is Not Servo On", axis.AxisName));
+				if (((axis as IAxisCommand).GetAxisCurStatus() & enAxisInFlag.Alarm) == enAxisInFlag.Alarm)
+					ServoLog.WriteLog(string.Format("{0} Status is Alarm", axis.AxisName));
+				if (((axis as IAxisCommand).GetAxisCurStatus() & enAxisInFlag.Limit_N) == enAxisInFlag.Limit_N)
+					ServoLog.WriteLog(string.Format("{0} Status is Limit_N", axis.AxisName));
+				if (((axis as IAxisCommand).GetAxisCurStatus() & enAxisInFlag.Limit_P) == enAxisInFlag.Limit_P)
+					ServoLog.WriteLog(string.Format("{0} Status is Limit_P", axis.AxisName));
+			}
+			
+			return rv;
+		}
 		public bool GetInPos()
 		{
 			bool rv = true;
@@ -1373,6 +1422,33 @@ namespace Sineva.VHL.Library.Servo
 
             return rv;
         }
+        public enAxisResult ContinuousMoveAxisStart(_Axis axis, double pos, VelSet set)
+        {
+            axis.CmdResult = enAxisResult.None;
+
+            if (!GetContinuousReady(axis))
+			{
+				ServoLog.WriteLog(string.Format("{0} Continuous Move Axis Start Fail, {0} Status Not Ready", axis.AxisName));
+				return enAxisResult.NotReadyError;
+			}
+            if (set.Vel <= 0.0 && !axis.CommandSkip) return enAxisResult.VelSettingError;
+            if (pos < axis.NegLimitPos && axis.NegLimitUse) return enAxisResult.SoftwareLimitNeg;
+            if (pos > axis.PosLimitPos && axis.PosLimitUse) return enAxisResult.SoftwareLimitPos;
+            if (set.Vel > axis.SpeedLimit) return enAxisResult.SoftwareLimitSpeed;
+			enAxisResult rv = enAxisResult.None;
+
+            axis.TargetPos = Math.Round(pos, 6);
+            axis.TargetSpeed = Math.Round(set.Vel, 6);
+            axis.TargetAcc = Math.Round(set.Acc, 6);
+            axis.TargetDec = Math.Round(set.Dec, 6);
+            axis.TargetJerk = Math.Round(set.Jerk, 6);
+            if (SetContinuousCommand(enAxisOutFlag.MotionStart, axis))
+				rv = enAxisResult.Success;
+			else
+				rv = enAxisResult.NotReadyError;
+
+            return rv;
+        }
         public enAxisResult SequenceMoveAxisStart(_Axis axis, SequenceCommand command)
         {
             axis.CmdResult = enAxisResult.None;
@@ -1552,7 +1628,7 @@ namespace Sineva.VHL.Library.Servo
 				rv &= (axis.GetAxisCurStatus() & enAxisInFlag.HEnd) == enAxisInFlag.HEnd ? true : false;
 				rv &= (axis.GetAxisCurStatus() & enAxisInFlag.InPos) == enAxisInFlag.InPos ? true : false;
 			}
-			return rv;
+			return rv ;
 		}
 
         public bool IsServoOn()

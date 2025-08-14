@@ -934,6 +934,8 @@ namespace Sineva.VHL.GUI
                         case 410:
                             {
                                 var command = RemoteManager.TouchInstance.Remoting.TouchGUI.WebAction.WebCommand;
+                                var totalCount = command.TotalCount;
+                                var waitTime = command.WaitTime;
                                 var newCommand = new Command
                                 {
                                     CommandID = command.CommandID,
@@ -945,6 +947,26 @@ namespace Sineva.VHL.GUI
                                     TypeOfDestination = (enGoCommandType)command.TypeOfDestination,
                                     IsValid = command.IsValid,
                                 };
+                                if (newCommand.ProcessCommand == OCSCommand.CycleHoistAging)
+                                {
+                                    GV.HoistCycleWaitTime = waitTime;
+                                    GV.HoistCycleTotalCount = totalCount;
+                                }
+                                else if (newCommand.ProcessCommand == OCSCommand.CycleSteerAging) 
+                                {
+                                    GV.SteerCycleWaitTime = waitTime;
+                                    GV.SteerCycleTotalCount = totalCount; 
+                                }
+                                else if (newCommand.ProcessCommand == OCSCommand.CycleAntiDropAging) 
+                                {
+                                    GV.AntiDropCycleWaitTime = waitTime;
+                                    GV.AntiDropCycleTotalCount = totalCount; 
+                                }
+                                else if (newCommand.ProcessCommand == OCSCommand.CycleWheelMoveAging)
+                                {
+                                    GV.WheelMoveCycleWaitTime = waitTime;
+                                    GV.WheelMoveCycleTotalCount = totalCount;
+                                }
                                 bool exist = ProcessDataHandler.Instance.TransferCommands.Select(x => x.CommandID).Contains(newCommand.CommandID);
                                 if (!exist)
                                 {
@@ -1530,6 +1552,7 @@ namespace Sineva.VHL.GUI
                         servoStatus.AxisName = axis.AxisName;
                         servoStatus.Position = axis.GetAxisCurPos();
                         servoStatus.Speed = axis.GetAxisCurSpeed();
+                        servoStatus.Torque = axis.GetAxisCurTorque();
                         enAxisInFlag axisStatus = axis.GetAxisCurStatus();
                         servoStatus.IsAlarm = (axisStatus & enAxisInFlag.Alarm) == enAxisInFlag.Alarm /*&& !item.CommandSkip*/;
                         servoStatus.InPosition = (axisStatus & enAxisInFlag.InPos) == enAxisInFlag.InPos/* && !item.CommandSkip*/;

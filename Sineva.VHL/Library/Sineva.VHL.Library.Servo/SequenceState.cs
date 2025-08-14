@@ -21,6 +21,7 @@ namespace Sineva.VHL.Library.Servo
         private bool m_IsSequenceAlarm = false;
         private int m_SequenceAlarmId = 0;
         private bool m_IsExternalEncoderRun = false; // Run 중일 경우는 BCR 값을 가지고 완료 Check를 해야 하고 중복 Command를 내리면 않된다.
+        private bool m_IsSequenceMoving = false; 
         #endregion
 
         #region Properties
@@ -32,6 +33,7 @@ namespace Sineva.VHL.Library.Servo
         public bool IsSequenceAlarm { get => m_IsSequenceAlarm; set => m_IsSequenceAlarm = value; }
         public int SequenceAlarmId { get => m_SequenceAlarmId; set => m_SequenceAlarmId = value; }
         public bool IsExternalEncoderRun { get => m_IsExternalEncoderRun; set => m_IsExternalEncoderRun = value; }
+        public bool IsSequenceMoving { get => m_IsSequenceMoving; set => m_IsSequenceMoving = value; }
         #endregion
 
         #region Constructor

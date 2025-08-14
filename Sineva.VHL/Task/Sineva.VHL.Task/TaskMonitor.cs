@@ -761,7 +761,7 @@ namespace Sineva.VHL.Task
                             finally
                             {
                                 bool logging = ProcessDataHandler.Instance.CurTransferCommand.IsValid;
-                                logging |= m_MasterAxis.GetCommandVelocity() > 0.1f;
+                                logging |= Math.Abs(m_MasterAxis.GetCommandVelocity()) > 0.1f;
                                 logging |= m_HoistAxis != null ? m_HoistAxis.GetCurVelocity() > 0.1f : false;
                                 logging |= m_SlideAxis != null ? m_SlideAxis.GetCurVelocity() > 0.1f : false;
                                 logging |= m_RotateAxis != null ? m_RotateAxis.GetCurVelocity() > 0.1f : false;

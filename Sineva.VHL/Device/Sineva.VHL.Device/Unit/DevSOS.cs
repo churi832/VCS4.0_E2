@@ -674,7 +674,7 @@ namespace Sineva.VHL.Device
                                     else
                                     {
                                         m_Device.m_FrontDetectState = set_front;
-                                        m_DelayTime = (uint)SetupManager.Instance.SetupSafty.OSBAbnormalReleaseWaitTime; // 2sec 간격으로 해제하자 ~~ //고객 요청으로 해제시간 1초로 변경.
+                                        m_DelayTime = (uint)SetupManager.Instance.SetupSafty.OBSAbnormalReleaseWaitTime; // 2sec 간격으로 해제하자 ~~ //고객 요청으로 해제시간 1초로 변경.
                                         StartTicks = XFunc.GetTickCount();
                                     }
                                 }

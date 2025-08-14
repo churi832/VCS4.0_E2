@@ -1234,7 +1234,7 @@ namespace Sineva.VHL.Task
                         if (GV.BumpCollisionInterlock) move_enable_code = 1;
                         else if (GV.SteerNotChangeInterlock) move_enable_code = 2;
                         else if (m_HoistAxis != null) if (Math.Abs(m_HoistAxis.GetCurPosition()) > 10.0f) move_enable_code = 3;
-                        else if (m_SlideAxis != null) if (Math.Abs(m_SlideAxis.GetCurPosition()) > 10.0f) move_enable_code = 4;
+                        else if (m_SlideAxis != null) if (Math.Abs(m_SlideAxis.GetCurPosition()) > 30.0f) move_enable_code = 4;
                         else if (m_DeviceManager.DevTransfer.IsValid)
                         {
                             if (m_DeviceManager.DevTransfer.DiWheelBrake.IsValid) if (m_DeviceManager.DevTransfer.DiWheelBrake.IsDetected == false) move_enable_code = 5;
@@ -1250,9 +1250,11 @@ namespace Sineva.VHL.Task
                         }
 
                         if (m_HoistAxis != null) if ((m_HoistAxis.GetAxis().AxisStatus & enAxisInFlag.Org) != enAxisInFlag.Org) move_enable_code = 8;
-                        else if (m_SlideAxis != null) if ((m_SlideAxis.GetAxis().AxisStatus & enAxisInFlag.Org) != enAxisInFlag.Org) move_enable_code = 9;
-                        else if (m_RotateAxis != null) if ((m_RotateAxis.GetAxis().AxisStatus & enAxisInFlag.Org) != enAxisInFlag.Org) move_enable_code = 10;
-
+                            if (SetupManager.Instance.SetupOperation.Early_Motion_Use == Use.NoUse)
+                            {
+                                if (m_SlideAxis != null) if ((m_SlideAxis.GetAxis().AxisStatus & enAxisInFlag.Org) != enAxisInFlag.Org) move_enable_code = 9;
+                                else if (m_RotateAxis != null) if ((m_RotateAxis.GetAxis().AxisStatus & enAxisInFlag.Org) != enAxisInFlag.Org) move_enable_code = 10;
+                            }
                         GV.TransferMoveEnableCode = move_enable_code;
                         GV.TransferMoveEnable = move_enable_code == 0;
 

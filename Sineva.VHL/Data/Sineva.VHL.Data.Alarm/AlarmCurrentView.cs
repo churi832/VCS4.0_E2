@@ -142,7 +142,11 @@ namespace Sineva.VHL.Data.Alarm
             if(rowId < 0 || rowId >= this.dataGridViewCurrentAlarms.RowCount) return;
 
             int alarmId = (int)this.dataGridViewCurrentAlarms.Rows[rowId].Cells[0].Value;
-            AlarmData alarm = new AlarmData();
+            
+            AlarmData alarm = AlarmListProvider.Instance.GetAlarm(alarmId);
+            string alarmUnit = alarm.Unit;
+            string alarmName = alarm.Name;
+            AlarmHelp.OpenTroubleshootingManual(alarmUnit, alarmName);
             
             //if(AlarmListProvider.Instance.GetAlarm(alarmId, alarm))
             //{

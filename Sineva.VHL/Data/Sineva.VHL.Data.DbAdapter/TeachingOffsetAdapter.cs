@@ -67,7 +67,31 @@ namespace Sineva.VHL.Data.DbAdapter
                 }
                 else
                 {
-                    m_Offsets.Add(new TeachingOffset(item.PortID, item.DriveLeftOffset, item.DriveRightOffset, item.SlideOffset, item.HoistOffset, item.RotateOffset));
+                    
+                    //var sameTypePortIDs = Offsets
+                    //    .Select(x => x.PortID)
+                    //    .ToList();
+ 
+                    var sameTypeOffsets = m_Offsets.Where(x =>
+                    {
+                        return GetPortTypeByPortID(x.PortID) == item.PortType;
+                    }).ToList();
+
+                    double GetMostCommon(Func<TeachingOffset, double> selector, double defaultValue)
+                    {
+                        if (sameTypeOffsets.Count == 0) return defaultValue;
+                        return sameTypeOffsets
+                            .GroupBy(selector)
+                            .OrderByDescending(g => g.Count())
+                            .First().Key;
+                    }
+
+                    double driveLeftOffset = GetMostCommon(x => x.DriveLeftOffset, item.DriveLeftOffset);
+                    double driveRightOffset = GetMostCommon(x => x.DriveRightOffset, item.DriveRightOffset);
+                    double slideOffset = GetMostCommon(x => x.SlideOffset, item.SlideOffset);
+                    double hoistOffset = GetMostCommon(x => x.HoistOffset, item.HoistOffset);
+                    double rotateOffset = GetMostCommon(x => x.RotateOffset, item.RotateOffset);
+                    m_Offsets.Add(new TeachingOffset(item.PortID, driveLeftOffset, driveRightOffset, slideOffset, hoistOffset, rotateOffset));
                 }
             }
             catch (Exception ex)
@@ -75,6 +99,17 @@ namespace Sineva.VHL.Data.DbAdapter
                 ExceptionLog.WriteLog(ex.ToString());
             }
         }
+
+        public PortType GetPortTypeByPortID(int portID)
+        {
+           
+            if (DatabaseHandler.Instance.DictionaryPortDataList != null && DatabaseHandler.Instance.DictionaryPortDataList.TryGetValue(portID, out var port))
+            {
+                return port.PortType;
+            }
+            return PortType.NotDefined;
+        }
+
         public void UpdateSaveOffset(DataItem_Port item)
         {
             try
@@ -157,7 +192,7 @@ namespace Sineva.VHL.Data.DbAdapter
                 TeachingOffset offset = m_Offsets.Find(x => x.PortID == portID);
                 if (offset != null)
                 {
-                    double k = 0.15f;
+                    double k = 0.15f;//0.3f //수치를 작게 조정하여 변화랑이 차근차근 적용되도록...
                     double oldValue = acquire ? offset.HoistAcquireTrackingValue : offset.HoistDepositeTrackingValue;
                     double newValue = (1 - k) * oldValue + k * (oldValue + error);
                     if (acquire) offset.HoistAcquireTrackingValue = Math.Round(newValue, 2);

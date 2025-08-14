@@ -18,8 +18,6 @@ namespace Sineva.VHL.Data.Setup
         private Use m_AutoDoor2Use = Use.Use;
         private Use m_OutRiggerUse = Use.Use;
         private OBSType m_OBSType = OBSType.SOS;
-        private bool m_SyncActionOfSlideAndRotate = false;
-        private bool m_SyncActionOfWheelAndAntiDrop = false;
         private double m_LinkSearchRange = 400.0f;
         private double m_LinkSearchDiffRange = 200.0f;
         private double m_AutoDoor1CheckStartDistance = 8000.0f;
@@ -30,6 +28,9 @@ namespace Sineva.VHL.Data.Setup
         private Use m_BcrScanTwoStepUse = Use.Use;
         private Use m_NetworkControlUse = Use.NoUse;
         private int m_SilentStopWaitTime = 5;
+        private Use m_Early_Motion_Use = Use.NoUse;
+        private Use m_Continuous_Motion_Use = Use.NoUse;
+        private double m_Early_Motion_Range = 500.0f;
         #endregion
 
         #region Properties
@@ -68,18 +69,6 @@ namespace Sineva.VHL.Data.Setup
         {
             get { return m_OBSType; }
             set { m_OBSType = value; }
-        }
-        [Category("SyncAction"), DisplayName("Sync Action Of Slide & Rotate")]
-        public bool SyncActionOfSlideAndRotate 
-        {
-            get { return m_SyncActionOfSlideAndRotate; }
-            set { m_SyncActionOfSlideAndRotate = value; }
-        }
-        [Category("SyncAction"), DisplayName("Sync Action Of Wheel & Anti-Drop")]
-        public bool SyncActionOfWheelAndAntiDrop 
-        {
-            get { return m_SyncActionOfWheelAndAntiDrop; }
-            set { m_SyncActionOfWheelAndAntiDrop = value; }
         }
         [Category("LinkSearch"), DisplayName("Similar Bcr Find Range")]
         public double LinkSearchRange 
@@ -140,6 +129,24 @@ namespace Sineva.VHL.Data.Setup
         {
             get { return m_SilentStopWaitTime; }
             set { m_SilentStopWaitTime = value; }
+        }
+        [Category("Transfer Motion"), DisplayName("Early Motion Usage(Use)")]
+        public Use Early_Motion_Use
+        {
+            get { return m_Early_Motion_Use; }
+            set { m_Early_Motion_Use = value; }
+        }
+        [Category("Transfer Motion"), DisplayName("Early Motion Range")]
+        public double Early_Motion_Range
+        {
+            get { return m_Early_Motion_Range; }
+            set { m_Early_Motion_Range = value; }
+        }
+        [Category("Transfer Motion"), DisplayName("Continuous Motion Usage(Use)")]
+        public Use Continuous_Motion_Use
+        {
+            get { return m_Continuous_Motion_Use; }
+            set { m_Continuous_Motion_Use = value; }
         }
         #endregion
 

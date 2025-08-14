@@ -60,6 +60,8 @@ namespace Sineva.VHL.Data
         public static bool VehicleMoveRecovery = false; // Foup이 있는 상태에서 Abort가 내려오지 않는다. InRange Alarm 같은 경우 Retry 해 볼수 있는데...
 
         public static bool[] TEST_INTERLOCK = new bool[10];
+        public static bool OpRouteChange = false;
+        public static bool RouteChangeOk = false; //Vehicle Move에서 CASE 30번 간 뒤에는 Abort 하면 안되기 때문에 Flag 만들어서 SeqOcsCommandProcess seqNo = 0으로 보내자..
         #endregion
 
         #region Interlock

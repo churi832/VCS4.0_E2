@@ -27,6 +27,7 @@ namespace Sineva.VHL.Library.Servo
 		enAxisResult MoveRelativeStart(_Axis axis, double Offset, int prop);
         enAxisResult MoveAxisStart(_Axis axis, int point, int prop);
 		enAxisResult MoveAxisStart(_Axis axis, double pos, VelSet set);
+        enAxisResult ContinuousMoveAxisStart(_Axis axis, double pos, VelSet set);
         enAxisResult SetTargetPosition(_Axis axis, int point, int prop);
         enAxisResult SetTargetPosition(_Axis axis, double pos, VelSet set);
         enAxisResult MotionDone();
