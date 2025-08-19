@@ -3521,6 +3521,13 @@ namespace Sineva.VHL.Library.MXP
                 if (m_AxisBlock.Connected == false) return -1;
                 if (m_Axis.GantryType && m_Axis.NodeId == m_Axis.SlaveNodeId) return -1; //Gantry Slave not need override
 
+                
+                double jerkTimeRatio = 0.3f;
+                if ((m_Axis as MpAxis).CommandSpeed >= 2000) jerkTimeRatio = 0.5f;
+                if ((m_Axis as MpAxis).CommandSpeed >= 1000) jerkTimeRatio = 0.4f;
+                if ((m_Axis as MpAxis).CommandSpeed >= 500) jerkTimeRatio = 0.3f;
+                else jerkTimeRatio = 0.25f;
+
                 int seqNo = this.SeqNo;
                 switch (seqNo)
                 {
@@ -3529,11 +3536,20 @@ namespace Sineva.VHL.Library.MXP
                             m_MxpAxis.CheckMoveState();
                             // Motor Encorder 위치 오차가 크다. BCR RemainDistance를 활용하자~~~
                             double remain_motor_distance = m_Axis.TargetPos - m_Axis.CurPos;
+
+                            double targetacc = m_MxpAxis.m_SequenceCommand.PositionSensorInfo.SensorScanAcceleration;
+                            double targetdec = m_MxpAxis.m_SequenceCommand.PositionSensorInfo.SensorScanDeceleration;
+                            double targetjerk = m_MxpAxis.m_SequenceCommand.PositionSensorInfo.SensorScanJerk;
+
+                            double deceleration_time = jerkTimeRatio + (m_Axis as MpAxis).CommandSpeed / targetdec;
+                            double deceleration_distance = 0.5f * targetdec * deceleration_time * deceleration_time;
+
                             double sensor_remain_distance = (m_Axis as MpAxis).SensorRemainDistance; //BCR Remain
                             double following_error = sensor_remain_distance - remain_motor_distance;
                             if (following_error < 0.0f) following_error = 0.0f;
                             else if (following_error > 1000.0f) following_error = 0.0f; // 너무 큰 경우
                             bool near_check = sensor_remain_distance < 1.5f * m_MxpAxis.m_SequenceCommand.PositionSensorInfo.SensorScanDistance ? true : false; // 근처에 왔구나 ~~~
+                            near_check |= sensor_remain_distance < deceleration_distance; // BCR로 근처에 왔는데 지금 정지거리보다 짧아 그럼 멈춰야해
                             near_check |= remain_motor_distance < 1.5f * m_MxpAxis.m_SequenceCommand.PositionSensorInfo.SensorScanDistance ? true : false; // 근처에 왔구나 ~~~
                             near_check |= remain_motor_distance < m_MxpAxis.m_SequenceCommand.PositionSensorInfo.SensorScanDistance + following_error;
                             bool run_condition = true;
@@ -3587,10 +3603,18 @@ namespace Sineva.VHL.Library.MXP
                                 double remain_bcr_distance = m_MxpAxis.m_SequenceCommand.PositionSensorInfo.SensorTargetValue - curBCR;
                                 double collision_distance = (m_Axis as MpAxis).OverrideCollisionDistance - (m_Axis as MpAxis).OverrideStopDistance; // 1300 기준으로 안쪽은 멈출수 없다. OverrideLimitDistance = 300 까지는 멈출수 있다.
 
+                                double targetacc = m_MxpAxis.m_SequenceCommand.PositionSensorInfo.SensorScanAcceleration;
+                                double targetdec = m_MxpAxis.m_SequenceCommand.PositionSensorInfo.SensorScanDeceleration;
+                                double targetjerk = m_MxpAxis.m_SequenceCommand.PositionSensorInfo.SensorScanJerk;
+
+                                double deceleration_time = jerkTimeRatio + (m_Axis as MpAxis).CommandSpeed / targetdec;
+                                double deceleration_distance = 0.5f * targetdec * deceleration_time * deceleration_time;
+
                                 bool normal_run = true;
                                 normal_run &= m_MxpAxis.m_SequenceMoving;
                                 normal_run &= remain_bcr_distance > 0.0f;
-                                normal_run &= remain_bcr_distance < (m_MxpAxis.m_SequenceCommand.PositionSensorInfo.SensorScanDistance + following_error);
+                                normal_run &= (remain_bcr_distance < (m_MxpAxis.m_SequenceCommand.PositionSensorInfo.SensorScanDistance + following_error)) ||
+                                              (remain_bcr_distance < deceleration_distance);
                                 normal_run &= remain_bcr_distance < collision_distance;
                                 if (AppConfig.Instance.Simulation.MY_DEBUG)
                                 {
@@ -3613,15 +3637,20 @@ namespace Sineva.VHL.Library.MXP
                                     //double targetvel = commandVel < m_MxpAxis.m_SequenceCommand.PositionSensorInfo.SensorScanVelocity ?
                                     //    m_MxpAxis.m_SequenceCommand.PositionSensorInfo.SensorScanVelocity : commandVel;
                                     double targetvel = Math.Min(commandVel, m_MxpAxis.m_SequenceCommand.PositionSensorInfo.SensorScanVelocity);
-                                    double targetacc = m_MxpAxis.m_SequenceCommand.PositionSensorInfo.SensorScanAcceleration;
-                                    double targetdec = m_MxpAxis.m_SequenceCommand.PositionSensorInfo.SensorScanDeceleration;
-                                    double targetjerk = m_MxpAxis.m_SequenceCommand.PositionSensorInfo.SensorScanJerk;
 
                                     if (actualVel > targetvel)
                                     {
                                         if (Math.Abs(targetvel - actualVel) > 0.3f * targetvel) targetvel = Math.Min(targetvel, actualVel); // 가장 이상적인 경우는 현 속도를 유지하면서 BCR 위치에 도달하는 것.
                                       //else targetvel = actualVel; // 최저 속도 제한 = 300.0f mm/sec
                                       // 거리에 대한 최대 속도 제한 = 거리의 반
+                                    }
+
+                                    //dt = SQRT((2 * distance) / target_acc), v = target_acc * dt
+                                    double dt2 = 0.5f * Math.Sqrt((2 * remain_bcr_distance) / targetacc); // 가속 + 감속
+                                    double new_vel = 0.7f * targetacc * dt2;
+                                    if (commandVel < new_vel) //증속 Case
+                                    {
+                                        targetvel = Math.Min(new_vel, m_MxpAxis.m_SequenceCommand.PositionSensorInfo.SensorScanVelocity);
                                     }
 
                                     //감속거리를 계산하여 Target 위치에 멈출수 있는지 확인
@@ -3643,18 +3672,21 @@ namespace Sineva.VHL.Library.MXP
                                     // acc, dec, jerk 제한
                                     if (targetvel < 720.0f)
                                     {
-                                        if (m_Axis.BcrControl == enMxpBcrControl.PLC)
-                                        {
-                                            targetacc = targetvel;
-                                            targetdec = targetvel;
-                                            targetjerk = targetvel;
-                                        }
-                                        else
-                                        {
-                                            targetacc = 2 * targetvel;
-                                            targetdec = 2 * targetvel;
-                                            targetjerk = 0.8f * targetdec;
-                                        }
+                                        //if (m_Axis.BcrControl == enMxpBcrControl.PLC)
+                                        //{
+                                        //    //targetacc = targetvel;
+                                        //    //targetdec = targetvel;
+                                        //    //targetjerk = targetvel;
+                                        //}
+                                        //else
+                                        //{
+                                        //    targetacc = 2 * targetvel;
+                                        //    targetdec = 2 * targetvel;
+                                        //    targetjerk = 0.8f * targetdec;
+                                        //}
+                                        targetacc = 2 * targetvel;
+                                        targetdec = 2 * targetvel;
+                                        targetjerk = 0.8f * targetdec;
                                     }
 
                                     // Target Position
@@ -3679,6 +3711,14 @@ namespace Sineva.VHL.Library.MXP
                                         double acc_time = Math.Sqrt((2 * acc_len) / (targetacc));
                                         targetvel = 0.5f * targetacc * acc_time;
                                         if (targetvel < 10.0f) targetvel = 10.0f; // Velocity 0으로 계산되는 경우가 있네.
+                                    }
+
+                                    if (m_MxpAxis.m_SequenceCommand.PositionSensorInfo.SensorUse == 0)
+                                    {
+                                        targetvel = Math.Max(commandVel, targetvel);
+                                        targetacc = m_Axis.AccDefault;
+                                        targetdec = m_Axis.DecDefault;
+                                        targetjerk = m_Axis.JerkDefault;
                                     }
 
                                     // 만일 ABS 명령을 날려도 멈출수 없는 거리/속도 라면 알람을 띄우자~~~
@@ -3796,7 +3836,7 @@ namespace Sineva.VHL.Library.MXP
 
                             if (m_MxpAxis.MoveState == MXP_MOVESTATE.MOVESTATE_MOVING)
                             {
-                                MxpCommLog.WriteLog(string.Format("{0} Move Ing", m_Axis.AxisName));
+                                MxpCommLog.WriteLog(string.Format("{0} External Move Ing", m_Axis.AxisName));
                                 m_AccumulateVelocity = 0.0f;
                                 m_CompleteTimeCheck = false;
                                 m_CompleteTimeTick = XFunc.GetTickCount();
@@ -4100,16 +4140,16 @@ namespace Sineva.VHL.Library.MXP
                                     if (targetvel < 50.0f) targetvel = 50.0f;
 
                                     double targetpos = commandPos + remain_bcr_distance;
-                                    double targetacc = (0.5f * targetvel * targetvel) / remain_bcr_distance;
-                                    double targetdec = targetacc;
-                                    double targetjerk = targetacc;
+                                    double targetacc1 = (0.5f * targetvel * targetvel) / remain_bcr_distance;
+                                    double targetdec1 = targetacc1;
+                                    double targetjerk1 = targetacc1;
 
                                     // ABS Command Set
                                     string msg = string.Empty;
                                     MXP.MXP_FUNCTION_STATUS_RESULT rv = MXP_FUNCTION_STATUS_RESULT.RT_NO_ERROR;
-                                    msg += string.Format("[{0}, {1}, {2}, {3}, {4}, {5}， {6}, {7}, {8}]", targetpos, targetvel, targetacc, targetdec, targetjerk, remain_bcr_distance, commandVel, commandPos, curBCR);
+                                    msg += string.Format("[{0}, {1}, {2}, {3}, {4}, {5}， {6}, {7}, {8}]", targetpos, targetvel, targetacc1, targetdec1, targetjerk1, remain_bcr_distance, commandVel, commandPos, curBCR);
                                     MxpCommLog.WriteLog(string.Format("{0} Sequence Monitor One More AX_MoveAbsolute Move Command : \r\n[Position, Velocity, Acc, Dec, Jerk, remain_bcr_distance， commandVel, commandPos, curBCR]\r\n{1}", m_Axis.AxisName, msg));
-                                    rv = MXP.AX_MoveAbsolute((uint)m_Axis.NodeId, (float)targetpos, (float)targetvel, (float)targetacc, (float)targetdec, (float)targetjerk, MXP.MXP_DIRECTION_ENUM.MXP_NONE_DIRECTION, MXP.MXP_BUFFERMODE_ENUM.MXP_ABORT_OVERRIDERESET);
+                                    rv = MXP.AX_MoveAbsolute((uint)m_Axis.NodeId, (float)targetpos, (float)targetvel, (float)targetacc1, (float)targetdec1, (float)targetjerk1, MXP.MXP_DIRECTION_ENUM.MXP_NONE_DIRECTION, MXP.MXP_BUFFERMODE_ENUM.MXP_ABORT_OVERRIDERESET);
 
                                     if (rv == MXP.MXP_FUNCTION_STATUS_RESULT.RT_NO_ERROR)
                                     {
@@ -4118,9 +4158,9 @@ namespace Sineva.VHL.Library.MXP
                                         m_Axis.TargetPos = targetpos; //이걸 Update 해줘야 ... 운영쪽에서도 이동 위치를 알거야...
                                                                       // abs move를 하면 override를 1로 변경함. 이전 값으로 재 설정 필요
                                         m_Axis.TargetSpeed = targetvel;
-                                        m_Axis.TargetAcc = targetacc;
-                                        m_Axis.TargetDec = targetdec;
-                                        m_Axis.TargetJerk = targetjerk;
+                                        m_Axis.TargetAcc = targetacc1;
+                                        m_Axis.TargetDec = targetdec1;
+                                        m_Axis.TargetJerk = targetjerk1;
                                         seqNo = 30;
                                     }
                                     else

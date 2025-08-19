@@ -394,6 +394,7 @@ namespace Sineva.VHL.Device
                 int index = 0;
                 m_MotionProfiles.Clear();
                 List<MotionProfile> tempProfiles = new List<MotionProfile>();
+                bool SameBCRSelectBeforeLastPath = false;
                 foreach (Data.Process.Path path in paths)
                 {
                     double runDistance = path.RunDistance;
@@ -475,14 +476,20 @@ namespace Sineva.VHL.Device
                         }
                     }
                     // 마지막 구간은 Velocity < Distance 조건으로 만들자...
-                    if (index == paths.Count - 1 && runVelocity > runDistance)
+                    //if (index == paths.Count - 1 && runVelocity > runDistance)
+					if (index == paths.Count - 1)
                     {
-                        if (paths.Count > 1)
+                        if (beforePath != null && beforePath.BcrDirection == path.BcrDirection && !beforePath.IsCorner()) SameBCRSelectBeforeLastPath = true;
+
+                        if (runVelocity > runDistance)
                         {
-                            if (runVelocity > paths[index - 1].Velocity) runVelocity = paths[index - 1].Velocity;
+                            if (paths.Count > 1)
+                            {
+                                if (runVelocity > paths[index - 1].Velocity) runVelocity = paths[index - 1].Velocity;
+                                else runVelocity = runDistance;
+                            }
                             else runVelocity = runDistance;
                         }
-                        else runVelocity = runDistance;
                     }
                     // 분기/합류 출발인 경우. 가속하면서 저전압 알람이 발생한다. 
                     if (isBranchJunction && index > 0)
@@ -626,16 +633,37 @@ namespace Sineva.VHL.Device
                         double beforeAcceleration = 0.0f;
                         double beforeDeceleration = 0.0f;
                         double beforeJerk = 0.0f;
+                        bool LastPathShortBCR = false;
+
                         msg += string.Format("[Motion Profiles]\r\n");
+                        int tempProfileLastIndex = tempProfiles.Count != 0 ? tempProfiles.Count - 1 : 0;
                         for (int i = 0; i < tempProfiles.Count; i++)
                         {
                             bool before_same = false;
+
                             if (i > 0)
                             {
-                                before_same = Math.Abs(tempProfiles[i].Velocity - beforeVelocity) < 1.0f;
-                                //before_same &= Math.Abs(tempProfiles[i].Acceleration - beforeAcceleration) < 1.0f;
-                                //before_same &= Math.Abs(tempProfiles[i].Deceleration - beforeDeceleration) < 1.0f;
-                                //before_same &= Math.Abs(tempProfiles[i].Jerk - beforeJerk) < 1.0f;
+                                if(Math.Abs(tempProfiles[i].Velocity - beforeVelocity) < 1.0f)
+                                {
+                                    before_same = true;
+                                    /*
+                                    before_same = Math.Abs(tempProfiles[i].Velocity - beforeVelocity) < 1.0f;
+                                    //before_same &= Math.Abs(tempProfiles[i].Acceleration - beforeAcceleration) < 1.0f;
+                                    //before_same &= Math.Abs(tempProfiles[i].Deceleration - beforeDeceleration) < 1.0f;
+                                    //before_same &= Math.Abs(tempProfiles[i].Jerk - beforeJerk) < 1.0f;
+                                    */
+                                }
+                                else
+                                {
+                                    if(i == tempProfileLastIndex && paths.Count > 1)
+                                    {
+                                        int LastpathsIndex = paths.Count - 1;
+                                        LastPathShortBCR = SameBCRSelectBeforeLastPath;
+                                        LastPathShortBCR &= paths.Last().BcrDirection == enBcrCheckDirection.Right ?
+                                                            Math.Abs(paths[LastpathsIndex - 1].RightBCREnd - paths.Last().RightBCRStart) < 10.0f : Math.Abs(paths[LastpathsIndex - 1].LeftBCREnd - paths.Last().LeftBCRStart) < 10.0f;
+                                        LastPathShortBCR &= tempProfiles[i].Distance < 200.0f;
+                                    }
+                                }
                             }
                             if (before_same)
                             {
@@ -644,6 +672,10 @@ namespace Sineva.VHL.Device
                                 m_MotionProfiles.Last().Acceleration = Math.Min(tempProfiles[i].Acceleration, m_MotionProfiles.Last().Acceleration);
                                 m_MotionProfiles.Last().Deceleration = Math.Min(tempProfiles[i].Deceleration, m_MotionProfiles.Last().Deceleration);
                                 m_MotionProfiles.Last().Jerk = Math.Min(tempProfiles[i].Acceleration, m_MotionProfiles.Last().Jerk);
+                            }
+                            else if(LastPathShortBCR)
+                            {
+                                m_MotionProfiles.Last().Distance += tempProfiles[i].Distance;
                             }
                             else
                             {
@@ -667,6 +699,7 @@ namespace Sineva.VHL.Device
                         }
                     }
 
+                    #region ShortBlock 삭제
                     // 가감속은 속도의 2배까지, Jert는 속도의 4배까지 제한하자 !
                     // Velocity Short Flag Check
                     //for (int i = 0; i < m_MotionProfiles.Count; i++)
@@ -759,6 +792,7 @@ namespace Sineva.VHL.Device
                     //    m_MotionProfiles[i].Deceleration = d;
                     //    m_MotionProfiles[i].Jerk = j;
                     //}
+                    #endregion
 
                     // Moving Sensor Setting
                     bool right_bcr_using = paths.Last().BcrDirection == enBcrCheckDirection.Right;
@@ -795,8 +829,15 @@ namespace Sineva.VHL.Device
                             double dt0 = vel / dec;
                             double s0 = dec * dt0 * dt0; //감속거리 * 2배
                             double s1 = m_MotionProfiles.Last().Distance;
-                            double d1 = tempProfiles.Last().Distance;
-                            m_MotionSensor.SensorScanDistance = d1 < 2.0f * scan_distance ? (float)(0.9f * m_MotionProfiles.Last().Distance) : (float)Math.Min(s0, s1);
+                            if (s0 < s1)
+                            {
+                                if (s0 > scan_distance) m_MotionSensor.SensorScanDistance = (float)s0;
+                                else m_MotionSensor.SensorScanDistance = (float)s1;
+                            }
+                            else
+                                m_MotionSensor.SensorScanDistance = (float)s1;
+                            
+                            //m_MotionSensor.SensorScanDistance = s1 < scan_distance ? (float)(s1) : (float)Math.Min(s0, s1);
                         }
                     }
                     m_MotionSensor.SensorScanVelocity = (float)m_MotionProfiles.Last().Velocity; // BCR Scan Area에 들어 왔을때 현 속도로 재 계산 필요함.

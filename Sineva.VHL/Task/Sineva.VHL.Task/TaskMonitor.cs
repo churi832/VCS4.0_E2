@@ -447,11 +447,8 @@ namespace Sineva.VHL.Task
             private const string FuncName = "[SeqSilentStopMonitor]";
 
             #region Fields
-            private _DevAxis m_MasterAxis = null;
-            private _DevAxis m_SlaveAxis = null;
-            private _DevAxis m_SlideAxis = null;
-            private _DevAxis m_HoistAxis = null;
-            private _DevAxis m_RotateAxis = null;
+            private DevTransfer m_devTransfer = null;
+            private DevFoupGripper m_devFoupGripper = null;
 
             private VehicleStatus curVehicleStatus = null;
 
@@ -463,11 +460,8 @@ namespace Sineva.VHL.Task
             {
                 this.SeqName = $"SeqSilentStopMonitor";
 
-                m_MasterAxis = DevicesManager.Instance.DevTransfer.AxisMaster.GetDevAxis();
-                m_SlaveAxis = DevicesManager.Instance.DevTransfer.AxisSlave.GetDevAxis();
-                m_SlideAxis = DevicesManager.Instance.DevFoupGripper.AxisSlide.GetDevAxis();
-                m_HoistAxis = DevicesManager.Instance.DevFoupGripper.AxisHoist.GetDevAxis();
-                m_RotateAxis = DevicesManager.Instance.DevFoupGripper.AxisTurn.GetDevAxis();
+                m_devTransfer = DevicesManager.Instance.DevTransfer;
+                m_devFoupGripper = DevicesManager.Instance.DevFoupGripper;
 
                 curVehicleStatus = ProcessDataHandler.Instance.CurVehicleStatus;
 
@@ -513,15 +507,28 @@ namespace Sineva.VHL.Task
                             bool SlientStop = true;
                             SlientStop &= ProcessDataHandler.Instance.CurTransferCommand.IsValid;
                             SlientStop &= ProcessDataHandler.Instance.CurVehicleStatus.ObsStatus.OverrideRatio > 0.0f;
+                            SlientStop &= ProcessDataHandler.Instance.CurVehicleStatus.ObsStatus.ObsUpperSensorState <= enFrontDetectState.enDeccelation4;
                             SlientStop &= EqpAlarm.EqpAlarmItems.Count == 0;
-                            SlientStop &= Math.Abs(m_MasterAxis.GetCurVelocity()) < 3.0f;
-                            SlientStop &= Math.Abs(m_SlaveAxis.GetCurVelocity()) < 3.0f;
-                            SlientStop &= Math.Abs(m_SlideAxis.GetCurVelocity()) < 3.0f;
-                            SlientStop &= Math.Abs(m_HoistAxis.GetCurVelocity()) < 3.0f;
-                            SlientStop &= Math.Abs(m_RotateAxis.GetCurVelocity()) < 3.0f;
-                            SlientStop &= Math.Abs(m_SlideAxis.GetCurPosition()) < 10.0f;
-                            SlientStop &= Math.Abs(m_HoistAxis.GetCurPosition()) < 10.0f;
-                            SlientStop &= Math.Abs(m_RotateAxis.GetCurPosition()) < 1.0f;
+                            SlientStop &= Math.Abs(m_devTransfer.AxisMaster.GetDevAxis().GetCurVelocity()) < 3.0f;
+                            SlientStop &= Math.Abs(m_devTransfer.AxisSlave.GetDevAxis().GetCurVelocity()) < 3.0f;
+                            if (m_devFoupGripper.IsValid)
+                            {
+                                if (m_devFoupGripper.AxisSlide.GetDevAxis() != null)
+                                {
+                                    SlientStop &= Math.Abs(m_devFoupGripper.AxisSlide.GetDevAxis().GetCurVelocity()) < 3.0f;
+                                    SlientStop &= Math.Abs(m_devFoupGripper.AxisSlide.GetDevAxis().GetCurPosition()) < 10.0f;
+                                }
+                                if (m_devFoupGripper.AxisHoist.GetDevAxis() != null)
+                                {
+                                    SlientStop &= Math.Abs(m_devFoupGripper.AxisHoist.GetDevAxis().GetCurVelocity()) < 3.0f;
+                                    SlientStop &= Math.Abs(m_devFoupGripper.AxisHoist.GetDevAxis().GetCurPosition()) < 10.0f;
+                                }
+                                if (m_devFoupGripper.AxisTurn.GetDevAxis() != null)
+                                {
+                                    SlientStop &= Math.Abs(m_devFoupGripper.AxisTurn.GetDevAxis().GetCurVelocity()) < 3.0f;
+                                    SlientStop &= Math.Abs(m_devFoupGripper.AxisTurn.GetDevAxis().GetCurPosition()) < 1.0f;
+                                }
+                            }
                             SlientStop &= GV.WheelBusy == false;
                             SlientStop &= EqpStateManager.Instance.OpMode == OperateMode.Auto;
                             SlientStop &= EqpStateManager.Instance.RunMode == EqpRunMode.Start;
@@ -570,11 +577,11 @@ namespace Sineva.VHL.Task
                     case 10:
                         {
                             bool ResetSilent = false;
-                            ResetSilent |= Math.Abs(m_MasterAxis.GetCurVelocity()) >= 3.0f;
-                            ResetSilent |= Math.Abs(m_SlaveAxis.GetCurVelocity()) >= 3.0f;
-                            ResetSilent |= Math.Abs(m_SlideAxis.GetCurVelocity()) >= 3.0f;
-                            ResetSilent |= Math.Abs(m_HoistAxis.GetCurVelocity()) >= 3.0f;
-                            ResetSilent |= Math.Abs(m_RotateAxis.GetCurVelocity()) >= 3.0f;
+                            ResetSilent |= Math.Abs(m_devTransfer.AxisMaster.GetDevAxis().GetCurVelocity()) >= 3.0f;
+                            ResetSilent |= Math.Abs(m_devTransfer.AxisSlave.GetDevAxis().GetCurVelocity()) >= 3.0f;
+                            ResetSilent |= Math.Abs(m_devFoupGripper.AxisSlide.GetDevAxis().GetCurVelocity()) >= 3.0f;
+                            ResetSilent |= Math.Abs(m_devFoupGripper.AxisHoist.GetDevAxis().GetCurVelocity()) >= 3.0f;
+                            ResetSilent |= Math.Abs(m_devFoupGripper.AxisTurn.GetDevAxis().GetCurVelocity()) >= 3.0f;
                             ResetSilent |= GV.WheelBusy;
                             ResetSilent |= ProcessDataHandler.Instance.CurTransferCommand.IsValid == false;
                             ResetSilent |= EqpStateManager.Instance.OpMode != OperateMode.Auto;

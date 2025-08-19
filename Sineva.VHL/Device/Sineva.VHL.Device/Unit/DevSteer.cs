@@ -705,8 +705,8 @@ namespace Sineva.VHL.Device
             private double m_SteerOffset = 0.0f;
             private double m_SteerChangeDelay = 0.0f;
             private double m_SCurveSteerOffset = 0.0f;
-            Data.Process.Path m_BeforePath = new Data.Process.Path();
             private int m_OldLinkID = 0;
+            private Data.Process.Path m_BeforePath = new Data.Process.Path();
             private bool m_FrontSteer = false;
             #endregion
 

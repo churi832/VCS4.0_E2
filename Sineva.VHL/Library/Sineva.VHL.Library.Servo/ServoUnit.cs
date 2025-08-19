@@ -1628,7 +1628,7 @@ namespace Sineva.VHL.Library.Servo
 				rv &= (axis.GetAxisCurStatus() & enAxisInFlag.HEnd) == enAxisInFlag.HEnd ? true : false;
 				rv &= (axis.GetAxisCurStatus() & enAxisInFlag.InPos) == enAxisInFlag.InPos ? true : false;
 			}
-			return rv ;
+			return rv;
 		}
 
         public bool IsServoOn()

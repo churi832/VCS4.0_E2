@@ -479,6 +479,6 @@ namespace Sineva.VHL.Library
         HoistLimitDetect_Acquire = 1 << 22,
         HoistLimitDetect_Deposit = 1 << 23,
         InRangeOver_Acquire = 1 << 24,
-        InRangeOver_Deposit= 1 << 25,
+        InRangeOver_Deposit = 1 << 25,
     }
 }

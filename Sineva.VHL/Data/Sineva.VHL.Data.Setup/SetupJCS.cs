@@ -18,7 +18,7 @@ namespace Sineva.VHL.Data.Setup
         private int m_MessageRepayTimeOut = 60000;
         private int m_StatusReportIntervalTime = 200;
         private int m_NetworkRestartFailCount = 5;
-        private int m_PermitRetryCount = 12;
+        private int m_PermitRetryCount = 18;
         #endregion
 
         #region Properties

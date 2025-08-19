@@ -67,11 +67,6 @@ namespace Sineva.VHL.Data.DbAdapter
                 }
                 else
                 {
-                    
-                    //var sameTypePortIDs = Offsets
-                    //    .Select(x => x.PortID)
-                    //    .ToList();
- 
                     var sameTypeOffsets = m_Offsets.Where(x =>
                     {
                         return GetPortTypeByPortID(x.PortID) == item.PortType;

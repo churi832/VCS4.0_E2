@@ -177,8 +177,11 @@ namespace Sineva.VHL.Task
                                                 EventHandlerManager.Instance.InvokeLinkChanged(myPath);
                                                 SequenceLog.WriteLog(FuncName, $"FoundLink_In_Paths ({curLinkId}->{myPath.LinkID}) LINK:{myPath}_{index} BCR:({leftBCR},{rightBCR})");
 
-                                                m_UpdateCurrentPath = false;
-                                                UpdateCurrentPathComplete = true;
+                                                if (m_UpdateCurrentPath)
+                                                {
+                                                    m_UpdateCurrentPath = false;
+                                                    UpdateCurrentPathComplete = true;
+                                                }
                                                 GV.RouteChangeTimeOverCheck = true;
                                             }
                                         }
@@ -230,8 +233,11 @@ namespace Sineva.VHL.Task
                                             EventHandlerManager.Instance.InvokeLinkChanged(newPath);
                                             SequenceLog.WriteLog(FuncName, $"FoundLink_In_DB ({curLinkId}->{linkId}) LINK:{newLink} BCR:({leftBCR},{rightBCR})");
 
-                                            m_UpdateCurrentPath = false;
-                                            UpdateCurrentPathComplete = true;
+                                            if (m_UpdateCurrentPath)
+                                            {
+                                                m_UpdateCurrentPath = false;
+                                                UpdateCurrentPathComplete = true;
+                                            }
                                         }
                                     }
 
